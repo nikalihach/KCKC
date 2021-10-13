@@ -1,1 +1,153 @@
+#define _CRT_SECURE_NO_WARNINGS
+#include <iostream>
+#include <string>
+#include <typeinfo>
 
+using namespace std;
+
+struct Command {
+    string name;
+    int r, g, b;
+    int first;
+    int second;
+    int third;
+    int fourth;
+   int flag;
+};
+
+void Parse(char *buff, struct Command *com)
+{
+    int k;
+    char* arr[100];
+    char* str;
+    str = strtok(buff, " ,.-;:"); //Здесь знаки, отделяющие слова
+    k = 0;
+    while (str != NULL)
+    {
+        arr[k] = str;
+        k++;
+        str = strtok(NULL, " ,.-");
+    }
+
+    int num;
+
+    switch (k)
+    {
+    case 2:
+            com->name = arr[0];
+            
+            //color
+            num = stoi(arr[1], 0, 16);
+            com->r = num / 0x10000;
+            com->g = (num / 0x100) % 0x100;
+            com->b = num % 0x100;
+
+            com->flag = 1;
+            cout << "Принято" << endl;
+            break;
+        
+    case 4:
+        com->name = arr[0];
+        com->first = atoi(arr[1]);
+        com->second = atoi(arr[2]);
+            //color
+        num = stoi(arr[3], 0, 16);
+        com->r = num / 0x10000;
+        com->g = (num / 0x100) % 0x100;
+        com->b = num % 0x100;
+
+        com->flag = 1;
+            cout << "Принято" << endl;
+
+            break;
+
+    case 6:
+        
+        com->name = arr[0];
+        com->first = atoi(arr[1]);
+        com->second = atoi(arr[2]);
+        com->third = atoi(arr[3]);
+        com->fourth = atoi(arr[4]);
+            //color
+        num = stoi(arr[5], 0, 16);
+        com->r = num / 0x10000;
+        com->g = (num / 0x100) % 0x100;
+        com->b = num % 0x100;
+
+        com->flag = 1;
+            cout << "Принято" << endl;
+            break;
+
+    default:
+        com->flag = 0;
+        cout << "Error: Неправильноe количество параметров" << endl;
+        break;
+    }
+}
+
+void printInformation( struct Command *com)
+{
+   
+        if (com->name == "clear_display")
+        {
+            cout << com->name << ":" << "(" << com->r << ", " << com->g << ", " << com->b << ")" << endl;
+            cout << "Принято" << endl;
+        }
+
+        else if (com->name == "draw_pixel")
+        {
+            cout << com->name << ":" <<" "<< com->first<<" "<< com->second<<" "<< "(" << com->r << ", " << com->g << ", " << com->b << ")"<< endl;
+            cout << "Принято" << endl;
+        } 
+        else if (com->name == "draw_line")
+        {
+            cout << com->name << ":" <<" "<< com->first << " " << com->second << " "<< com->third <<" " << com->fourth<< " "<<"(" << com->r << ", " << com->g << ", " << com->b << ")" << endl;
+            cout << "Принято" << endl;
+        }
+        else if (com->name == "draw_rectangle")
+        {
+            cout << com->name << ":" << " " << com->first << " " << com->second << " " << com->third << " " << com->fourth << " " << "(" << com->r << ", " << com->g << ", " << com->b << ")" << endl;
+            cout << "Принято" << endl;
+        }
+        else if (com->name == "fill_rectangle")
+        {
+            cout << com->name << ":" << " " << com->first << " " << com->second << " " << com->third << " " << com->fourth << " " << "(" << com->r << ", " << com->g << ", " << com->b << ")" << endl;
+            cout << "Принято" << endl;
+        }
+        else if (com->name == "draw_ellipse")
+        {
+            cout << com->name << ":" << " " << com->first << " " << com->second << " " << com->third << " " << com->fourth << " " << "(" << com->r << ", " << com->g << ", " << com->b << ")" << endl;
+            cout << "Принято" << endl;
+        }
+        
+        else if (com->name == "fill_ellipse")
+        {
+            cout << com->name << ":" << " " << com->first << " " << com->second << " " << com->third << " " << com->fourth << " " << "(" << com->r << ", " << com->g << ", " << com->b << ")" << endl;
+            cout << "Принято" << endl;
+        }
+
+        else
+        {
+            com->flag = 0;
+            cout << "Error: Неправильная команда " << endl;
+        }
+}
+
+int main()
+{
+    setlocale(LC_ALL, "rus");
+    char a[100];
+    cout << "Введите строку из слов:" << endl;
+    gets_s(a);
+    struct Command one;
+
+    Parse(a, &one);
+  
+    if (one.flag == 1)
+    {
+        printInformation(&one);
+    }
+
+    cin.get();
+    return 0;
+}

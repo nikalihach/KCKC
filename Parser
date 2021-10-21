@@ -2,7 +2,25 @@
 #include <iostream>
 #include <string>
 
+
 using namespace std;
+
+bool HEX(string str)
+{
+    if (str.size() != 6)
+    {
+        return false;
+    }
+    else
+    for (int i = 0; i < str.size(); i++)
+    {
+        if ((str[i] > 'f') ||
+            (str[i] < '0') ||
+            ((str[i] > '9') && (str[i] < 'A')) ||
+            ((str[i] > 'F') && (str[i] < 'a'))) return false;
+    }
+    return true;
+}
 
 struct Command {
     string name;
@@ -11,7 +29,7 @@ struct Command {
     int second;
     int third;
     int fourth;
-   int flag;
+   int success;
 };
 
 void Parse(char *buff, struct Command *com)
@@ -27,35 +45,72 @@ void Parse(char *buff, struct Command *com)
         k++;
         str = strtok(NULL, " ,.-");
     }
-
+  
     int num;
-
+    char* end;
+    int error=0;
+   
+ 
     switch (k)
     {
     case 2:
             com->name = arr[0];
             
-            //color
-            num = stoi(arr[1], 0, 16);
+          
+            if (!HEX(arr[1]))
+            {
+                cout << "ERROR: Некорректный параметр color" << endl;
+                error = 1;
+            }
+            if (error == 1)break;
+            
+
+            num = strtol(arr[1], &end, 16);
+          
             com->r = num / 0x10000;
             com->g = (num / 0x100) % 0x100;
             com->b = num % 0x100;
 
-            com->flag = 1;
+            com->success = 1;
             cout << "Принято" << endl;
             break;
         
     case 4:
         com->name = arr[0];
-        com->first = atoi(arr[1]);
-        com->second = atoi(arr[2]);
+        
+        com->first = strtol(arr[1], &end, 10);
+        if (end == arr[1])
+        {
+            cout << "ERROR: Параметр (1) - некорректное значение" << endl;
+            error = 1;
+        }
+        if (error == 1)break;
+
+        com->second = strtol(arr[2], &end, 10);
+        if (end == arr[2])
+        {
+            cout << "ERROR: Параметр (2) - некорректное значение" << endl;
+            error = 1;
+        }
+        if (error == 1)break;
+
+
             //color
-        num = stoi(arr[3], 0, 16);
+        if (!HEX(arr[3]))
+        {
+            cout << "ERROR: Некорректный параметр color" << endl;
+            error = 1;
+        }
+        if (error == 1)break;
+
+
+        num = strtol(arr[3], &end, 16);
+
         com->r = num / 0x10000;
         com->g = (num / 0x100) % 0x100;
         com->b = num % 0x100;
 
-        com->flag = 1;
+        com->success = 1;
             cout << "Принято" << endl;
 
             break;
@@ -63,22 +118,57 @@ void Parse(char *buff, struct Command *com)
     case 6:
         
         com->name = arr[0];
-        com->first = atoi(arr[1]);
-        com->second = atoi(arr[2]);
-        com->third = atoi(arr[3]);
-        com->fourth = atoi(arr[4]);
+        com->first = strtol(arr[1], &end, 10);
+        if (end == arr[1])
+        {
+            cout << "ERROR: Параметр (1) - некорректное значение" << endl;
+            error = 1;
+        }
+        if (error == 1)break;
+
+        com->second = strtol(arr[2], &end, 10);
+        if (end == arr[2])
+        {
+            cout << "ERROR: Параметр (2) - некорректное значение" << endl;
+            error = 1;
+        }
+        if (error == 1)break;
+
+        com->third = strtol(arr[3], &end, 10);
+        if (end == arr[3])
+        {
+            cout << "ERROR: Параметр (3) - некорректное значение" << endl;
+            error = 1;
+        }
+        if (error == 1)break;
+
+        com->fourth = strtol(arr[4], &end, 10);
+        if (end == arr[4])
+        {
+            cout << "ERROR: Параметр (4) - некорректное значение" << endl;
+            error = 1;
+        }
+        if (error == 1)break;
+
             //color
-        num = stoi(arr[5], 0, 16);
+        if (!HEX(arr[5]))
+        {
+            cout << "ERROR: Некорректный параметр color" << endl;
+            error = 1;
+        }
+        if (error == 1)break;
+
+        num = strtol(arr[5], &end, 16);
         com->r = num / 0x10000;
         com->g = (num / 0x100) % 0x100;
         com->b = num % 0x100;
 
-        com->flag = 1;
+        com->success = 1;
             cout << "Принято" << endl;
             break;
 
     default:
-        com->flag = 0;
+        com->success = 0;
         cout << "Error: Неправильноe количество параметров" << endl;
         break;
     }
@@ -127,9 +217,10 @@ void printInformation( struct Command *com)
 
         else
         {
-            com->flag = 0;
+            com->success = 0;
             cout << "Error: Неправильная команда " << endl;
         }
+    
 }
 
 int main()
@@ -142,7 +233,7 @@ int main()
 
     Parse(a, &one);
   
-    if (one.flag == 1)
+    if (one.success == 1)
     {
         printInformation(&one);
     }

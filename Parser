@@ -7,6 +7,7 @@ using namespace std;
 
 bool HEX(string str)
 {
+    cout << str.size() << endl;
     if (str.size() != 6)
     {
         return false;
@@ -37,13 +38,14 @@ void Parse(char *buff, struct Command *com)
     int k;
     char* arr[100];
     char* str;
-    str = strtok(buff, " ,.-;:"); //Здесь знаки, отделяющие слова
+    char* next_token1 = NULL;
+    str = strtok_s(buff, " ,.-;:", &next_token1); //Здесь знаки, отделяющие слова
     k = 0;
     while (str != NULL)
     {
         arr[k] = str;
         k++;
-        str = strtok(NULL, " ,.-");
+        str = strtok_s(NULL, " ,.-", &next_token1);
     }
   
     int num;
@@ -59,7 +61,7 @@ void Parse(char *buff, struct Command *com)
           
             if (!HEX(arr[1]))
             {
-                cout << "ERROR: Некорректный параметр color" << endl;
+                cout << "ERROR: Неправильный параметр color" << endl;
                 error = 1;
             }
             if (error == 1)break;
@@ -98,7 +100,7 @@ void Parse(char *buff, struct Command *com)
             //color
         if (!HEX(arr[3]))
         {
-            cout << "ERROR: Некорректный параметр color" << endl;
+            cout << "ERROR: Неправильный параметр color" << endl;
             error = 1;
         }
         if (error == 1)break;
@@ -153,10 +155,11 @@ void Parse(char *buff, struct Command *com)
             //color
         if (!HEX(arr[5]))
         {
-            cout << "ERROR: Некорректный параметр color" << endl;
+            cout << "ERROR: Неправильный параметр color" << endl;
             error = 1;
         }
         if (error == 1)break;
+
 
         num = strtol(arr[5], &end, 16);
         com->r = num / 0x10000;

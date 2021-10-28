@@ -1,13 +1,13 @@
-#define _CRT_SECURE_NO_WARNINGS
 #include <iostream>
 #include <string>
 
 
 using namespace std;
+ int fault = 0;
 
 bool HEX(string str)
 {
-    cout << str.size() << endl;
+    
     if (str.size() != 6)
     {
         return false;
@@ -21,6 +21,35 @@ bool HEX(string str)
             ((str[i] > 'F') && (str[i] < 'a'))) return false;
     }
     return true;
+}
+
+int Сonverting(char* str)
+{
+    long lnum;
+    int num;
+    char* end;
+
+    errno = 0;
+
+    lnum = strtol(str, &end, 10);        
+    if (end == str)
+    {
+        cout << "ERROR: некорректное значение параметра" << endl;
+        fault = 1;
+        return false;
+        
+    }
+
+    if ((lnum < -32768) || (lnum > 32768))
+    {
+        cout << "ERROR: значение параметра выходит за диапазон допустимых значений" << endl;
+       fault =1;
+        return false;
+    }
+     
+    
+    num = (int)lnum;
+    return num;
 }
 
 struct Command {
@@ -48,6 +77,8 @@ void Parse(char *buff, struct Command *com)
         str = strtok_s(NULL, " ,.-", &next_token1);
     }
   
+    char param[8] = {'x1','x2','y1','y2','w','h','rx','ry'};
+
     int num;
     char* end;
     int error=0;
@@ -80,21 +111,12 @@ void Parse(char *buff, struct Command *com)
     case 4:
         com->name = arr[0];
         
-        com->first = strtol(arr[1], &end, 10);
-        if (end == arr[1])
-        {
-            cout << "ERROR: Параметр (1) - некорректное значение" << endl;
-            error = 1;
-        }
-        if (error == 1)break;
+        com->first = Сonverting(arr[1]);
+        if (fault == 1)break;
+       
 
-        com->second = strtol(arr[2], &end, 10);
-        if (end == arr[2])
-        {
-            cout << "ERROR: Параметр (2) - некорректное значение" << endl;
-            error = 1;
-        }
-        if (error == 1)break;
+        com->second = Сonverting(arr[2]);
+        if (fault == 1)break;
 
 
             //color
@@ -120,37 +142,17 @@ void Parse(char *buff, struct Command *com)
     case 6:
         
         com->name = arr[0];
-        com->first = strtol(arr[1], &end, 10);
-        if (end == arr[1])
-        {
-            cout << "ERROR: Параметр (1) - некорректное значение" << endl;
-            error = 1;
-        }
-        if (error == 1)break;
+        com->first = Сonverting(arr[1]);
+        if (fault == 1)break;
 
-        com->second = strtol(arr[2], &end, 10);
-        if (end == arr[2])
-        {
-            cout << "ERROR: Параметр (2) - некорректное значение" << endl;
-            error = 1;
-        }
-        if (error == 1)break;
+        com->second = Сonverting(arr[2]);
+        if (fault == 1)break;
 
-        com->third = strtol(arr[3], &end, 10);
-        if (end == arr[3])
-        {
-            cout << "ERROR: Параметр (3) - некорректное значение" << endl;
-            error = 1;
-        }
-        if (error == 1)break;
+        com->third = Сonverting(arr[3]);
+        if (fault == 1)break;
 
-        com->fourth = strtol(arr[4], &end, 10);
-        if (end == arr[4])
-        {
-            cout << "ERROR: Параметр (4) - некорректное значение" << endl;
-            error = 1;
-        }
-        if (error == 1)break;
+        com->fourth = Сonverting(arr[4]);
+        if (fault == 1)break;
 
             //color
         if (!HEX(arr[5]))

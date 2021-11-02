@@ -65,13 +65,13 @@ void Parse(char* buff, struct Command* com)
     char* arr[100];
     char* str;
     char* next_token1 = NULL;
-    str = strtok_s(buff, " ,.-;:", &next_token1);
+    str = strtok_s(buff, " ,.;:", &next_token1);
     k = 0;
     while (str != NULL)
     {
         arr[k] = str;
         k++;
-        str = strtok_s(NULL, " ,.-", &next_token1);
+        str = strtok_s(NULL, " ,.", &next_token1);
     }
 
     int num;

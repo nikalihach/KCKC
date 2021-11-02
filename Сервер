@@ -1,0 +1,284 @@
+#include <stdio.h>
+#define _WINSOCK_DEPRECATED_NO_WARNINGS
+#pragma comment(lib, "Ws2_32.lib")
+#include <winsock2.h>
+#define PORT 777
+
+#include <iostream>
+
+using namespace std;
+
+bool HEX(string str)
+{
+
+    if (str.size() != 7)
+    {
+        return false;
+    }
+    else
+        for (int i = 0; i < str.size()-1; i++)
+        {
+            if ((str[i] > 'f') ||
+                (str[i] < '0') ||
+                ((str[i] > '9') && (str[i] < 'A')) ||
+                ((str[i] > 'F') && (str[i] < 'a'))) return false;
+        }
+    return true;
+}
+
+int Сonverting(char* str)
+{
+    long lnum;
+    int num;
+    char* end;
+
+
+
+    lnum = strtol(str, &end, 10);
+    if (end == str)
+    {
+        cout << "ERROR: некорректное значение параметра" << endl;
+        return 9999999;
+
+    }
+
+    if ((lnum < -32768) || (lnum > 32768))
+    {
+        cout << "ERROR: значение параметра выходит за диапазон допустимых значений" << endl;
+        return 9999999;
+    }
+
+
+    num = (int)lnum;
+    return num;
+}
+
+struct Command {
+    string name;
+    int r, g, b = 9999999;
+    int first = 9999999;
+    int second = 9999999;
+    int third = 9999999;
+    int fourth = 9999999;
+    int success = 9999999;
+};
+
+void Parse(char* buff, struct Command* com)
+{
+    int k;
+    char* arr[100];
+    char* str;
+    char* next_token1 = NULL;
+    str = strtok_s(buff, " ,.-;:", &next_token1);
+    k = 0;
+    while (str != NULL)
+    {
+        arr[k] = str;
+        k++;
+        str = strtok_s(NULL, " ,.-", &next_token1);
+    }
+
+    int num;
+    char* end;
+    int error = 0;
+
+
+
+    switch (k)
+    {
+    case 2:
+        com->name = arr[0];
+
+
+        if (!HEX(arr[1]))
+        {
+            cout << "ERROR: Неправильный параметр color" << endl;
+            error = 1;
+        }
+        if (error == 1)break;
+
+
+        num = strtol(arr[1], &end, 16);
+
+        com->r = num / 0x10000;
+        com->g = (num / 0x100) % 0x100;
+        com->b = num % 0x100;
+
+        com->success = 1;
+        cout << "Принято" << endl;
+        break;
+
+    case 4:
+        com->name = arr[0];
+
+        com->first = Сonverting(arr[1]);
+        if (com->first == 9999999)break;
+
+        com->second = Сonverting(arr[2]);
+        if (com->second == 9999999)break;
+        //color
+        if (!HEX(arr[3]))
+        {
+            cout << "ERROR: Неправильный параметр color" << endl;
+            error = 1;
+        }
+        if (error == 1)break;
+
+        num = strtol(arr[3], &end, 16);
+
+        com->r = num / 0x10000;
+        com->g = (num / 0x100) % 0x100;
+        com->b = num % 0x100;
+
+        com->success = 1;
+        cout << "Принято" << endl;
+        break;
+
+    case 6:
+
+        com->name = arr[0];
+        com->first = Сonverting(arr[1]);
+        if (com->first == 9999999)break;
+
+        com->second = Сonverting(arr[2]);
+        if (com->second == 9999999)break;
+
+        com->third = Сonverting(arr[3]);
+        if (com->third == 9999999)break;
+
+        com->fourth = Сonverting(arr[4]);
+        if (com->fourth == 9999999)break;
+
+        //color
+        if (!HEX(arr[5]))
+        {
+            cout << "ERROR: Неправильный параметр color" << endl;
+            error = 1;
+        }
+        if (error == 1)break;
+
+
+        num = strtol(arr[5], &end, 16);
+        com->r = num / 0x10000;
+        com->g = (num / 0x100) % 0x100;
+        com->b = num % 0x100;
+
+        com->success = 1;
+        cout << "Принято" << endl;
+        break;
+
+    default:
+        com->success = 0;
+        cout << "Error: Неправильноe количество параметров" << endl;
+        break;
+    }
+}
+
+void printInformation(struct Command* com)
+{
+
+    if (com->name == "clear_display" )
+    {
+        cout << com->name << ":" << "(" << com->r << ", " << com->g << ", " << com->b << ")" << endl;
+        cout << "Принято" << endl;
+    }
+
+    else if (com->name == "draw_pixel" && com->first != 9999999 && com->second != 9999999)
+    {
+        cout << com->name << ":" << " " << com->first << " " << com->second << " " << "(" << com->r << ", " << com->g << ", " << com->b << ")" << endl;
+        cout << "Принято" << endl;
+    }
+    else if (com->name == "draw_line" && com->first != 9999999 && com->second != 9999999 && com->third != 9999999 && com->fourth != 9999999)
+    {
+        cout << com->name << ":" << " " << com->first << " " << com->second << " " << com->third << " " << com->fourth << " " << "(" << com->r << ", " << com->g << ", " << com->b << ")" << endl;
+        cout << "Принято" << endl;
+    }
+    else if (com->name == "draw_rectangle" && com->first != 9999999 && com->second != 9999999 && com->third != 9999999 && com->fourth != 9999999)
+    {
+        cout << com->name << ":" << " " << com->first << " " << com->second << " " << com->third << " " << com->fourth << " " << "(" << com->r << ", " << com->g << ", " << com->b << ")" << endl;
+        cout << "Принято" << endl;
+    }
+    else if (com->name == "fill_rectangle" && com->first != 9999999 && com->second != 9999999 && com->third != 9999999 && com->fourth != 9999999)
+    {
+        cout << com->name << ":" << " " << com->first << " " << com->second << " " << com->third << " " << com->fourth << " " << "(" << com->r << ", " << com->g << ", " << com->b << ")" << endl;
+        cout << "Принято" << endl;
+    }
+    else if (com->name == "draw_ellipse" && com->first != 9999999 && com->second != 9999999 && com->third != 9999999 && com->fourth != 9999999)
+    {
+        cout << com->name << ":" << " " << com->first << " " << com->second << " " << com->third << " " << com->fourth << " " << "(" << com->r << ", " << com->g << ", " << com->b << ")" << endl;
+        cout << "Принято" << endl;
+    }
+
+    else if (com->name == "fill_ellipse" && com->first != 9999999 && com->second != 9999999 && com->third != 9999999 && com->fourth != 9999999)
+    {
+        cout << com->name << ":" << " " << com->first << " " << com->second << " " << com->third << " " << com->fourth << " " << "(" << com->r << ", " << com->g << ", " << com->b << ")" << endl;
+        cout << "Принято" << endl;
+    }
+
+    else
+    {
+        com->success = 0;
+        cout << "Error: Неправильная команда " << endl;
+    }
+}
+
+int main(int argc, char* argv[])
+{
+    setlocale(LC_ALL, "rus");
+	char buff[1024];
+	printf("Server \n");
+
+	if (WSAStartup(0x202, (WSADATA*)&buff[0]))
+	{
+		printf("WSAStartup error : % d \n", WSAGetLastError());
+		WSACleanup();
+	}
+
+	SOCKET my_sock;
+	my_sock = socket(AF_INET, SOCK_DGRAM, 0);
+	if (my_sock == INVALID_SOCKET)
+	{
+		printf("Socket() error: % d \n", WSAGetLastError());
+		WSACleanup();
+	}
+
+	sockaddr_in local_addr;
+	local_addr.sin_family = AF_INET;
+	local_addr.sin_addr.s_addr = INADDR_ANY;
+	local_addr.sin_port = htons(PORT);
+	if (bind(my_sock, (sockaddr*)&local_addr, sizeof(local_addr)))
+	{
+		printf("bind error : % d \n", WSAGetLastError());
+		closesocket(my_sock);
+		WSACleanup();
+	}
+
+	while (1)
+	{
+		sockaddr_in client_addr;
+		int client_addr_size = sizeof(client_addr);
+		int bsize = recvfrom(my_sock, &buff[0], sizeof(buff) - 1, 0, (sockaddr*)&client_addr, &client_addr_size);
+		if (bsize == SOCKET_ERROR)
+			printf("recvfrom() error: % d \n", WSAGetLastError());
+
+		HOSTENT* hst;
+		hst = gethostbyaddr((char*)&client_addr.sin_addr, 4, AF_INET);
+		printf(" + % s[% s:% d] new DATAGRAM!\n", (hst) ? hst->h_name : "Unknown host", inet_ntoa(client_addr.sin_addr), ntohs(client_addr.sin_port));
+
+		buff[bsize] = 0;
+        
+		printf("C = > S:% s \n", &buff[0]);
+
+
+        struct Command one;
+
+        Parse(buff, &one);
+
+        if (one.success == 1)
+        {
+            printInformation(&one);
+        }
+	}
+	return 0;
+}
+

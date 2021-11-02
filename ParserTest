@@ -1,0 +1,421 @@
+
+#include "pch.h"
+#include "CppUnitTest.h"
+#include "../KCKCKC/KCKCKC.cpp"
+#define _CRT_SECURE_NO_WARNINGS
+
+using namespace Microsoft::VisualStudio::CppUnitTestFramework;
+
+namespace ParserTest
+{
+	TEST_CLASS(ParserTest)
+	{
+	public:
+		
+		TEST_METHOD(TestMethod1)
+		{
+			
+			char a[100] = "clear_display: black"; //неправильная команда, color должен быть hex
+			struct Command one;
+
+			Parse(a, &one);
+			if (one.success == 1)
+			{
+				printInformation(&one);
+			}
+
+			Assert::IsTrue(one.success == 1);
+		}
+		
+		TEST_METHOD(TestMethod2)
+		{
+
+			char a[100] = "clear: 000000"; //  команда 'clear' некорректна 
+			struct Command one;
+
+			Parse(a, &one);
+			if (one.success == 1)
+			{
+				printInformation(&one);
+			}
+
+			Assert::IsTrue(one.success == 1);
+		}
+
+		TEST_METHOD(TestMethod3)
+		{
+
+			char a[100] = "clear_display: 000000"; // правильная команда
+			struct Command one;
+
+			Parse(a, &one);
+			if (one.success == 1)
+			{
+				printInformation(&one);
+			}
+
+			Assert::IsTrue(one.success == 1);
+		}
+
+		TEST_METHOD(TestMethod4)
+		{
+
+			char a[100] = "clear_display: 11111"; //неправильная команда, параметр "color" - шестнадцетиричное число
+			struct Command one;
+
+			Parse(a, &one);
+			if (one.success == 1)
+			{
+				printInformation(&one);
+			}
+
+			Assert::IsTrue(one.success == 1);
+		}
+
+		TEST_METHOD(TestMethod5)
+		{
+
+			char a[100] = "clear_display: 10 000000"; //неправильное количество параметров
+			struct Command one;
+
+			Parse(a, &one);
+			if (one.success == 1)
+			{
+				printInformation(&one);
+			}
+
+			Assert::IsTrue(one.success == 1);
+		}
+
+		TEST_METHOD(TestMethod6)
+		{
+
+			char a[100] = "draw_pixel: 10 20 000000"; // правильная команда
+			struct Command one;
+
+			Parse(a, &one);
+			if (one.success == 1)
+			{
+				printInformation(&one);
+			}
+
+			Assert::IsTrue(one.success == 1);
+		}
+
+		TEST_METHOD(TestMethod7)
+		{
+
+			char a[100] = "draw_pixel: -10 20 000000"; //правильная команда
+			struct Command one;
+
+			Parse(a, &one);
+			if (one.success == 1)
+			{
+				printInformation(&one);
+			}
+
+			Assert::IsTrue(one.success == 1);
+		}
+
+		TEST_METHOD(TestMethod8)
+		{
+
+			char a[100] = "draw_pixel: ten 20 000000"; //неправильный параметр x
+			struct Command one;
+
+			Parse(a, &one);
+			if (one.success == 1)
+			{
+				printInformation(&one);
+			}
+
+			Assert::IsTrue(one.success == 1);
+		}
+
+		TEST_METHOD(TestMethod9)
+		{
+
+			char a[100] = "drawpixel: 10 20 000000"; //неправильное название команды
+			struct Command one;
+
+			Parse(a, &one);
+			if (one.success == 1)
+			{
+				printInformation(&one);
+			}
+
+			Assert::IsTrue(one.success == 1);
+		}
+
+		TEST_METHOD(TestMethod10)
+		{
+
+			char a[100] = "draw_pixel: 10 20 0000000"; //неправильное название команды
+			struct Command one;
+
+			Parse(a, &one);
+			if (one.success == 1)
+			{
+				printInformation(&one);
+			}
+
+			Assert::IsTrue(one.success == 1);
+		}
+
+		TEST_METHOD(TestMethod11)
+		{
+
+			char a[100] = "draw_line: 10 20 000000"; //неправильное количество параметров
+			struct Command one;
+
+			Parse(a, &one);
+			if (one.success == 1)
+			{
+				printInformation(&one);
+			}
+
+			Assert::IsTrue(one.success == 1);
+		}
+
+		TEST_METHOD(TestMethod12)
+		{
+
+			char a[100] = "draw_line: 10 20 40 20 000000"; //правильная команда
+			struct Command one;
+
+			Parse(a, &one);
+			if (one.success == 1)
+			{
+				printInformation(&one);
+			}
+
+			Assert::IsTrue(one.success == 1);
+		}
+
+		TEST_METHOD(TestMethod13)
+		{
+
+			char a[100] = "drawline: 10 20 30 25 000000"; //неправильное название команды
+			struct Command one;
+
+			Parse(a, &one);
+			if (one.success == 1)
+			{
+				printInformation(&one);
+			}
+
+			Assert::IsTrue(one.success == 1);
+		}
+
+		TEST_METHOD(TestMethod14)
+		{
+
+			char a[100] = "draw_line: -10 -20 30 25 000000"; //правильная команда
+			struct Command one;
+
+			Parse(a, &one);
+			if (one.success == 1)
+			{
+				printInformation(&one);
+			}
+
+			Assert::IsTrue(one.success == 1);
+		}
+
+		TEST_METHOD(TestMethod15)
+		{
+
+			char a[100] = "draw_line: 10 20 3.5 25 000000"; // некорректный параметр
+			struct Command one;
+
+			Parse(a, &one);
+			if (one.success == 1)
+			{
+				printInformation(&one);
+			}
+
+			Assert::IsTrue(one.success == 1);
+		}
+
+		TEST_METHOD(TestMethod16)
+		{
+
+			char a[100] = "draw_rectangle: 10 20 50 25 000000"; // правильная команда
+			struct Command one;
+
+			Parse(a, &one);
+			if (one.success == 1)
+			{
+				printInformation(&one);
+			}
+
+			Assert::IsTrue(one.success == 1);
+		}
+
+		TEST_METHOD(TestMethod17)
+		{
+
+			char a[100] = "drawrectangle: 10 20 50 25 000000"; // неправильное название команды
+			struct Command one; 
+
+			Parse(a, &one);
+			if (one.success == 1)
+			{
+				printInformation(&one);
+			}
+
+			Assert::IsTrue(one.success == 1);
+		}
+
+		TEST_METHOD(TestMethod18)
+		{
+
+			char a[100] = "draw_rectangle: 10 20 50 25 black"; // некорректный параметр
+			struct Command one;
+
+			Parse(a, &one);
+			if (one.success == 1)
+			{
+				printInformation(&one);
+			}
+
+			Assert::IsTrue(one.success == 1);
+		}
+
+		TEST_METHOD(TestMethod19)
+		{
+
+			char a[100] = "fill_rectangle: 10 20 50 25 000000"; // правильная команда
+			struct Command one;
+
+			Parse(a, &one);
+			if (one.success == 1)
+			{
+				printInformation(&one);
+			}
+
+			Assert::IsTrue(one.success == 1);
+		}
+
+		TEST_METHOD(TestMethod20)
+		{
+
+			char a[100] = "fillrectangle: 10 20 50 25 000000"; // неправильное название команды
+			struct Command one;
+
+			Parse(a, &one);
+			if (one.success == 1)
+			{
+				printInformation(&one);
+			}
+
+			Assert::IsTrue(one.success == 1);
+		}
+
+		TEST_METHOD(TestMethod21)
+		{
+
+			char a[100] = "fill_rectangle: 10 20 w 25 000000"; // некорректный параметр
+			struct Command one;
+
+			Parse(a, &one);
+			if (one.success == 1)
+			{
+				printInformation(&one);
+			}
+
+			Assert::IsTrue(one.success == 1);
+		}
+
+		TEST_METHOD(TestMethod22)
+		{
+
+			char a[100] = "draw_ellipse: 100 250 50 25 000000"; // правильная команда
+			struct Command one;
+
+			Parse(a, &one);
+			if (one.success == 1)
+			{
+				printInformation(&one);
+			}
+
+			Assert::IsTrue(one.success == 1);
+		}
+
+		TEST_METHOD(TestMethod23)
+		{
+
+			char a[100] = "ellipse: 10 20 50 25 000000"; // неправильное название команды
+			struct Command one;
+
+			Parse(a, &one);
+			if (one.success == 1)
+			{
+				printInformation(&one);
+			}
+
+			Assert::IsTrue(one.success == 1);
+		}
+
+		TEST_METHOD(TestMethod24)
+		{
+
+			char a[100] = "draw_ellipse: 150 200 35 r 111111"; // некорректный параметр
+			struct Command one;
+
+			Parse(a, &one);
+			if (one.success == 1)
+			{
+				printInformation(&one);
+			}
+
+			Assert::IsTrue(one.success == 1);
+		}
+
+		TEST_METHOD(TestMethod25)
+		{
+
+			char a[100] = "fill_ellipse: 30 150 30 25 b80b0b"; // правильная команда
+			struct Command one;
+
+			Parse(a, &one);
+			if (one.success == 1)
+			{
+				printInformation(&one);
+			}
+
+			Assert::IsTrue(one.success == 1);
+		}
+
+		TEST_METHOD(TestMethod26)
+		{
+
+			char a[100] = "fillellipse: 120 90 45 20 000000"; // неправильное название команды
+			struct Command one;
+
+			Parse(a, &one);
+			if (one.success == 1)
+			{
+				printInformation(&one);
+			}
+
+			Assert::IsTrue(one.success == 1);
+		}
+
+		TEST_METHOD(TestMethod27)
+		{
+
+			char a[100] = "fill_ellipse: 150 200 r35 20 111111"; // некорректный параметр
+			struct Command one;
+
+			Parse(a, &one);
+			if (one.success == 1)
+			{
+				printInformation(&one);
+			}
+
+			Assert::IsTrue(one.success == 1);
+		}
+
+	};
+}

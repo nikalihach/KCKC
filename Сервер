@@ -216,7 +216,7 @@ void printInformation(struct Command* com)
 
 }
 
-int main(int argc, char* argv[])
+int main()
 {
     setlocale(LC_ALL, "rus");
 	char buff[1024];

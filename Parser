@@ -30,11 +30,15 @@ int Сonverting(char* str )
     int num;
     char* end;
 
+ 
+
     lnum = strtol(str, &end, 10);        
     if (end == str)
     {
         cout << "ERROR: некорректное значение параметра" << endl;
+        
         return 9999999;
+        
     }
 
     if ((lnum < -32768) || (lnum > 32768))
@@ -42,6 +46,7 @@ int Сonverting(char* str )
         cout << "ERROR: значение параметра выходит за диапазон допустимых значений" << endl;
         return 9999999;
     }
+     
     
     num = (int)lnum;
     return num;
@@ -75,19 +80,29 @@ void Parse(char *buff, struct Command *com)
     int num;
     char* end;
     int error=0;
-  
+    
+   
+ 
     switch (k)
     {
     case 2:
             com->name = arr[0];
             
+          
             if (!HEX(arr[1]))
             {
                 cout << "ERROR: Неправильный параметр color" << endl;
                 error = 1;
+                com->success = 0;
             }
             if (error == 1)break;
-        
+            
+
+            if (isxdigit(000000) == 0)
+            {
+                cout<<"БЕГИ";
+            }
+
             num = strtol(arr[1], &end, 16);
           
             com->r = num / 0x10000;
@@ -101,16 +116,30 @@ void Parse(char *buff, struct Command *com)
     case 4:
         com->name = arr[0];
         
+        cout << arr[1] << endl;
+
         com->first = Сonverting(arr[1]);
-        if (com->first == 9999999)break;
+        if (com->first == 9999999)
+        {
+            error = 1;
+            com->success = 0;
+        }
+        if (error == 1) break;
        
         com->second = Сonverting(arr[2]);
-        if (com->second == 9999999)break;
+        if (com->second == 9999999)
+        {
+            error = 1;
+            com->success = 0;
+        }
+        if (error == 1) break;
+
             //color
         if (!HEX(arr[3]))
         {
             cout << "ERROR: Неправильный параметр color" << endl;
             error = 1;
+            com->success = 0;
         }
         if (error == 1)break;
 
@@ -128,22 +157,43 @@ void Parse(char *buff, struct Command *com)
         
         com->name = arr[0];
         com->first = Сonverting(arr[1]);
-        if (com->first == 9999999)break;
+        if (com->first == 9999999)
+        {
+            error = 1;
+            com->success = 0;
+        }
+        if (error == 1) break;
 
         com->second = Сonverting(arr[2]);
-        if (com->second == 9999999)break;
+        if (com->second == 9999999)
+        {
+            error = 1;
+            com->success = 0;
+        }
+        if (error == 1) break;
 
         com->third = Сonverting(arr[3]);
-        if (com->third == 9999999)break;
+        if (com->third == 9999999)
+        {
+            error = 1;
+            com->success = 0;
+        }
+        if (error == 1) break;
 
         com->fourth = Сonverting(arr[4]);
-        if (com->fourth == 9999999)break;
+        if (com->fourth == 9999999)
+        {
+            error = 1;
+            com->success = 0;
+        }
+        if (error == 1) break;
 
             //color
         if (!HEX(arr[5]))
         {
             cout << "ERROR: Неправильный параметр color" << endl;
             error = 1;
+            com->success = 0;
         }
         if (error == 1)break;
 

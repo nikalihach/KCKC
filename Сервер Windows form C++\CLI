@@ -176,7 +176,6 @@ namespace GraphServer {
 		}
 
 		String^ buffer;
-		int success;
 
 		void Server()
 		{
@@ -244,47 +243,38 @@ namespace GraphServer {
 				clear_display(com->r, com->g, com->b);
 			}
 
-			else if (com->name == "draw_pixel" && com->first != 9999999 && com->second != 9999999)
+			else if (com->name == "draw_pixel")
 			{
 				draw_pixel(com->first, com->second, com->r, com->g, com->b);
 			}
-			else if (com->name == "draw_line" && com->first != 9999999 && com->second != 9999999 && com->third != 9999999 && com->fourth != 9999999)
+			else if (com->name == "draw_line")
 			{
 				draw_line(com->first, com->second, com->third, com->fourth, com->r, com->g, com->b);
 			}
-			else if (com->name == "draw_rectangle" && com->first != 9999999 && com->second != 9999999 && com->third != 9999999 && com->fourth != 9999999)
+			else if (com->name == "draw_rectangle" )
 			{
 				draw_rectangle(com->first, com->second, com->third, com->fourth, com->r, com->g, com->b);
 			}
-			else if (com->name == "fill_rectangle" && com->first != 9999999 && com->second != 9999999 && com->third != 9999999 && com->fourth != 9999999)
+			else if (com->name == "fill_rectangle" )
 			{
 				fill_rectangle(com->first, com->second, com->third, com->fourth, com->r, com->g, com->b);
 			}
-			else if (com->name == "draw_ellipse" && com->first != 9999999 && com->second != 9999999 && com->third != 9999999 && com->fourth != 9999999)
+			else if (com->name == "draw_ellipse" )
 			{
 				draw_ellipse(com->first, com->second, com->third, com->fourth, com->r, com->g, com->b);
 			}
 
-			else if (com->name == "fill_ellipse" && com->first != 9999999 && com->second != 9999999 && com->third != 9999999 && com->fourth != 9999999)
+			else if (com->name == "fill_ellipse" )
 			{
 				fill_ellipse(com->first, com->second, com->third, com->fourth, com->r, com->g, com->b);
-			}
-
-			else
-			{
-				com->success = 0;
-				MessageBox::Show("Ошибка", "Неправильная команда", MessageBoxButtons::OK, MessageBoxIcon::Warning);
 			}
 
 		}
 
 	private: System::Void button1_Click(System::Object^ sender, System::EventArgs^ e) {
 
-		if (success == 1)
-		{
 			textBox1->Text = buffer;
 
-		}
 	}
 
 	};

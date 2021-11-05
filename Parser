@@ -88,6 +88,13 @@ void Parse(char *buff, struct Command *com)
     case 2:
             com->name = arr[0];
             
+             if (com->name != "clear_display")
+        {
+            cout << "ERROR: Неправильное название команды" << endl;
+            com->success = 0;
+            error = 1;
+        }
+        if (error == 1)break;
           
             if (!HEX(arr[1]))
             {
@@ -116,7 +123,13 @@ void Parse(char *buff, struct Command *com)
     case 4:
         com->name = arr[0];
         
-        cout << arr[1] << endl;
+        if (com->name != "draw_pixel")
+        {
+            cout << "ERROR: Неправильное название команды" << endl;
+            com->success = 0;
+            error = 1;
+        }
+        if (error == 1)break;
 
         com->first = Сonverting(arr[1]);
         if (com->first == 9999999)
@@ -156,6 +169,19 @@ void Parse(char *buff, struct Command *com)
     case 6:
         
         com->name = arr[0];
+        
+         if (com->name == "draw_line" || com->name == "draw_rectangle" || com->name == "fill_rectangle" || com->name == "draw_ellipse" || com->name == "fill_ellipse")
+        {
+           // 
+          
+        }
+        else{
+            cout << "ERROR: Неправильное название команды" << endl;
+            com->success = 0;
+            error = 1;
+        }
+        if (error == 1)break;
+        
         com->first = Сonverting(arr[1]);
         if (com->first == 9999999)
         {
@@ -222,33 +248,33 @@ void printInformation( struct Command *com)
         cout << "Принято" << endl;
     }
 
-    else if (com->name == "draw_pixel" && com->first != 9999999 && com->second != 9999999)
+    else if (com->name == "draw_pixel" )
     {
         cout << com->name << ":" << " " << com->first << " " << com->second << " " << "(" << com->r << ", " << com->g << ", " << com->b << ")" << endl;
         cout << "Принято" << endl;
     }
-    else if (com->name == "draw_line" && com->first != 9999999 && com->second != 9999999 && com->third != 9999999 && com->fourth != 9999999)
+    else if (com->name == "draw_line")
     {
         cout << com->name << ":" << " " << com->first << " " << com->second << " " << com->third << " " << com->fourth << " " << "(" << com->r << ", " << com->g << ", " << com->b << ")" << endl;
         cout << "Принято" << endl;
     }
-    else if (com->name == "draw_rectangle" && com->first != 9999999 && com->second != 9999999 && com->third != 9999999 && com->fourth != 9999999)
+    else if (com->name == "draw_rectangle")
     {
         cout << com->name << ":" << " " << com->first << " " << com->second << " " << com->third << " " << com->fourth << " " << "(" << com->r << ", " << com->g << ", " << com->b << ")" << endl;
         cout << "Принято" << endl;
     }
-    else if (com->name == "fill_rectangle" && com->first != 9999999 && com->second != 9999999 && com->third != 9999999 && com->fourth != 9999999)
+    else if (com->name == "fill_rectangle" )
     {
         cout << com->name << ":" << " " << com->first << " " << com->second << " " << com->third << " " << com->fourth << " " << "(" << com->r << ", " << com->g << ", " << com->b << ")" << endl;
         cout << "Принято" << endl;
     }
-    else if (com->name == "draw_ellipse" && com->first != 9999999 && com->second != 9999999 && com->third != 9999999 && com->fourth != 9999999)
+    else if (com->name == "draw_ellipse" )
     {
         cout << com->name << ":" << " " << com->first << " " << com->second << " " << com->third << " " << com->fourth << " " << "(" << com->r << ", " << com->g << ", " << com->b << ")" << endl;
         cout << "Принято" << endl;
     }
 
-    else if (com->name == "fill_ellipse" && com->first != 9999999 && com->second != 9999999 && com->third != 9999999 && com->fourth != 9999999)
+    else if (com->name == "fill_ellipse" )
     {
         cout << com->name << ":" << " " << com->first << " " << com->second << " " << com->third << " " << com->fourth << " " << "(" << com->r << ", " << com->g << ", " << com->b << ")" << endl;
         cout << "Принято" << endl;

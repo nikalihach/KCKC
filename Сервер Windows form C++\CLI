@@ -33,9 +33,10 @@ namespace GraphServer {
 			Thread^ ServerThread = gcnew Thread(gcnew ThreadStart(this, &MyForm::Server));
 
 			ServerThread->IsBackground = true;
-
 			ServerThread->Start();
-			Thread::Sleep(200);
+			
+			Thread::Sleep(20);
+
 		}
 
 	protected:
@@ -81,7 +82,7 @@ namespace GraphServer {
 			this->button1->Name = L"button1";
 			this->button1->Size = System::Drawing::Size(115, 37);
 			this->button1->TabIndex = 0;
-			this->button1->Text = L"Отобразить";
+			this->button1->Text = L"Отобразить\r\n команду";
 			this->button1->UseVisualStyleBackColor = false;
 			this->button1->Click += gcnew System::EventHandler(this, &MyForm::button1_Click);
 			// 
@@ -246,8 +247,11 @@ namespace GraphServer {
 				name = gcnew String(buffname);
 				success = one.success;
 
+				Drawing();
+			
 			}
 		}
+
 
 		void Drawing()
 		{
@@ -285,7 +289,7 @@ namespace GraphServer {
 			else
 			{
 				success = 0;
-				label1->Text = "Неправильная команда";
+				MessageBox::Show("Ошибка", "Неправильная команда", MessageBoxButtons::OK, MessageBoxIcon::Warning);
 
 			}
 
@@ -296,7 +300,6 @@ namespace GraphServer {
 		if (success == 1)
 		{
 			textBox1->Text = buffer;
-			Drawing();
 
 		}
 	}

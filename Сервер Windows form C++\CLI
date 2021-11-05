@@ -176,13 +176,7 @@ namespace GraphServer {
 		}
 
 		String^ buffer;
-		String^ name;
-		int first;
-		int second;
-		int third;
-		int fourth;
 		int success;
-		int r, g, b;
 
 		void Server()
 		{
@@ -280,7 +274,6 @@ namespace GraphServer {
 			{
 				com->success = 0;
 				MessageBox::Show("Ошибка", "Неправильная команда", MessageBoxButtons::OK, MessageBoxIcon::Warning);
-
 			}
 
 		}

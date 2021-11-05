@@ -234,61 +234,51 @@ namespace GraphServer {
 				struct Command one;
 
 				Parse(buff, &one);
-
-				first = one.first;
-				second = one.second;
-				third = one.third;
-				fourth = one.fourth;
-				r = one.r;
-				g = one.g;
-				b = one.b;
-				char buffname[20];
-				strcpy(buffname, one.name.c_str());
-				name = gcnew String(buffname);
 				success = one.success;
-
-				Drawing();
+				if (one.success == 1)
+				{
+					Drawing(&one);
+				}
 			
 			}
 		}
 
-
-		void Drawing()
+		void Drawing(struct Command* com)
 		{
-			if (name == "clear_display")
+			if (com->name == "clear_display")
 			{
-				clear_display(r, g, b);
+				clear_display(com->r, com->g, com->b);
 			}
 
-			else if (name == "draw_pixel" && first != 9999999 && second != 9999999)
+			else if (com->name == "draw_pixel" && com->first != 9999999 && com->second != 9999999)
 			{
-				draw_pixel(first, second, r, g, b);
+				draw_pixel(com->first, com->second, com->r, com->g, com->b);
 			}
-			else if (name == "draw_line" && first != 9999999 && second != 9999999 && third != 9999999 && fourth != 9999999)
+			else if (com->name == "draw_line" && com->first != 9999999 && com->second != 9999999 && com->third != 9999999 && com->fourth != 9999999)
 			{
-				draw_line(first, second, third, fourth, r, g, b);
+				draw_line(com->first, com->second, com->third, com->fourth, com->r, com->g, com->b);
 			}
-			else if (name == "draw_rectangle" && first != 9999999 && second != 9999999 && third != 9999999 && fourth != 9999999)
+			else if (com->name == "draw_rectangle" && com->first != 9999999 && com->second != 9999999 && com->third != 9999999 && com->fourth != 9999999)
 			{
-				draw_rectangle(first, second, third, fourth, r, g, b);
+				draw_rectangle(com->first, com->second, com->third, com->fourth, com->r, com->g, com->b);
 			}
-			else if (name == "fill_rectangle" && first != 9999999 && second != 9999999 && third != 9999999 && fourth != 9999999)
+			else if (com->name == "fill_rectangle" && com->first != 9999999 && com->second != 9999999 && com->third != 9999999 && com->fourth != 9999999)
 			{
-				fill_rectangle(first, second, third, fourth, r, g, b);
+				fill_rectangle(com->first, com->second, com->third, com->fourth, com->r, com->g, com->b);
 			}
-			else if (name == "draw_ellipse" && first != 9999999 && second != 9999999 && third != 9999999 && fourth != 9999999)
+			else if (com->name == "draw_ellipse" && com->first != 9999999 && com->second != 9999999 && com->third != 9999999 && com->fourth != 9999999)
 			{
-				draw_ellipse(first, second, third, fourth, r, g, b);
+				draw_ellipse(com->first, com->second, com->third, com->fourth, com->r, com->g, com->b);
 			}
 
-			else if (name == "fill_ellipse" && first != 9999999 && second != 9999999 && third != 9999999 && fourth != 9999999)
+			else if (com->name == "fill_ellipse" && com->first != 9999999 && com->second != 9999999 && com->third != 9999999 && com->fourth != 9999999)
 			{
-				fill_ellipse(first, second, third, fourth, r, g, b);
+				fill_ellipse(com->first, com->second, com->third, com->fourth, com->r, com->g, com->b);
 			}
 
 			else
 			{
-				success = 0;
+				com->success = 0;
 				MessageBox::Show("Ошибка", "Неправильная команда", MessageBoxButtons::OK, MessageBoxIcon::Warning);
 
 			}

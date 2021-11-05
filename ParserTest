@@ -2,7 +2,6 @@
 #include "pch.h"
 #include "CppUnitTest.h"
 #include "../KCKCKC/KCKCKC.cpp"
-#define _CRT_SECURE_NO_WARNINGS
 
 using namespace Microsoft::VisualStudio::CppUnitTestFramework;
 
@@ -24,7 +23,7 @@ namespace ParserTest
 				printInformation(&one);
 			}
 
-			Assert::IsTrue(one.success == 1);
+			Assert::IsTrue(one.success == 0);
 		}
 		
 		TEST_METHOD(TestMethod2)
@@ -39,7 +38,7 @@ namespace ParserTest
 				printInformation(&one);
 			}
 
-			Assert::IsTrue(one.success == 1);
+			Assert::IsTrue(one.success == 0);
 		}
 
 		TEST_METHOD(TestMethod3)
@@ -69,7 +68,7 @@ namespace ParserTest
 				printInformation(&one);
 			}
 
-			Assert::IsTrue(one.success == 1);
+			Assert::IsTrue(one.success == 0);
 		}
 
 		TEST_METHOD(TestMethod5)
@@ -84,7 +83,7 @@ namespace ParserTest
 				printInformation(&one);
 			}
 
-			Assert::IsTrue(one.success == 1);
+			Assert::IsTrue(one.success == 0);
 		}
 
 		TEST_METHOD(TestMethod6)
@@ -129,7 +128,7 @@ namespace ParserTest
 				printInformation(&one);
 			}
 
-			Assert::IsTrue(one.success == 1);
+			Assert::IsTrue(one.success == 0);
 		}
 
 		TEST_METHOD(TestMethod9)
@@ -144,7 +143,7 @@ namespace ParserTest
 				printInformation(&one);
 			}
 
-			Assert::IsTrue(one.success == 1);
+			Assert::IsTrue(one.success == 0);
 		}
 
 		TEST_METHOD(TestMethod10)
@@ -159,7 +158,7 @@ namespace ParserTest
 				printInformation(&one);
 			}
 
-			Assert::IsTrue(one.success == 1);
+			Assert::IsTrue(one.success == 0);
 		}
 
 		TEST_METHOD(TestMethod11)
@@ -174,7 +173,7 @@ namespace ParserTest
 				printInformation(&one);
 			}
 
-			Assert::IsTrue(one.success == 1);
+			Assert::IsTrue(one.success == 0);
 		}
 
 		TEST_METHOD(TestMethod12)
@@ -204,7 +203,7 @@ namespace ParserTest
 				printInformation(&one);
 			}
 
-			Assert::IsTrue(one.success == 1);
+			Assert::IsTrue(one.success == 0);
 		}
 
 		TEST_METHOD(TestMethod14)
@@ -234,7 +233,7 @@ namespace ParserTest
 				printInformation(&one);
 			}
 
-			Assert::IsTrue(one.success == 1);
+			Assert::IsTrue(one.success == 0);
 		}
 
 		TEST_METHOD(TestMethod16)
@@ -264,7 +263,7 @@ namespace ParserTest
 				printInformation(&one);
 			}
 
-			Assert::IsTrue(one.success == 1);
+			Assert::IsTrue(one.success == 0);
 		}
 
 		TEST_METHOD(TestMethod18)
@@ -279,7 +278,7 @@ namespace ParserTest
 				printInformation(&one);
 			}
 
-			Assert::IsTrue(one.success == 1);
+			Assert::IsTrue(one.success == 0);
 		}
 
 		TEST_METHOD(TestMethod19)
@@ -309,7 +308,7 @@ namespace ParserTest
 				printInformation(&one);
 			}
 
-			Assert::IsTrue(one.success == 1);
+			Assert::IsTrue(one.success == 0);
 		}
 
 		TEST_METHOD(TestMethod21)
@@ -324,7 +323,7 @@ namespace ParserTest
 				printInformation(&one);
 			}
 
-			Assert::IsTrue(one.success == 1);
+			Assert::IsTrue(one.success == 0);
 		}
 
 		TEST_METHOD(TestMethod22)
@@ -354,7 +353,7 @@ namespace ParserTest
 				printInformation(&one);
 			}
 
-			Assert::IsTrue(one.success == 1);
+			Assert::IsTrue(one.success == 0);
 		}
 
 		TEST_METHOD(TestMethod24)
@@ -369,7 +368,7 @@ namespace ParserTest
 				printInformation(&one);
 			}
 
-			Assert::IsTrue(one.success == 1);
+			Assert::IsTrue(one.success == 0);
 		}
 
 		TEST_METHOD(TestMethod25)
@@ -399,7 +398,7 @@ namespace ParserTest
 				printInformation(&one);
 			}
 
-			Assert::IsTrue(one.success == 1);
+			Assert::IsTrue(one.success == 0);
 		}
 
 		TEST_METHOD(TestMethod27)
@@ -414,7 +413,7 @@ namespace ParserTest
 				printInformation(&one);
 			}
 
-			Assert::IsTrue(one.success == 1);
+			Assert::IsTrue(one.success == 0);
 		}
 
 	};

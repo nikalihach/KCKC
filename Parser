@@ -103,12 +103,6 @@ void Parse(char *buff, struct Command *com)
                 com->success = 0;
             }
             if (error == 1)break;
-            
-
-            if (isxdigit(000000) == 0)
-            {
-                cout<<"БЕГИ";
-            }
 
             num = strtol(arr[1], &end, 16);
           

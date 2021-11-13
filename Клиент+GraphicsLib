@@ -7,6 +7,7 @@
 
 using namespace std;
 
+
 int main()
 {
 	
@@ -37,6 +38,7 @@ int main()
 		char Color[6];
 		int color;
 		int x0, x1, y0, y1, w, h, rx, ry;
+		int r,g,b;
 		
 		cout << endl;
 		cout << "Выберите команду для отправки:" << endl;
@@ -55,10 +57,11 @@ int main()
 			case 1:
 				
 				cout << "Подготовка команды 'fillScreen':"<<endl;
-				cout << "Введите параметр color:";
+				cout << "Введите параметр color (формат 0х0000):";
 				cin >> Color;
 				color = stoi(Color, 0, 16);
-
+				cout << color << endl;
+	
 				display.fillScreen(color);
 				break;
 
@@ -68,7 +71,7 @@ int main()
 				cin >> x0;
 				cout << "Введите парметр y0:";
 				cin >> y0;
-				cout << "Введите параметр color:";
+				cout << "Введите параметр color (формат 0х0000):";
 				cin >> Color;
 				color = stoi(Color, 0, 16);
 				display.drawPixel(x0, y0, color);
@@ -84,7 +87,7 @@ int main()
 				cin >> x1;
 				cout << "Введите парметр y1:";
 				cin >> y1;
-				cout << "Введите параметр color:";
+				cout << "Введите параметр color (формат 0х0000):";
 				cin >> Color;
 				color = stoi(Color, 0, 16);
 				display.drawLine(x0, y0, x1, y1, color);
@@ -100,7 +103,7 @@ int main()
 				cin >> w;
 				cout << "Введите парметр h:";
 				cin >> h;
-				cout << "Введите параметр color:";
+				cout << "Введите параметр color (формат 0х0000):";
 				cin >> Color;
 				color = stoi(Color, 0, 16);
 				display.drawRect(x0, y0, w, h, color);
@@ -116,7 +119,7 @@ int main()
 				cin >> w;
 				cout << "Введите парметр h:";
 				cin >> h;
-				cout << "Введите параметр color:";
+				cout << "Введите параметр color (формат 0х0000):";
 				cin >> Color;
 				color = stoi(Color, 0, 16);
 				display.fillRect(x0, y0, w, h, color);
@@ -132,7 +135,7 @@ int main()
 				cin >> rx;
 				cout << "Введите парметр ry:";
 				cin >> ry;
-				cout << "Введите параметр color:";
+				cout << "Введите параметр color (формат 0х0000):";
 				cin >> Color;
 				color = stoi(Color, 0, 16);
 				display.drawEllipse(x0, y0, rx, ry, color);
@@ -148,7 +151,7 @@ int main()
 				cin >> rx;
 				cout << "Введите парметр ry:";
 				cin >> ry;
-				cout << "Введите параметр color:";
+				cout << "Введите параметр color (формат 0х0000):";
 				cin >> Color;
 				color = stoi(Color, 0, 16);
 				display.fillEllipse(x0, y0, rx, ry, color);

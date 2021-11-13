@@ -15,6 +15,21 @@
 
 #include "GraphicsLib.h"
 
+
+int hexToRGB(uint16_t hexValue)
+{
+    unsigned r = (hexValue & 0xF800) >> 11;
+    unsigned g = (hexValue & 0x07E0) >> 5;
+    unsigned b = hexValue & 0x001F;
+
+    r = (r * 255) / 31;
+    g = (g * 255) / 63;
+    b = (b * 255) / 31;
+
+    return (r << 16) | (g << 8) | b;
+}
+
+
 class Display : public GraphicsLib
 {
 public:
@@ -46,49 +61,47 @@ public:
             }
     };
 
-    void fillScreen(uint_least32_t color) {
+    void fillScreen(uint_least16_t color) {
 
-        snprintf(buffer, buffer_length, "clear_display: %06x", color);
+        int hexcolor = hexToRGB(color);
+
+        snprintf(buffer, buffer_length, "clear_display: %06x", hexcolor);
         sendCommand(buffer);
     };
 
-    void drawPixel(int_least16_t x0, int_least16_t y0, uint_least32_t color) {
-        snprintf(buffer, buffer_length, "draw_pixel: %i %i %06x", x0, y0, color);
+    void drawPixel(int_least16_t x0, int_least16_t y0, uint_least16_t color) {
+        int hexcolor = hexToRGB(color);
+        snprintf(buffer, buffer_length, "draw_pixel: %i %i %06x", x0, y0, hexcolor);
         sendCommand(buffer);
     };
 
-    void drawLine(int_least16_t x0, int_least16_t y0, int_least16_t x1, int_least16_t y1, uint_least32_t color) {
-        snprintf(
-            buffer, buffer_length, "draw_line: %i %i %i %i %06x", x0, y0, x1, y1, color
-        );
+    void drawLine(int_least16_t x0, int_least16_t y0, int_least16_t x1, int_least16_t y1, uint_least16_t color) {
+        int hexcolor = hexToRGB(color);
+        snprintf(buffer, buffer_length, "draw_line: %i %i %i %i %06x", x0, y0, x1, y1, hexcolor);
         sendCommand(buffer);
     };
 
-    void drawRect(int_least16_t x0, int_least16_t y0, int_least16_t w, int_least16_t h, uint_least32_t color) {
-        snprintf(
-            buffer, buffer_length, "draw_rectangle: %i %i %i %i %06x", x0, y0, w, h, color
-        );
+    void drawRect(int_least16_t x0, int_least16_t y0, int_least16_t w, int_least16_t h, uint_least16_t color) {
+        int hexcolor = hexToRGB(color);
+        snprintf(  buffer, buffer_length, "draw_rectangle: %i %i %i %i %06x", x0, y0, w, h, hexcolor);
         sendCommand(buffer);
     };
 
-    void fillRect(int_least16_t x0, int_least16_t y0, int_least16_t w, int_least16_t h, uint_least32_t color) {
-        snprintf(
-            buffer, buffer_length, "fill_rectangle: %i %i %i %i %06x", x0, y0, w, h, color
-        );
+    void fillRect(int_least16_t x0, int_least16_t y0, int_least16_t w, int_least16_t h, uint_least16_t color) {
+        int hexcolor = hexToRGB(color);
+        snprintf(  buffer, buffer_length, "fill_rectangle: %i %i %i %i %06x", x0, y0, w, h, hexcolor);
         sendCommand(buffer);
     };
 
-    void drawEllipse(int_least16_t x0, int_least16_t y0, int_least16_t r_x, int_least16_t r_y, uint_least32_t color) {
-        snprintf(
-            buffer, buffer_length, "draw_ellipse: %i %i %i %i %06x", x0, y0, r_x, r_y, color
-        );
+    void drawEllipse(int_least16_t x0, int_least16_t y0, int_least16_t r_x, int_least16_t r_y, uint_least16_t color) {
+        int hexcolor = hexToRGB(color);
+        snprintf( buffer, buffer_length, "draw_ellipse: %i %i %i %i %06x", x0, y0, r_x, r_y, hexcolor);
         sendCommand(buffer);
     };
 
-    void fillEllipse(int_least16_t x0, int_least16_t y0, int_least16_t r_x, int_least16_t r_y, uint_least32_t color) {
-        snprintf(
-            buffer, buffer_length, "fill_ellipse: %i %i %i %i %06x", x0, y0, r_x, r_y, color
-        );
+    void fillEllipse(int_least16_t x0, int_least16_t y0, int_least16_t r_x, int_least16_t r_y, uint_least16_t color) {
+        int hexcolor = hexToRGB(color);
+        snprintf( buffer, buffer_length, "fill_ellipse: %i %i %i %i %06x", x0, y0, r_x, r_y, hexcolor);
         sendCommand(buffer);
     };
 

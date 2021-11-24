@@ -35,7 +35,7 @@ int main()
 	{
 		
 		int selection;
-		char Color[6];
+		char Color[4];
 		uint_least16_t color;
 		int x0, x1, y0, y1, w, h, rx, ry;
 		

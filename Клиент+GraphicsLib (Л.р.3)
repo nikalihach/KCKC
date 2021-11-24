@@ -38,7 +38,6 @@ int main()
 		char Color[6];
 		int color;
 		int x0, x1, y0, y1, w, h, rx, ry;
-		int r,g,b;
 		
 		cout << endl;
 		cout << "Выберите команду для отправки:" << endl;

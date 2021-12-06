@@ -1,0 +1,118 @@
+#define _CRT_SECURE_NO_WARNINGS
+
+#include "Display.h"
+
+#include <stdio.h>
+#include <iostream>
+#include <string.h>
+#include <string>
+#include <math.h>
+#include <ctime>
+
+
+using namespace std;
+
+const double PI = 3.141592653589793;
+
+int main()
+{
+
+	setlocale(LC_ALL, "RUS");
+	printf("Client\n");
+
+	char buff[1000];
+
+	if (WSAStartup(0x202, (WSADATA*)&buff[0]))
+	{
+		printf("WSAStartup error : % d \n", WSAGetLastError());
+	}
+
+	SOCKET my_sock = socket(AF_INET, SOCK_DGRAM, 0);
+	if (my_sock == INVALID_SOCKET)
+	{
+		printf("socket() error: % d \n", WSAGetLastError());
+		WSACleanup();
+	}
+
+	int width = 700;
+	int height = 500;
+
+	Display display = Display(width, height);
+
+int radiusClock = 280;
+int xCenterClock = 250;
+int yCenterClock = 170;
+ 
+ display.fillScreen(stoi("ffff", 0, 16));
+ display.drawEllipse(110, 30, radiusClock, radiusClock, 0000);
+ display.drawPixel(xCenterClock, yCenterClock, 0000);
+
+ int radiusNum = 130; 	
+ int radiusPoint;
+ for (int tm = 0; tm < 60; tm++) {
+
+	 if (tm % 5 == 0)
+	 {
+		 radiusPoint = 5;
+	 }
+	 else {
+		 radiusPoint = 2;
+	 } 
+
+	 int xPointM = xCenterClock + radiusNum * cos(-6 * tm * (PI / 180) + PI / 2);
+	 int yPointM = yCenterClock - radiusNum * sin(-6 * tm * (PI / 180) + PI / 2);
+	 display.drawEllipse(xPointM, yPointM, radiusPoint, radiusPoint, 0000);
+ }
+
+ 
+ int lengthSeconds = radiusNum - 10;
+ int lengthMinutes = radiusNum - 15;
+ int lengthHour = lengthMinutes / 1.5;
+
+ while (1)
+ {
+	 time_t now = time(0);
+	 char* dt = ctime(&now);
+	 cout << "The local date and time is: " << dt << endl;
+	 tm* ltm = localtime(&now);
+
+
+	 int t_sec = 6 * ltm->tm_sec;                          
+	 int t_min = 6 * (ltm->tm_min + (1 / 60) * ltm->tm_sec);
+	 int t_hour = 30 * (ltm->tm_hour + (1 / 60) * ltm->tm_min); 
+
+	 int xSecond = xCenterClock + lengthSeconds * cos(PI / 2 - t_sec * (PI / 180));
+	 int ySecond = yCenterClock - lengthSeconds * sin(PI / 2 - t_sec * (PI / 180));
+
+	 int xMinute = xCenterClock + lengthMinutes * cos(PI / 2 - t_min * (PI / 180));
+	 int yMinute = yCenterClock - lengthMinutes * sin(PI / 2 - t_min * (PI / 180));
+
+	 int xHour = xCenterClock + lengthHour * cos(PI / 2 - t_hour * (PI / 180));
+	 int yHour = yCenterClock - lengthHour * sin(PI / 2 - t_hour * (PI / 180));
+
+
+	 int bufft_sec = 6 * (ltm->tm_sec - 1);                          
+	 int bufft_min = 6 * ((ltm->tm_min - 1) + (1 / 60) * (ltm->tm_sec - 1));
+	 int bufft_hour = 30 * (ltm->tm_hour - 1 + (1 / 60) * (ltm->tm_min - 1)); 
+
+	 int buffxSecond = xCenterClock + lengthSeconds * cos(PI / 2 - bufft_sec * (PI / 180));
+	 int buffySecond = yCenterClock - lengthSeconds * sin(PI / 2 - bufft_sec * (PI / 180));
+
+	 int buffxMinute = xCenterClock + lengthMinutes * cos(PI / 2 - bufft_min * (PI / 180));
+	 int buffyMinute = yCenterClock - lengthMinutes * sin(PI / 2 - bufft_min * (PI / 180));
+
+	 int buffxHour = xCenterClock + lengthHour * cos(PI / 2 - bufft_hour * (PI / 180));
+	 int buffyHour = yCenterClock - lengthHour * sin(PI / 2 - bufft_hour * (PI / 180));
+
+
+	 display.drawLine(xCenterClock, yCenterClock, buffxSecond, buffySecond, stoi("FFFF", 0, 16));
+	 display.drawLine(xCenterClock, yCenterClock, buffxMinute, buffyMinute, stoi("FFFF", 0, 16));
+	 display.drawLine(xCenterClock, yCenterClock, buffxHour, buffyHour, stoi("FFFF", 0, 16));
+
+	 display.drawLine(xCenterClock, yCenterClock, xSecond, ySecond, stoi("F800", 0, 16));
+	 display.drawLine(xCenterClock, yCenterClock, xMinute, yMinute, stoi("0000", 0, 16));
+	 display.drawLine(xCenterClock, yCenterClock, xHour, yHour, stoi("0000", 0, 16));
+ }
+ 
+	return 0;
+}

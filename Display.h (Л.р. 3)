@@ -4,16 +4,16 @@
 #include <iostream>
 #include "stdio.h"
 #include <stdlib.h>
+#include <string>
 
 #define _WINSOCK_DEPRECATED_NO_WARNINGS
 #pragma comment(lib, "Ws2_32.lib")
 #include <winsock2.h>
 #include <windows.h>
-#define PORT 777
-#define SERVERADDR "127.0.0.1"
-
 
 #include "GraphicsLib.h"
+
+using namespace std;
 
 
 int hexToRGB(uint16_t hexValue)
@@ -33,7 +33,7 @@ int hexToRGB(uint16_t hexValue)
 class Display : public GraphicsLib
 {
 public:
-    Display(uint_least16_t w, uint_least16_t h) : GraphicsLib(w, h) 
+    Display(uint_least16_t w, uint_least16_t h, int PORT = 777, string SERVERADDR = "127.0.0.1") : GraphicsLib(w, h)
     
     {
         my_sock = socket(AF_INET, SOCK_DGRAM, 0);
@@ -48,10 +48,10 @@ public:
         dest_addr.sin_family = AF_INET;
         dest_addr.sin_port = htons(PORT);
 
-        if (inet_addr(SERVERADDR))
-            dest_addr.sin_addr.s_addr = inet_addr(SERVERADDR);
+        if (inet_addr(SERVERADDR.c_str()))
+            dest_addr.sin_addr.s_addr = inet_addr(SERVERADDR.c_str());
         else
-            if (hst = gethostbyname(SERVERADDR))
+            if (hst = gethostbyname(SERVERADDR.c_str()))
                 dest_addr.sin_addr.s_addr = ((unsigned long**)hst->h_addr_list)[0][0];
             else
             {

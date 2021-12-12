@@ -1,4 +1,0 @@
-﻿  Client_graphlib.cpp
-D:\Proect\KCKC\Client_graphlib\Client_graphlib\Display.h(135,52): warning C4305: инициализация: усечение из "int" в "const unsigned char"
-D:\Proect\KCKC\Client_graphlib\Client_graphlib\Display.h(135,48): warning C4309: инициализация: усечение константного значения
-  Client_graphlib.vcxproj -> D:\Proect\KCKC\Client_graphlib\Debug\Client_graphlib.exe

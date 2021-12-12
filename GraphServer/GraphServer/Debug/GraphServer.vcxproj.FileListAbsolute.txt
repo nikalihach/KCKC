@@ -1,0 +1,3 @@
+D:\Proect\KCKC\GraphServer\GraphServer\Debug\GraphServer.vcxprojAssemblyReference.cache
+D:\Proect\KCKC\GraphServer\GraphServer\Debug\GraphServer.MyForm.resources
+D:\Proect\KCKC\GraphServer\GraphServer\Debug\GraphServer.vcxproj.GenerateResource.cache

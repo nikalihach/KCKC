@@ -19,7 +19,7 @@ namespace GraphServer {
 	using namespace System::Threading;
 
 	/// <summary>
-	/// Сводка для MyForm
+	/// РЎРІРѕРґРєР° РґР»СЏ MyForm
 	/// </summary>
 	public ref class MyForm : public System::Windows::Forms::Form
 	{
@@ -28,7 +28,7 @@ namespace GraphServer {
 		{
 			InitializeComponent();
 			//
-			//TODO: добавьте код конструктора
+			//TODO: РґРѕР±Р°РІСЊС‚Рµ РєРѕРґ РєРѕРЅСЃС‚СЂСѓРєС‚РѕСЂР°
 			//
 
 			Thread^ ServerThread = gcnew Thread(gcnew ThreadStart(this, &MyForm::Server));
@@ -42,7 +42,7 @@ namespace GraphServer {
 
 	protected:
 		/// <summary>
-		/// Освободить все используемые ресурсы.
+		/// РћСЃРІРѕР±РѕРґРёС‚СЊ РІСЃРµ РёСЃРїРѕР»СЊР·СѓРµРјС‹Рµ СЂРµСЃСѓСЂСЃС‹.
 		/// </summary>
 		~MyForm()
 		{
@@ -55,23 +55,28 @@ namespace GraphServer {
 	protected:
 	private: System::Windows::Forms::Label^ label1;
 	private: System::Windows::Forms::TextBox^ textBox1;
+	private: System::Windows::Forms::PictureBox^ pictureBox1;
+
+
 
 	private:
 		/// <summary>
-		/// Обязательная переменная конструктора.
+		/// РћР±СЏР·Р°С‚РµР»СЊРЅР°СЏ РїРµСЂРµРјРµРЅРЅР°СЏ РєРѕРЅСЃС‚СЂСѓРєС‚РѕСЂР°.
 		/// </summary>
 		System::ComponentModel::Container^ components;
 
 #pragma region Windows Form Designer generated code
 		/// <summary>
-		/// Требуемый метод для поддержки конструктора — не изменяйте 
-		/// содержимое этого метода с помощью редактора кода.
+		/// РўСЂРµР±СѓРµРјС‹Р№ РјРµС‚РѕРґ РґР»СЏ РїРѕРґРґРµСЂР¶РєРё РєРѕРЅСЃС‚СЂСѓРєС‚РѕСЂР° вЂ” РЅРµ РёР·РјРµРЅСЏР№С‚Рµ 
+		/// СЃРѕРґРµСЂР¶РёРјРѕРµ СЌС‚РѕРіРѕ РјРµС‚РѕРґР° СЃ РїРѕРјРѕС‰СЊСЋ СЂРµРґР°РєС‚РѕСЂР° РєРѕРґР°.
 		/// </summary>
 		void InitializeComponent(void)
 		{
 			this->button1 = (gcnew System::Windows::Forms::Button());
 			this->label1 = (gcnew System::Windows::Forms::Label());
 			this->textBox1 = (gcnew System::Windows::Forms::TextBox());
+			this->pictureBox1 = (gcnew System::Windows::Forms::PictureBox());
+			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->pictureBox1))->BeginInit();
 			this->SuspendLayout();
 			// 
 			// button1
@@ -83,7 +88,7 @@ namespace GraphServer {
 			this->button1->Name = L"button1";
 			this->button1->Size = System::Drawing::Size(115, 37);
 			this->button1->TabIndex = 0;
-			this->button1->Text = L"Отобразить\r\n команду";
+			this->button1->Text = L"РћС‚РѕР±СЂР°Р·РёС‚СЊ\r\n РєРѕРјР°РЅРґСѓ";
 			this->button1->UseVisualStyleBackColor = false;
 			this->button1->Click += gcnew System::EventHandler(this, &MyForm::button1_Click);
 			// 
@@ -96,7 +101,7 @@ namespace GraphServer {
 			this->label1->Name = L"label1";
 			this->label1->Size = System::Drawing::Size(180, 22);
 			this->label1->TabIndex = 1;
-			this->label1->Text = L"Получена команда:";
+			this->label1->Text = L"РџРѕР»СѓС‡РµРЅР° РєРѕРјР°РЅРґР°:";
 			// 
 			// textBox1
 			// 
@@ -108,16 +113,26 @@ namespace GraphServer {
 			this->textBox1->Size = System::Drawing::Size(343, 25);
 			this->textBox1->TabIndex = 2;
 			// 
+			// pictureBox1
+			// 
+			this->pictureBox1->Location = System::Drawing::Point(177, 94);
+			this->pictureBox1->Name = L"pictureBox1";
+			this->pictureBox1->Size = System::Drawing::Size(343, 256);
+			this->pictureBox1->TabIndex = 3;
+			this->pictureBox1->TabStop = false;
+			// 
 			// MyForm
 			// 
 			this->AutoScaleDimensions = System::Drawing::SizeF(8, 16);
 			this->AutoScaleMode = System::Windows::Forms::AutoScaleMode::Font;
 			this->ClientSize = System::Drawing::Size(700, 500);
+			this->Controls->Add(this->pictureBox1);
 			this->Controls->Add(this->textBox1);
 			this->Controls->Add(this->label1);
 			this->Controls->Add(this->button1);
 			this->Name = L"MyForm";
 			this->Text = L"MyForm";
+			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->pictureBox1))->EndInit();
 			this->ResumeLayout(false);
 			this->PerformLayout();
 
@@ -143,6 +158,7 @@ namespace GraphServer {
 			Pen^ color = gcnew Pen(Color::FromArgb(r, g, b));
 			Graphics^ gr = this->CreateGraphics();
 			gr->DrawLine(color, x0, y0, x1, y1);
+			
 		}
 
 		void draw_rectangle(int x0, int y0, int w, int h, int r, int g, int b)
@@ -176,7 +192,7 @@ namespace GraphServer {
 			gr->FillEllipse(aBrush, x0, y0, rx, ry);
 		}
 
-		void draw_text(int x, int y, int r, int g, int b, int font_number, int lenght, char* text)
+		void draw_text(int x, int y, int r, int g, int b, int font_number, int size, char* text)
 		{
 
 			switch (font_number)
@@ -185,315 +201,315 @@ namespace GraphServer {
 
 				for (int i = 0; i < strlen(text); i++)
 				{
-					if (text[i] == 'А' || text[i] == 'а')
+					if (text[i] == 'Рђ' || text[i] == 'Р°')
 					{
-						draw_line(x, y, x, y + lenght, r, g, b);
-						draw_line(x, y, x + (lenght / 2), y, r, g, b);
-						draw_line(x + (lenght / 2), y, x + (lenght / 2), y + lenght, r, g, b);
-						draw_line(x, y + (lenght / 2), x + (lenght / 2), y + (lenght / 2), r, g, b);
-						x = x + (lenght / 2) + lenght / 2;
+						draw_line(x, y, x, y + size, r, g, b);
+						draw_line(x, y, x + (size / 2), y, r, g, b);
+						draw_line(x + (size / 2), y, x + (size / 2), y + size, r, g, b);
+						draw_line(x, y + (size / 2), x + (size / 2), y + (size / 2), r, g, b);
+						x = x + (size / 2) + size / 2;
 					}
 
-					if (text[i] == 'Б' || text[i] == 'б')
+					if (text[i] == 'Р‘' || text[i] == 'Р±')
 					{
-						draw_line(x, y, x, y + lenght, r, g, b);
-						draw_line(x, y, x + lenght / 2, y, r, g, b);
-						draw_line(x, y + lenght, x + lenght / 2, y + lenght, r, g, b);
-						draw_line(x + lenght / 2, y + lenght, x + lenght / 2, y + lenght / 2, r, g, b);
-						draw_line(x + lenght / 2, y + lenght / 2, x, y + lenght / 2, r, g, b);
-						x = x + (lenght / 2) + lenght / 2;
+						draw_line(x, y, x, y + size, r, g, b);
+						draw_line(x, y, x + size / 2, y, r, g, b);
+						draw_line(x, y + size, x + size / 2, y + size, r, g, b);
+						draw_line(x + size / 2, y + size, x + size / 2, y + size / 2, r, g, b);
+						draw_line(x + size / 2, y + size / 2, x, y + size / 2, r, g, b);
+						x = x + (size / 2) + size / 2;
 					}
 
-					if (text[i] == 'В' || text[i] == 'в')
+					if (text[i] == 'Р’' || text[i] == 'РІ')
 					{
-						draw_line(x, y, x, y + lenght, r, g, b);
-						draw_line(x, y, x + lenght / 2, y, r, g, b);
-						draw_line(x + lenght / 2, y, x + lenght / 2, y + lenght / 2, r, g, b);
-						draw_line(x + lenght / 2, y + lenght / 2, x, y + lenght / 2, r, g, b);
-						draw_line(x, y + lenght / 2, x + lenght * 0.75, y + lenght / 2, r, g, b);
-						draw_line(x + lenght * 0.75, y + lenght / 2, x + lenght * 0.75, y + lenght, r, g, b);
-						draw_line(x + lenght * 0.75, y + lenght, x, y + lenght, r, g, b);
-						x=x + lenght*0.7 + lenght / 2;
+						draw_line(x, y, x, y + size, r, g, b);
+						draw_line(x, y, x + size / 2, y, r, g, b);
+						draw_line(x + size / 2, y, x + size / 2, y + size / 2, r, g, b);
+						draw_line(x + size / 2, y + size / 2, x, y + size / 2, r, g, b);
+						draw_line(x, y + size / 2, x + size * 0.75, y + size / 2, r, g, b);
+						draw_line(x + size * 0.75, y + size / 2, x + size * 0.75, y + size, r, g, b);
+						draw_line(x + size * 0.75, y + size, x, y + size, r, g, b);
+						x=x + size*0.7 + size / 2;
 					}
 
-					if (text[i] == 'Г' || text[i] == 'г')
+					if (text[i] == 'Р“' || text[i] == 'Рі')
 					{
-						draw_line(x, y, x, y + lenght, r, g, b);
-						draw_line(x, y, x + lenght / 2, y, r, g, b);
-						x = x + (lenght / 2) + lenght / 2;
+						draw_line(x, y, x, y + size, r, g, b);
+						draw_line(x, y, x + size / 2, y, r, g, b);
+						x = x + (size / 2) + size / 2;
 					}
 
-					if (text[i] == 'Д' || text[i] == 'д')
+					if (text[i] == 'Р”' || text[i] == 'Рґ')
 					{
-						draw_line(x, y + lenght / 2, x, y + lenght, r, g, b);
-						draw_line(x, y + lenght / 2, x + lenght, y + lenght / 2, r, g, b);
-						draw_line(x + lenght, y + lenght / 2, x + lenght, y + lenght, r, g, b);
-						draw_line(x + lenght * 0.25, y + lenght / 2, x + lenght * 0.25, y, r, g, b);
-						draw_line(x + lenght * 0.25, y, x + lenght * 0.75, y, r, g, b);
-						draw_line(x + lenght * 0.75, y, x + lenght * 0.75, y + lenght / 2, r, g, b);
-						x = x + lenght * 0.75 + lenght / 2;
+						draw_line(x, y + size / 2, x, y + size, r, g, b);
+						draw_line(x, y + size / 2, x + size, y + size / 2, r, g, b);
+						draw_line(x + size, y + size / 2, x + size, y + size, r, g, b);
+						draw_line(x + size * 0.25, y + size / 2, x + size * 0.25, y, r, g, b);
+						draw_line(x + size * 0.25, y, x + size * 0.75, y, r, g, b);
+						draw_line(x + size * 0.75, y, x + size * 0.75, y + size / 2, r, g, b);
+						x = x + size * 0.75 + size / 2;
 					}
 
-					if (text[i] == 'Е' || text[i] == 'е')
+					if (text[i] == 'Р•' || text[i] == 'Рµ')
 					{
-						draw_line(x, y, x, y + lenght, r, g, b);
-						draw_line(x, y, x + lenght / 2, y, r, g, b);
-						draw_line(x, y + lenght / 2, x + lenght / 2, y + lenght / 2, r, g, b);
-						draw_line(x, y + lenght, x + lenght / 2, y + lenght, r, g, b);
-						x = x + lenght / 2 + lenght / 2;
+						draw_line(x, y, x, y + size, r, g, b);
+						draw_line(x, y, x + size / 2, y, r, g, b);
+						draw_line(x, y + size / 2, x + size / 2, y + size / 2, r, g, b);
+						draw_line(x, y + size, x + size / 2, y + size, r, g, b);
+						x = x + size / 2 + size / 2;
 					}
 
-					if (text[i] == 'Ё' || text[i] == 'ё')
+					if (text[i] == 'РЃ' || text[i] == 'С‘')
 					{
-						draw_line(x, y, x, y + lenght, r, g, b);
-						draw_line(x, y, x + lenght / 2, y, r, g, b);
-						draw_line(x, y + lenght / 2, x + lenght / 2, y + lenght / 2, r, g, b);
-						draw_line(x, y + lenght, x + lenght / 2, y + lenght, r, g, b);
-						draw_line(x + lenght * 0.15, y - lenght * 0.25, x + lenght * 0.15, y - lenght * 0.15, r, g, b);
-						draw_line(x + lenght * 0.45, y - lenght * 0.25, x + lenght * 0.45, y - lenght * 0.15, r, g, b);
-						x = x + lenght / 2 + lenght / 2;
+						draw_line(x, y, x, y + size, r, g, b);
+						draw_line(x, y, x + size / 2, y, r, g, b);
+						draw_line(x, y + size / 2, x + size / 2, y + size / 2, r, g, b);
+						draw_line(x, y + size, x + size / 2, y + size, r, g, b);
+						draw_line(x + size * 0.15, y - size * 0.25, x + size * 0.15, y - size * 0.15, r, g, b);
+						draw_line(x + size * 0.45, y - size * 0.25, x + size * 0.45, y - size * 0.15, r, g, b);
+						x = x + size / 2 + size / 2;
 					}
 
-					if (text[i] == 'Ж' || text[i] == 'ж')
+					if (text[i] == 'Р–' || text[i] == 'Р¶')
 					{
-						draw_line(x, y, x + lenght, y + lenght, r, g, b);
-						draw_line(x, y + lenght, x + lenght, y, r, g, b);
-						draw_line(x + lenght / 2, y, x + lenght / 2, y + lenght, r, g, b);
-						x = x + lenght*0.8 + lenght / 2;
+						draw_line(x, y, x + size, y + size, r, g, b);
+						draw_line(x, y + size, x + size, y, r, g, b);
+						draw_line(x + size / 2, y, x + size / 2, y + size, r, g, b);
+						x = x + size*0.8 + size / 2;
 					}
 
-					if (text[i] == 'З' || text[i] == 'з')
+					if (text[i] == 'Р—' || text[i] == 'Р·')
 					{
-						draw_line(x + lenght * 0.10, y, x + lenght / 2, y, r, g, b);
-						draw_line(x + lenght / 2, y, x + lenght / 2, y + lenght / 2, r, g, b);
-						draw_line(x + lenght * 0.25, y + lenght / 2, x + lenght * 0.75, y + lenght / 2, r, g, b);
-						draw_line(x + lenght * 0.75, y + lenght / 2, x + lenght * 0.75, y + lenght, r, g, b);
-						draw_line(x + lenght * 0.75, y + lenght, x, y + lenght, r, g, b);
-						x = x + lenght *0.75 + lenght / 2;
+						draw_line(x + size * 0.10, y, x + size / 2, y, r, g, b);
+						draw_line(x + size / 2, y, x + size / 2, y + size / 2, r, g, b);
+						draw_line(x + size * 0.25, y + size / 2, x + size * 0.75, y + size / 2, r, g, b);
+						draw_line(x + size * 0.75, y + size / 2, x + size * 0.75, y + size, r, g, b);
+						draw_line(x + size * 0.75, y + size, x, y + size, r, g, b);
+						x = x + size *0.75 + size / 2;
 					}
 
-					if (text[i] == 'И' || text[i] == 'и')
+					if (text[i] == 'Р' || text[i] == 'Рё')
 					{
-						draw_line(x, y, x, y + lenght, r, g, b);
-						draw_line(x, y + lenght, x + lenght / 2, y, r, g, b);
-						draw_line(x + lenght / 2, y, x + lenght / 2, y + lenght, r, g, b);
-						x = x + lenght / 2 + lenght / 2;
+						draw_line(x, y, x, y + size, r, g, b);
+						draw_line(x, y + size, x + size / 2, y, r, g, b);
+						draw_line(x + size / 2, y, x + size / 2, y + size, r, g, b);
+						x = x + size / 2 + size / 2;
 					}
 
-					if (text[i] == 'Й' || text[i] == 'й')
+					if (text[i] == 'Р™' || text[i] == 'Р№')
 					{
-						draw_line(x, y, x, y + lenght, r, g, b);
-						draw_line(x, y + lenght, x + lenght / 2, y, r, g, b);
-						draw_line(x + lenght / 2, y, x + lenght / 2, y + lenght, r, g, b);
-						draw_line(x + lenght * 0.20, y - lenght * 0.15, x + lenght * 0.30, y - lenght * 0.10, r, g, b);
-						x = x + lenght / 2 + lenght / 2;
+						draw_line(x, y, x, y + size, r, g, b);
+						draw_line(x, y + size, x + size / 2, y, r, g, b);
+						draw_line(x + size / 2, y, x + size / 2, y + size, r, g, b);
+						draw_line(x + size * 0.20, y - size * 0.15, x + size * 0.30, y - size * 0.10, r, g, b);
+						x = x + size / 2 + size / 2;
 					}
 
-					if (text[i] == 'К' || text[i] == 'к')
+					if (text[i] == 'Рљ' || text[i] == 'Рє')
 					{
-						draw_line(x, y, x, y + lenght, r, g, b);
-						draw_line(x, y + lenght / 2, x + lenght * 0.25, y + lenght / 2, r, g, b);
-						draw_line(x + lenght * 0.25, y + lenght / 2, x + lenght / 2, y, r, g, b);
-						draw_line(x + lenght * 0.25, y + lenght / 2, x + lenght / 2, y + lenght, r, g, b);
-						x = x + lenght / 2 + lenght / 2;
+						draw_line(x, y, x, y + size, r, g, b);
+						draw_line(x, y + size / 2, x + size * 0.25, y + size / 2, r, g, b);
+						draw_line(x + size * 0.25, y + size / 2, x + size / 2, y, r, g, b);
+						draw_line(x + size * 0.25, y + size / 2, x + size / 2, y + size, r, g, b);
+						x = x + size / 2 + size / 2;
 					}
 
-					if (text[i] == 'Л' || text[i] == 'л')
+					if (text[i] == 'Р›' || text[i] == 'Р»')
 					{
-						draw_line(x, y + lenght, x + lenght / 2, y, r, g, b);
-						draw_line(x + lenght / 2, y, x + lenght, y + lenght, r, g, b);
-						x = x + lenght  + lenght / 2;
+						draw_line(x, y + size, x + size / 2, y, r, g, b);
+						draw_line(x + size / 2, y, x + size, y + size, r, g, b);
+						x = x + size  + size / 2;
 					}
 
-					if (text[i] == 'М' || text[i] == 'м')
+					if (text[i] == 'Рњ' || text[i] == 'Рј')
 					{
-						draw_line(x, y, x, y + lenght, r, g, b);
-						draw_line(x, y, x + lenght / 2, y + lenght / 2, r, g, b);
-						draw_line(x + lenght / 2, y + lenght / 2, x + lenght, y, r, g, b);
-						draw_line(x + lenght, y, x + lenght, y + lenght, r, g, b);
-						x = x + lenght + lenght / 2;
+						draw_line(x, y, x, y + size, r, g, b);
+						draw_line(x, y, x + size / 2, y + size / 2, r, g, b);
+						draw_line(x + size / 2, y + size / 2, x + size, y, r, g, b);
+						draw_line(x + size, y, x + size, y + size, r, g, b);
+						x = x + size + size / 2;
 					}
 
-					if (text[i] == 'Н' || text[i] == 'н')
+					if (text[i] == 'Рќ' || text[i] == 'РЅ')
 					{
-						draw_line(x, y, x, y + lenght, r, g, b);
-						draw_line(x, y + lenght / 2, x + lenght / 2, y + lenght / 2, r, g, b);
-						draw_line(x + lenght / 2, y, x + lenght / 2, y + lenght, r, g, b);
-						x = x + lenght / 2 + lenght / 2;
+						draw_line(x, y, x, y + size, r, g, b);
+						draw_line(x, y + size / 2, x + size / 2, y + size / 2, r, g, b);
+						draw_line(x + size / 2, y, x + size / 2, y + size, r, g, b);
+						x = x + size / 2 + size / 2;
 					}
 
-					if (text[i] == 'О' || text[i] == 'о')
+					if (text[i] == 'Рћ' || text[i] == 'Рѕ')
 					{
-						draw_line(x, y, x, y + lenght, r, g, b);
-						draw_line(x, y, x + lenght / 2, y, r, g, b);
-						draw_line(x + lenght / 2, y, x + lenght / 2, y + lenght, r, g, b);
-						draw_line(x + lenght / 2, y + lenght, x, y + lenght, r, g, b);
-						x = x + lenght / 2 + lenght / 2;
+						draw_line(x, y, x, y + size, r, g, b);
+						draw_line(x, y, x + size / 2, y, r, g, b);
+						draw_line(x + size / 2, y, x + size / 2, y + size, r, g, b);
+						draw_line(x + size / 2, y + size, x, y + size, r, g, b);
+						x = x + size / 2 + size / 2;
 					}
 
-					if (text[i] == 'П' || text[i] == 'п')
+					if (text[i] == 'Рџ' || text[i] == 'Рї')
 					{
-						draw_line(x, y, x, y + lenght, r, g, b);
-						draw_line(x, y, x + lenght / 2, y, r, g, b);
-						draw_line(x + lenght / 2, y, x + lenght / 2, y + lenght, r, g, b);
-						x = x + lenght / 2 + lenght / 2;
+						draw_line(x, y, x, y + size, r, g, b);
+						draw_line(x, y, x + size / 2, y, r, g, b);
+						draw_line(x + size / 2, y, x + size / 2, y + size, r, g, b);
+						x = x + size / 2 + size / 2;
 					}
 
-					if (text[i] == 'Р' || text[i] == 'р')
+					if (text[i] == 'Р ' || text[i] == 'СЂ')
 					{
 
-						draw_line(x, y, x, y + lenght, r, g, b);
-						draw_line(x, y, x + lenght / 2, y, r, g, b);
-						draw_line(x + lenght / 2, y, x + lenght / 2, y + lenght / 2, r, g, b);
-						draw_line(x + lenght / 2, y + lenght / 2, x, y + lenght / 2, r, g, b);
-						x = x + lenght / 2 + lenght / 2;
+						draw_line(x, y, x, y + size, r, g, b);
+						draw_line(x, y, x + size / 2, y, r, g, b);
+						draw_line(x + size / 2, y, x + size / 2, y + size / 2, r, g, b);
+						draw_line(x + size / 2, y + size / 2, x, y + size / 2, r, g, b);
+						x = x + size / 2 + size / 2;
 
 					}
 
-					if (text[i] == 'С' || text[i] == 'с')
+					if (text[i] == 'РЎ' || text[i] == 'СЃ')
 					{
-						draw_line(x, y, x, y + lenght, r, g, b);
-						draw_line(x, y, x + lenght / 2, y, r, g, b);
-						draw_line(x + lenght / 2, y, x + lenght / 2, y + lenght * 0.20, r, g, b);
-						draw_line(x, y + lenght, x + lenght / 2, y + lenght, r, g, b);
-						draw_line(x + lenght / 2, y + lenght, x + lenght / 2, y + lenght * 0.80, r, g, b);
-						x = x + lenght / 2 + lenght / 2;
+						draw_line(x, y, x, y + size, r, g, b);
+						draw_line(x, y, x + size / 2, y, r, g, b);
+						draw_line(x + size / 2, y, x + size / 2, y + size * 0.20, r, g, b);
+						draw_line(x, y + size, x + size / 2, y + size, r, g, b);
+						draw_line(x + size / 2, y + size, x + size / 2, y + size * 0.80, r, g, b);
+						x = x + size / 2 + size / 2;
 					}
 
-					if (text[i] == 'Т' || text[i] == 'т')
+					if (text[i] == 'Рў' || text[i] == 'С‚')
 					{
-						draw_line(x, y, x + lenght * 0.8, y, r, g, b);
-						draw_line(x + lenght * 0.4, y, x + lenght * 0.4, y + lenght, r, g, b);
-						x = x + lenght *0.8 + lenght / 2;
+						draw_line(x, y, x + size * 0.8, y, r, g, b);
+						draw_line(x + size * 0.4, y, x + size * 0.4, y + size, r, g, b);
+						x = x + size *0.8 + size / 2;
 					}
 
-					if (text[i] == 'У' || text[i] == 'у')
+					if (text[i] == 'РЈ' || text[i] == 'Сѓ')
 					{
-						draw_line(x, y, x + lenght * 0.4, y + lenght / 2, r, g, b);
-						draw_line(x + lenght * 0.4, y + lenght / 2, x + lenght * 0.8, y, r, g, b);
-						draw_line(x + lenght * 0.4, y + lenght / 2, x + lenght * 0.4, y + lenght, r, g, b);
-						x = x + lenght * 0.8 + lenght / 2;
+						draw_line(x, y, x + size * 0.4, y + size / 2, r, g, b);
+						draw_line(x + size * 0.4, y + size / 2, x + size * 0.8, y, r, g, b);
+						draw_line(x + size * 0.4, y + size / 2, x + size * 0.4, y + size, r, g, b);
+						x = x + size * 0.8 + size / 2;
 					}
 
-					if (text[i] == 'Ф' || text[i] == 'ф')
+					if (text[i] == 'Р¤' || text[i] == 'С„')
 					{
-						draw_line(x, y, x, y + lenght / 2, r, g, b);
-						draw_line(x, y, x + lenght * 0.8, y, r, g, b);
-						draw_line(x + lenght * 0.8, y, x + lenght * 0.8, y + lenght / 2, r, g, b);
-						draw_line(x + lenght * 0.8, y + lenght / 2, x, y + lenght / 2, r, g, b);
-						draw_line(x + lenght * 0.4, y, x + lenght * 0.4, y + lenght, r, g, b);
-						x = x + lenght * 0.8 + lenght / 2;
+						draw_line(x, y, x, y + size / 2, r, g, b);
+						draw_line(x, y, x + size * 0.8, y, r, g, b);
+						draw_line(x + size * 0.8, y, x + size * 0.8, y + size / 2, r, g, b);
+						draw_line(x + size * 0.8, y + size / 2, x, y + size / 2, r, g, b);
+						draw_line(x + size * 0.4, y, x + size * 0.4, y + size, r, g, b);
+						x = x + size * 0.8 + size / 2;
 					}
 
-					if (text[i] == 'Х' || text[i] == 'х')
+					if (text[i] == 'РҐ' || text[i] == 'С…')
 					{
-						draw_line(x, y, x + lenght * 0.8, y + lenght, r, g, b);
-						draw_line(x + lenght * 0.8, y, x, y + lenght, r, g, b);
-						x = x + lenght * 0.8 + lenght / 2;
+						draw_line(x, y, x + size * 0.8, y + size, r, g, b);
+						draw_line(x + size * 0.8, y, x, y + size, r, g, b);
+						x = x + size * 0.8 + size / 2;
 					}
 
-					if (text[i] == 'Ц' || text[i] == 'ц')
+					if (text[i] == 'Р¦' || text[i] == 'С†')
 					{
-						draw_line(x, y, x, y + lenght, r, g, b);
-						draw_line(x, y + lenght, x + lenght / 2, y + lenght, r, g, b);
-						draw_line(x + lenght / 2, y + lenght, x + lenght / 2, y, r, g, b);
-						draw_line(x, y + lenght, x + lenght * 0.7, y + lenght, r, g, b);
-						draw_line(x + lenght * 0.7, y + lenght, x + lenght * 0.7, y + lenght * 1.2, r, g, b);
-						x = x + lenght * 0.6 + lenght / 2;
+						draw_line(x, y, x, y + size, r, g, b);
+						draw_line(x, y + size, x + size / 2, y + size, r, g, b);
+						draw_line(x + size / 2, y + size, x + size / 2, y, r, g, b);
+						draw_line(x, y + size, x + size * 0.7, y + size, r, g, b);
+						draw_line(x + size * 0.7, y + size, x + size * 0.7, y + size * 1.2, r, g, b);
+						x = x + size * 0.6 + size / 2;
 					}
 
-					if (text[i] == 'Ч' || text[i] == 'ч')
+					if (text[i] == 'Р§' || text[i] == 'С‡')
 					{
-						draw_line(x, y, x, y + lenght / 2, r, g, b);
-						draw_line(x, y + lenght / 2, x + lenght / 2, y + lenght / 2, r, g, b);
-						draw_line(x + lenght / 2, y, x + lenght / 2, y + lenght, r, g, b);
-						x = x + lenght / 2 + lenght / 2;
+						draw_line(x, y, x, y + size / 2, r, g, b);
+						draw_line(x, y + size / 2, x + size / 2, y + size / 2, r, g, b);
+						draw_line(x + size / 2, y, x + size / 2, y + size, r, g, b);
+						x = x + size / 2 + size / 2;
 					}
 
-					if (text[i] == 'Ш' || text[i] == 'ш')
+					if (text[i] == 'РЁ' || text[i] == 'С€')
 					{
-						draw_line(x, y, x, y + lenght, r, g, b);
-						draw_line(x + lenght * 0.4, y, x + lenght * 0.4, y + lenght, r, g, b);
-						draw_line(x + lenght * 0.8, y, x + lenght * 0.8, y + lenght, r, g, b);
-						draw_line(x, y + lenght, x + lenght * 0.8, y + lenght, r, g, b);
-						x = x + lenght * 0.8 + lenght / 2;
+						draw_line(x, y, x, y + size, r, g, b);
+						draw_line(x + size * 0.4, y, x + size * 0.4, y + size, r, g, b);
+						draw_line(x + size * 0.8, y, x + size * 0.8, y + size, r, g, b);
+						draw_line(x, y + size, x + size * 0.8, y + size, r, g, b);
+						x = x + size * 0.8 + size / 2;
 					}
 
-					if (text[i] == 'Щ' || text[i] == 'щ')
+					if (text[i] == 'Р©' || text[i] == 'С‰')
 					{
-						draw_line(x, y, x, y + lenght, r, g, b);
-						draw_line(x + lenght * 0.4, y, x + lenght * 0.4, y + lenght, r, g, b);
-						draw_line(x + lenght * 0.8, y, x + lenght * 0.8, y + lenght, r, g, b);
-						draw_line(x, y + lenght, x + lenght * 0.8, y + lenght, r, g, b);
-						draw_line(x + lenght * 0.8, y + lenght, x + lenght, y + lenght, r, g, b);
-						draw_line(x + lenght, y + lenght, x + lenght, y + lenght * 1.1, r, g, b);
-						x = x + lenght * 0.8 + lenght / 2;
+						draw_line(x, y, x, y + size, r, g, b);
+						draw_line(x + size * 0.4, y, x + size * 0.4, y + size, r, g, b);
+						draw_line(x + size * 0.8, y, x + size * 0.8, y + size, r, g, b);
+						draw_line(x, y + size, x + size * 0.8, y + size, r, g, b);
+						draw_line(x + size * 0.8, y + size, x + size, y + size, r, g, b);
+						draw_line(x + size, y + size, x + size, y + size * 1.1, r, g, b);
+						x = x + size * 0.8 + size / 2;
 					}
 
-					if (text[i] == 'Ъ' || text[i] == 'ъ')
+					if (text[i] == 'РЄ' || text[i] == 'СЉ')
 					{
-						draw_line(x, y, x + lenght * 0.4, y, r, g, b);
-						draw_line(x + lenght * 0.4, y, x + lenght * 0.4, y + lenght, r, g, b);
-						draw_line(x + lenght * 0.4, y + lenght, x + lenght * 0.8, y + lenght, r, g, b);
-						draw_line(x + lenght * 0.8, y + lenght, x + lenght * 0.8, y + lenght / 2, r, g, b);
-						draw_line(x + lenght * 0.8, y + lenght / 2, x + lenght * 0.4, y + lenght / 2, r, g, b);
-						x = x + lenght * 0.8 + lenght / 2;
+						draw_line(x, y, x + size * 0.4, y, r, g, b);
+						draw_line(x + size * 0.4, y, x + size * 0.4, y + size, r, g, b);
+						draw_line(x + size * 0.4, y + size, x + size * 0.8, y + size, r, g, b);
+						draw_line(x + size * 0.8, y + size, x + size * 0.8, y + size / 2, r, g, b);
+						draw_line(x + size * 0.8, y + size / 2, x + size * 0.4, y + size / 2, r, g, b);
+						x = x + size * 0.8 + size / 2;
 					}
 
-					if (text[i] == 'Ы' || text[i] == 'ы')
+					if (text[i] == 'Р«' || text[i] == 'С‹')
 					{
-						draw_line(x, y, x, y + lenght, r, g, b);
-						draw_line(x, y + lenght / 2, x + lenght * 0.4, y + lenght / 2, r, g, b);
-						draw_line(x, y + lenght, x + lenght * 0.4, y + lenght, r, g, b);
-						draw_line(x + lenght * 0.4, y + lenght / 2, x + lenght * 0.4, y + lenght, r, g, b);
-						draw_line(x + lenght * 0.6, y, x + lenght * 0.6, y + lenght, r, g, b);
-						x = x + lenght / 2 + lenght / 2;
+						draw_line(x, y, x, y + size, r, g, b);
+						draw_line(x, y + size / 2, x + size * 0.4, y + size / 2, r, g, b);
+						draw_line(x, y + size, x + size * 0.4, y + size, r, g, b);
+						draw_line(x + size * 0.4, y + size / 2, x + size * 0.4, y + size, r, g, b);
+						draw_line(x + size * 0.6, y, x + size * 0.6, y + size, r, g, b);
+						x = x + size / 2 + size / 2;
 					}
 
-					if (text[i] == 'Ь' || text[i] == 'ь')
+					if (text[i] == 'Р¬' || text[i] == 'СЊ')
 					{
-						draw_line(x, y, x, y + lenght, r, g, b);
-						draw_line(x, y + lenght / 2, x + lenght * 0.4, y + lenght / 2, r, g, b);
-						draw_line(x, y + lenght, x + lenght * 0.4, y + lenght, r, g, b);
-						draw_line(x + lenght * 0.4, y + lenght / 2, x + lenght * 0.4, y + lenght, r, g, b);
-						x = x + lenght / 2 + lenght / 2;
+						draw_line(x, y, x, y + size, r, g, b);
+						draw_line(x, y + size / 2, x + size * 0.4, y + size / 2, r, g, b);
+						draw_line(x, y + size, x + size * 0.4, y + size, r, g, b);
+						draw_line(x + size * 0.4, y + size / 2, x + size * 0.4, y + size, r, g, b);
+						x = x + size / 2 + size / 2;
 					}
 
-					if (text[i] == 'Э' || text[i] == 'э')
+					if (text[i] == 'Р­' || text[i] == 'СЌ')
 					{
-						draw_line(x, y, x + lenght / 2, y, r, g, b);
-						draw_line(x + lenght / 2, y, x + lenght / 2, y + lenght, r, g, b);
-						draw_line(x + lenght / 2, y + lenght, x, y + lenght, r, g, b);
-						draw_line(x + lenght / 2, y + lenght / 2, x, y + lenght / 2, r, g, b);
-						x = x + lenght / 2 + lenght / 2;
+						draw_line(x, y, x + size / 2, y, r, g, b);
+						draw_line(x + size / 2, y, x + size / 2, y + size, r, g, b);
+						draw_line(x + size / 2, y + size, x, y + size, r, g, b);
+						draw_line(x + size / 2, y + size / 2, x, y + size / 2, r, g, b);
+						x = x + size / 2 + size / 2;
 					}
 
-					if (text[i] == 'Ю' || text[i] == 'ю')
+					if (text[i] == 'Р®' || text[i] == 'СЋ')
 					{
-						draw_line(x, y, x, y + lenght, r, g, b);
-						draw_line(x, y + lenght / 2, x + lenght * 0.4, y + lenght / 2, r, g, b);
-						draw_line(x + lenght * 0.4, y, x + lenght * 0.4, y + lenght, r, g, b);
-						draw_line(x + lenght * 0.8, y, x + lenght * 0.8, y + lenght, r, g, b);
-						draw_line(x + lenght * 0.4, y, x + lenght * 0.8, y, r, g, b);
-						draw_line(x + lenght * 0.4, y + lenght, x + lenght * 0.8, y + lenght, r, g, b);
-						x = x + lenght * 0.8 + lenght / 2;
+						draw_line(x, y, x, y + size, r, g, b);
+						draw_line(x, y + size / 2, x + size * 0.4, y + size / 2, r, g, b);
+						draw_line(x + size * 0.4, y, x + size * 0.4, y + size, r, g, b);
+						draw_line(x + size * 0.8, y, x + size * 0.8, y + size, r, g, b);
+						draw_line(x + size * 0.4, y, x + size * 0.8, y, r, g, b);
+						draw_line(x + size * 0.4, y + size, x + size * 0.8, y + size, r, g, b);
+						x = x + size * 0.8 + size / 2;
 					}
 
 
-					if (text[i] == 'Я' || text[i] == 'я')
+					if (text[i] == 'РЇ' || text[i] == 'СЏ')
 					{
-						draw_line(x + lenght / 2, y, x + lenght / 2, y + lenght, r, g, b);
-						draw_line(x, y, x + lenght / 2, y, r, g, b);
-						draw_line(x, y, x, y + lenght / 2, r, g, b);
-						draw_line(x, y + lenght / 2, x + lenght / 2, y + lenght / 2, r, g, b);
-						draw_line(x + lenght / 2, y + lenght / 2, x, y + lenght, r, g, b);
-						x = x + lenght / 2 + lenght / 2;
+						draw_line(x + size / 2, y, x + size / 2, y + size, r, g, b);
+						draw_line(x, y, x + size / 2, y, r, g, b);
+						draw_line(x, y, x, y + size / 2, r, g, b);
+						draw_line(x, y + size / 2, x + size / 2, y + size / 2, r, g, b);
+						draw_line(x + size / 2, y + size / 2, x, y + size, r, g, b);
+						x = x + size / 2 + size / 2;
 					}
 
 					if (text[i] == '_' )
 					{
 						
-						x = x + 1.5* lenght;
+						x = x + 1.5* size;
 					}
 				}
 
@@ -503,314 +519,314 @@ namespace GraphServer {
 
 				for (int i = 0; i < strlen(text); i++)
 				{
-					if (text[i] == 'А' || text[i] == 'а')
+					if (text[i] == 'Рђ' || text[i] == 'Р°')
 					{
 
-						draw_line(x, y + lenght, x + lenght / 3, y, r, g, b);
-						draw_line(x + lenght / 3, y, x + lenght / 2, y + lenght, r, g, b);
-						draw_line(x, y + lenght / 2, x + lenght / 2, y + lenght / 2, r, g, b);
+						draw_line(x, y + size, x + size / 3, y, r, g, b);
+						draw_line(x + size / 3, y, x + size / 2, y + size, r, g, b);
+						draw_line(x, y + size / 2, x + size / 2, y + size / 2, r, g, b);
 
-						x = x + (lenght / 2) + lenght / 2;
+						x = x + (size / 2) + size / 2;
 					}
-					if (text[i] == 'Б' || text[i] == 'б')
+					if (text[i] == 'Р‘' || text[i] == 'Р±')
 					{
-						draw_line(x, y, x, y + lenght, r, g, b);
-						draw_line(x, y, x + lenght / 2, y, r, g, b);
-						draw_line(x, y + lenght / 2, x + lenght / 2, y + lenght * 0.75, r, g, b);
-						draw_line(x, y + lenght, x + lenght / 2, y + lenght * 0.75, r, g, b);
-						x = x + (lenght / 2) + lenght / 2;
-					}
-
-					if (text[i] == 'В' || text[i] == 'в')
-					{
-						draw_line(x, y, x, y + lenght, r, g, b);
-						draw_line(x, y, x + lenght / 2, y + lenght * 0.25, r, g, b);
-						draw_line(x + lenght / 2, y + lenght * 0.25, x, y + lenght / 2, r, g, b);
-						draw_line(x, y + lenght / 2, x + lenght / 2, y + lenght * 0.75, r, g, b);
-						draw_line(x + lenght / 2, y + lenght * 0.75, x, y + lenght, r, g, b);
-						x = x + (lenght / 2) + lenght / 2;
+						draw_line(x, y, x, y + size, r, g, b);
+						draw_line(x, y, x + size / 2, y, r, g, b);
+						draw_line(x, y + size / 2, x + size / 2, y + size * 0.75, r, g, b);
+						draw_line(x, y + size, x + size / 2, y + size * 0.75, r, g, b);
+						x = x + (size / 2) + size / 2;
 					}
 
-					if (text[i] == 'Г' || text[i] == 'г')
+					if (text[i] == 'Р’' || text[i] == 'РІ')
 					{
-						draw_line(x, y, x, y + lenght, r, g, b);
-						draw_line(x, y, x + lenght / 2, y, r, g, b);
-						x = x + (lenght / 2) + lenght / 2;
+						draw_line(x, y, x, y + size, r, g, b);
+						draw_line(x, y, x + size / 2, y + size * 0.25, r, g, b);
+						draw_line(x + size / 2, y + size * 0.25, x, y + size / 2, r, g, b);
+						draw_line(x, y + size / 2, x + size / 2, y + size * 0.75, r, g, b);
+						draw_line(x + size / 2, y + size * 0.75, x, y + size, r, g, b);
+						x = x + (size / 2) + size / 2;
 					}
 
-					if (text[i] == 'Д' || text[i] == 'д')
+					if (text[i] == 'Р“' || text[i] == 'Рі')
 					{
-						draw_line(x, y + lenght / 2, x, y + lenght, r, g, b);
-						draw_line(x, y + lenght / 2, x + lenght, y + lenght / 2, r, g, b);
-						draw_line(x + lenght, y + lenght / 2, x + lenght, y + lenght, r, g, b);
-						draw_line(x + lenght * 0.25, y + lenght / 2, x + lenght / 2, y, r, g, b);
-						draw_line(x + lenght / 2, y, x + lenght * 0.75, y + lenght / 2, r, g, b);
-						x = x + lenght + lenght / 2;
+						draw_line(x, y, x, y + size, r, g, b);
+						draw_line(x, y, x + size / 2, y, r, g, b);
+						x = x + (size / 2) + size / 2;
 					}
 
-					if (text[i] == 'Е' || text[i] == 'е')
+					if (text[i] == 'Р”' || text[i] == 'Рґ')
 					{
-						draw_line(x, y, x, y + lenght, r, g, b);
-						draw_line(x, y, x + lenght / 2, y + lenght * 0.25, r, g, b);
-						draw_line(x, y + lenght / 2, x + lenght / 2, y + lenght / 2, r, g, b);
-						draw_line(x, y + lenght, x + lenght / 2, y + lenght * 0.75, r, g, b);
-						x = x + lenght / 2 + lenght / 2;
+						draw_line(x, y + size / 2, x, y + size, r, g, b);
+						draw_line(x, y + size / 2, x + size, y + size / 2, r, g, b);
+						draw_line(x + size, y + size / 2, x + size, y + size, r, g, b);
+						draw_line(x + size * 0.25, y + size / 2, x + size / 2, y, r, g, b);
+						draw_line(x + size / 2, y, x + size * 0.75, y + size / 2, r, g, b);
+						x = x + size + size / 2;
 					}
 
-					if (text[i] == 'Ё' || text[i] == 'ё')
+					if (text[i] == 'Р•' || text[i] == 'Рµ')
 					{
-						draw_line(x, y, x, y + lenght, r, g, b);
-						draw_line(x, y, x + lenght / 2, y + lenght * 0.25, r, g, b);
-						draw_line(x, y + lenght / 2, x + lenght / 2, y + lenght / 2, r, g, b);
-						draw_line(x, y + lenght, x + lenght / 2, y + lenght * 0.75, r, g, b);
-						draw_line(x + lenght * 0.15, y - lenght * 0.25, x + lenght * 0.15, y - lenght * 0.15, r, g, b);
-						draw_line(x + lenght * 0.45, y - lenght * 0.25, x + lenght * 0.45, y - lenght * 0.15, r, g, b);
-						x = x + lenght / 2 + lenght / 2;
+						draw_line(x, y, x, y + size, r, g, b);
+						draw_line(x, y, x + size / 2, y + size * 0.25, r, g, b);
+						draw_line(x, y + size / 2, x + size / 2, y + size / 2, r, g, b);
+						draw_line(x, y + size, x + size / 2, y + size * 0.75, r, g, b);
+						x = x + size / 2 + size / 2;
 					}
 
-					if (text[i] == 'Ж' || text[i] == 'ж')
+					if (text[i] == 'РЃ' || text[i] == 'С‘')
 					{
-						draw_line(x, y, x + lenght, y + lenght, r, g, b);
-						draw_line(x, y + lenght, x + lenght, y, r, g, b);
-						draw_line(x + lenght / 2, y + lenght * 0.10, x + lenght / 2, y + lenght * 0.9, r, g, b);
-						x = x + lenght + lenght / 2;
+						draw_line(x, y, x, y + size, r, g, b);
+						draw_line(x, y, x + size / 2, y + size * 0.25, r, g, b);
+						draw_line(x, y + size / 2, x + size / 2, y + size / 2, r, g, b);
+						draw_line(x, y + size, x + size / 2, y + size * 0.75, r, g, b);
+						draw_line(x + size * 0.15, y - size * 0.25, x + size * 0.15, y - size * 0.15, r, g, b);
+						draw_line(x + size * 0.45, y - size * 0.25, x + size * 0.45, y - size * 0.15, r, g, b);
+						x = x + size / 2 + size / 2;
 					}
 
-					if (text[i] == 'З' || text[i] == 'з')
+					if (text[i] == 'Р–' || text[i] == 'Р¶')
 					{
-						draw_line(x + lenght * 0.10, y, x + lenght / 2, y, r, g, b);
-						draw_line(x + lenght / 2, y, x + lenght / 2, y + lenght / 2, r, g, b);
-						draw_line(x + lenght * 0.25, y + lenght / 2, x + lenght * 0.75, y + lenght / 2, r, g, b);
-						draw_line(x + lenght * 0.75, y + lenght / 2, x + lenght * 0.75, y + lenght, r, g, b);
-						draw_line(x + lenght * 0.75, y + lenght, x, y + lenght, r, g, b);
-						draw_line(x, y, x, y + lenght * 0.10, r, g, b);
-						draw_line(x, y + lenght, x, y + lenght * 0.90, r, g, b);
-						x = x + lenght * 0.8 + lenght / 2;
+						draw_line(x, y, x + size, y + size, r, g, b);
+						draw_line(x, y + size, x + size, y, r, g, b);
+						draw_line(x + size / 2, y + size * 0.10, x + size / 2, y + size * 0.9, r, g, b);
+						x = x + size + size / 2;
 					}
 
-					if (text[i] == 'И' || text[i] == 'и')
+					if (text[i] == 'Р—' || text[i] == 'Р·')
 					{
-						draw_line(x, y, x, y + lenght, r, g, b);
-						draw_line(x, y + lenght, x + lenght * 0.40, y, r, g, b);
-						draw_line(x + lenght * 0.40, y, x + lenght * 0.40, y + lenght, r, g, b);
-						x = x + lenght / 2 + lenght / 2;
+						draw_line(x + size * 0.10, y, x + size / 2, y, r, g, b);
+						draw_line(x + size / 2, y, x + size / 2, y + size / 2, r, g, b);
+						draw_line(x + size * 0.25, y + size / 2, x + size * 0.75, y + size / 2, r, g, b);
+						draw_line(x + size * 0.75, y + size / 2, x + size * 0.75, y + size, r, g, b);
+						draw_line(x + size * 0.75, y + size, x, y + size, r, g, b);
+						draw_line(x, y, x, y + size * 0.10, r, g, b);
+						draw_line(x, y + size, x, y + size * 0.90, r, g, b);
+						x = x + size * 0.8 + size / 2;
 					}
 
-					if (text[i] == 'Й' || text[i] == 'й')
+					if (text[i] == 'Р' || text[i] == 'Рё')
 					{
-						draw_line(x, y, x, y + lenght, r, g, b);
-						draw_line(x, y + lenght, x + lenght * 0.40, y, r, g, b);
-						draw_line(x + lenght * 0.40, y, x + lenght * 0.40, y + lenght, r, g, b);
-						draw_line(x + lenght * 0.10, y - lenght * 0.15, x + lenght * 0.30, y - lenght * 0.15, r, g, b);
-						x = x + lenght / 2 + lenght / 2;
+						draw_line(x, y, x, y + size, r, g, b);
+						draw_line(x, y + size, x + size * 0.40, y, r, g, b);
+						draw_line(x + size * 0.40, y, x + size * 0.40, y + size, r, g, b);
+						x = x + size / 2 + size / 2;
 					}
 
-					if (text[i] == 'К' || text[i] == 'к')
+					if (text[i] == 'Р™' || text[i] == 'Р№')
 					{
-						draw_line(x, y, x, y + lenght, r, g, b);
-						draw_line(x, y + lenght / 2, x + lenght / 2, y, r, g, b);
-						draw_line(x, y + lenght / 2, x + lenght / 2, y + lenght, r, g, b);
-						x = x + lenght / 2 + lenght / 2;
+						draw_line(x, y, x, y + size, r, g, b);
+						draw_line(x, y + size, x + size * 0.40, y, r, g, b);
+						draw_line(x + size * 0.40, y, x + size * 0.40, y + size, r, g, b);
+						draw_line(x + size * 0.10, y - size * 0.15, x + size * 0.30, y - size * 0.15, r, g, b);
+						x = x + size / 2 + size / 2;
 					}
 
-					if (text[i] == 'Л' || text[i] == 'л')
+					if (text[i] == 'Рљ' || text[i] == 'Рє')
 					{
-						draw_line(x, y + lenght, x + lenght * 0.30, y, r, g, b);
-						draw_line(x + lenght * 0.30, y, x + lenght * 0.60, y + lenght, r, g, b);
-						x = x + lenght / 2 + lenght / 2;
+						draw_line(x, y, x, y + size, r, g, b);
+						draw_line(x, y + size / 2, x + size / 2, y, r, g, b);
+						draw_line(x, y + size / 2, x + size / 2, y + size, r, g, b);
+						x = x + size / 2 + size / 2;
 					}
 
-					if (text[i] == 'М' || text[i] == 'м')
+					if (text[i] == 'Р›' || text[i] == 'Р»')
 					{
-						draw_line(x, y, x, y + lenght, r, g, b);
-						draw_line(x, y, x + lenght * 0.30, y + lenght / 2, r, g, b);
-						draw_line(x + lenght * 0.30, y + lenght / 2, x + lenght * 0.60, y, r, g, b);
-						draw_line(x + lenght * 0.60, y, x + lenght * 0.60, y + lenght, r, g, b);
-						x = x + lenght / 2 + lenght / 2;
-
+						draw_line(x, y + size, x + size * 0.30, y, r, g, b);
+						draw_line(x + size * 0.30, y, x + size * 0.60, y + size, r, g, b);
+						x = x + size / 2 + size / 2;
 					}
 
-					if (text[i] == 'Н' || text[i] == 'н')
+					if (text[i] == 'Рњ' || text[i] == 'Рј')
 					{
-						draw_line(x, y, x, y + lenght, r, g, b);
-						draw_line(x, y + lenght * 0.30, x + lenght / 2, y + lenght * 0.30, r, g, b);
-						draw_line(x + lenght / 2, y, x + lenght / 2, y + lenght, r, g, b);
-						x = x + lenght / 2 + lenght / 2;
+						draw_line(x, y, x, y + size, r, g, b);
+						draw_line(x, y, x + size * 0.30, y + size / 2, r, g, b);
+						draw_line(x + size * 0.30, y + size / 2, x + size * 0.60, y, r, g, b);
+						draw_line(x + size * 0.60, y, x + size * 0.60, y + size, r, g, b);
+						x = x + size / 2 + size / 2;
 
 					}
 
-					if (text[i] == 'О' || text[i] == 'о')
+					if (text[i] == 'Рќ' || text[i] == 'РЅ')
 					{
-						draw_line(x, y + lenght / 2, x + lenght / 2, y, r, g, b);
-						draw_line(x + lenght / 2, y, x + lenght, y + lenght / 2, r, g, b);
-						draw_line(x + lenght, y + lenght / 2, x + lenght / 2, y + lenght, r, g, b);
-						draw_line(x + lenght / 2, y + lenght, x, y + lenght / 2, r, g, b);
-						x = x + lenght  + lenght / 2;
+						draw_line(x, y, x, y + size, r, g, b);
+						draw_line(x, y + size * 0.30, x + size / 2, y + size * 0.30, r, g, b);
+						draw_line(x + size / 2, y, x + size / 2, y + size, r, g, b);
+						x = x + size / 2 + size / 2;
+
 					}
 
-					if (text[i] == 'П' || text[i] == 'п')
+					if (text[i] == 'Рћ' || text[i] == 'Рѕ')
 					{
-						draw_line(x, y, x, y + lenght, r, g, b);
-						draw_line(x, y, x + lenght / 2, y, r, g, b);
-						draw_line(x + lenght / 2, y, x + lenght / 2, y + lenght, r, g, b);
-						x = x + lenght / 2 + lenght / 2;
+						draw_line(x, y + size / 2, x + size / 2, y, r, g, b);
+						draw_line(x + size / 2, y, x + size, y + size / 2, r, g, b);
+						draw_line(x + size, y + size / 2, x + size / 2, y + size, r, g, b);
+						draw_line(x + size / 2, y + size, x, y + size / 2, r, g, b);
+						x = x + size  + size / 2;
 					}
 
-					if (text[i] == 'Р' || text[i] == 'р')
+					if (text[i] == 'Рџ' || text[i] == 'Рї')
 					{
-						draw_line(x, y, x, y + lenght, r, g, b);
-						draw_line(x, y, x + lenght / 2, y + lenght * 0.25, r, g, b);
-						draw_line(x + lenght / 2, y + lenght * 0.25, x, y + lenght / 2, r, g, b);
-						x = x + (lenght / 2) + lenght / 2;
+						draw_line(x, y, x, y + size, r, g, b);
+						draw_line(x, y, x + size / 2, y, r, g, b);
+						draw_line(x + size / 2, y, x + size / 2, y + size, r, g, b);
+						x = x + size / 2 + size / 2;
 					}
 
-					if (text[i] == 'С' || text[i] == 'с')
+					if (text[i] == 'Р ' || text[i] == 'СЂ')
 					{
-						draw_line(x, y + lenght / 2, x + lenght / 2, y, r, g, b);
-						draw_line(x + lenght / 2, y, x + lenght, y + lenght * 0.2, r, g, b);
-						draw_line(x + lenght, y + lenght * 0.80, x + lenght / 2, y + lenght, r, g, b);
-						draw_line(x + lenght / 2, y + lenght, x, y + lenght / 2, r, g, b);
-						x = x + lenght  + lenght / 2;
+						draw_line(x, y, x, y + size, r, g, b);
+						draw_line(x, y, x + size / 2, y + size * 0.25, r, g, b);
+						draw_line(x + size / 2, y + size * 0.25, x, y + size / 2, r, g, b);
+						x = x + (size / 2) + size / 2;
 					}
 
-					if (text[i] == 'Т' || text[i] == 'т')
+					if (text[i] == 'РЎ' || text[i] == 'СЃ')
 					{
-						draw_line(x, y, x + lenght * 0.5, y, r, g, b);
-						draw_line(x + lenght * 0.25, y, x + lenght * 0.25, y + lenght, r, g, b);
-						x = x + lenght / 2 + lenght / 2;
+						draw_line(x, y + size / 2, x + size / 2, y, r, g, b);
+						draw_line(x + size / 2, y, x + size, y + size * 0.2, r, g, b);
+						draw_line(x + size, y + size * 0.80, x + size / 2, y + size, r, g, b);
+						draw_line(x + size / 2, y + size, x, y + size / 2, r, g, b);
+						x = x + size  + size / 2;
 					}
 
-					if (text[i] == 'У' || text[i] == 'у')
+					if (text[i] == 'Рў' || text[i] == 'С‚')
 					{
-						draw_line(x, y, x + lenght * 0.4, y + lenght / 2, r, g, b);
-						draw_line(x + lenght * 0.4, y + lenght / 2, x + lenght * 0.8, y, r, g, b);
-						draw_line(x + lenght * 0.4, y + lenght / 2, x, y + lenght, r, g, b);
-						x = x + lenght * 0.7 + lenght / 2;
+						draw_line(x, y, x + size * 0.5, y, r, g, b);
+						draw_line(x + size * 0.25, y, x + size * 0.25, y + size, r, g, b);
+						x = x + size / 2 + size / 2;
 					}
 
-					if (text[i] == 'Ф' || text[i] == 'ф')
+					if (text[i] == 'РЈ' || text[i] == 'Сѓ')
 					{
-						draw_line(x, y + lenght * 0.25, x + lenght * 0.4, y, r, g, b);
-						draw_line(x + lenght * 0.4, y, x + lenght * 0.8, y + lenght * 0.25, r, g, b);
-						draw_line(x + lenght * 0.8, y + lenght * 0.25, x + lenght * 0.4, y + lenght * 0.5, r, g, b);
-						draw_line(x + lenght * 0.4, y, x + lenght * 0.4, y + lenght, r, g, b);
-						draw_line(x, y + lenght * 0.25, x + lenght * 0.4, y + lenght / 2, r, g, b);
-						x = x + lenght * 0.8 + lenght / 2;
+						draw_line(x, y, x + size * 0.4, y + size / 2, r, g, b);
+						draw_line(x + size * 0.4, y + size / 2, x + size * 0.8, y, r, g, b);
+						draw_line(x + size * 0.4, y + size / 2, x, y + size, r, g, b);
+						x = x + size * 0.7 + size / 2;
 					}
 
-					if (text[i] == 'Х' || text[i] == 'х')
+					if (text[i] == 'Р¤' || text[i] == 'С„')
 					{
-						draw_line(x, y, x + lenght * 0.6, y + lenght, r, g, b);
-						draw_line(x + lenght * 0.6, y, x, y + lenght, r, g, b);
-						x = x + lenght / 2 + lenght / 2;
+						draw_line(x, y + size * 0.25, x + size * 0.4, y, r, g, b);
+						draw_line(x + size * 0.4, y, x + size * 0.8, y + size * 0.25, r, g, b);
+						draw_line(x + size * 0.8, y + size * 0.25, x + size * 0.4, y + size * 0.5, r, g, b);
+						draw_line(x + size * 0.4, y, x + size * 0.4, y + size, r, g, b);
+						draw_line(x, y + size * 0.25, x + size * 0.4, y + size / 2, r, g, b);
+						x = x + size * 0.8 + size / 2;
 					}
 
-					if (text[i] == 'Ц' || text[i] == 'ц')
+					if (text[i] == 'РҐ' || text[i] == 'С…')
 					{
-						draw_line(x, y, x, y + lenght, r, g, b);
-						draw_line(x, y + lenght, x + lenght / 2, y + lenght, r, g, b);
-						draw_line(x + lenght / 2, y + lenght, x + lenght / 2, y + lenght / 2, r, g, b);
-						draw_line(x, y + lenght, x + lenght * 0.7, y + lenght, r, g, b);
-						draw_line(x + lenght * 0.7, y + lenght, x + lenght * 0.7, y + lenght * 1.2, r, g, b);
-						x = x + lenght * 0.6 + lenght / 2;
+						draw_line(x, y, x + size * 0.6, y + size, r, g, b);
+						draw_line(x + size * 0.6, y, x, y + size, r, g, b);
+						x = x + size / 2 + size / 2;
 					}
 
-						if (text[i] == 'Ч' || text[i] == 'ч')
+					if (text[i] == 'Р¦' || text[i] == 'С†')
+					{
+						draw_line(x, y, x, y + size, r, g, b);
+						draw_line(x, y + size, x + size / 2, y + size, r, g, b);
+						draw_line(x + size / 2, y + size, x + size / 2, y + size / 2, r, g, b);
+						draw_line(x, y + size, x + size * 0.7, y + size, r, g, b);
+						draw_line(x + size * 0.7, y + size, x + size * 0.7, y + size * 1.2, r, g, b);
+						x = x + size * 0.6 + size / 2;
+					}
+
+						if (text[i] == 'Р§' || text[i] == 'С‡')
 						{
-							draw_line(x, y, x, y + lenght / 2, r, g, b);
-							draw_line(x, y + lenght / 2, x + lenght / 4, y + lenght * 0.7, r, g, b);
-							draw_line(x + lenght / 4, y + lenght * 0.7, x + lenght / 2, y + lenght / 2, r, g, b);
-							draw_line(x + lenght / 2, y, x + lenght / 2, y + lenght, r, g, b);
-							x = x + lenght / 2 + lenght / 2;
+							draw_line(x, y, x, y + size / 2, r, g, b);
+							draw_line(x, y + size / 2, x + size / 4, y + size * 0.7, r, g, b);
+							draw_line(x + size / 4, y + size * 0.7, x + size / 2, y + size / 2, r, g, b);
+							draw_line(x + size / 2, y, x + size / 2, y + size, r, g, b);
+							x = x + size / 2 + size / 2;
 						}
 
-						if (text[i] == 'Ш' || text[i] == 'ш')
+						if (text[i] == 'РЁ' || text[i] == 'С€')
 						{
-							draw_line(x, y, x, y + lenght, r, g, b);
-							draw_line(x + lenght * 0.4, y + lenght * 0.25, x + lenght * 0.4, y + lenght, r, g, b);
-							draw_line(x + lenght * 0.8, y, x + lenght * 0.8, y + lenght, r, g, b);
-							draw_line(x, y + lenght, x + lenght * 0.8, y + lenght, r, g, b);
-							x = x + lenght * 0.8 + lenght / 2;
+							draw_line(x, y, x, y + size, r, g, b);
+							draw_line(x + size * 0.4, y + size * 0.25, x + size * 0.4, y + size, r, g, b);
+							draw_line(x + size * 0.8, y, x + size * 0.8, y + size, r, g, b);
+							draw_line(x, y + size, x + size * 0.8, y + size, r, g, b);
+							x = x + size * 0.8 + size / 2;
 						}
 
-						if (text[i] == 'Щ' || text[i] == 'щ')
+						if (text[i] == 'Р©' || text[i] == 'С‰')
 						{
-							draw_line(x, y, x, y + lenght, r, g, b);
-							draw_line(x + lenght * 0.4, y + lenght * 0.25, x + lenght * 0.4, y + lenght, r, g, b);
-							draw_line(x + lenght * 0.8, y, x + lenght * 0.8, y + lenght, r, g, b);
-							draw_line(x, y + lenght, x + lenght * 0.8, y + lenght, r, g, b);
-							draw_line(x + lenght * 0.8, y + lenght, x + lenght, y + lenght, r, g, b);
-							draw_line(x + lenght, y + lenght, x + lenght, y + lenght * 1.1, r, g, b);
-							x = x + lenght * 0.8 + lenght / 2;
+							draw_line(x, y, x, y + size, r, g, b);
+							draw_line(x + size * 0.4, y + size * 0.25, x + size * 0.4, y + size, r, g, b);
+							draw_line(x + size * 0.8, y, x + size * 0.8, y + size, r, g, b);
+							draw_line(x, y + size, x + size * 0.8, y + size, r, g, b);
+							draw_line(x + size * 0.8, y + size, x + size, y + size, r, g, b);
+							draw_line(x + size, y + size, x + size, y + size * 1.1, r, g, b);
+							x = x + size * 0.8 + size / 2;
 						}
 
-						if (text[i] == 'Ъ' || text[i] == 'ъ')
+						if (text[i] == 'РЄ' || text[i] == 'СЉ')
 						{
-							draw_line(x, y, x + lenght * 0.4, y, r, g, b);
-							draw_line(x + lenght * 0.4, y, x + lenght * 0.4, y + lenght, r, g, b);
-							draw_line(x + lenght * 0.4, y + lenght / 2, x + lenght * 0.8, y + lenght * 0.75, r, g, b);
-							draw_line(x + lenght * 0.8, y + lenght * 0.75, x + lenght * 0.4, y + lenght, r, g, b);
-							x = x + lenght * 0.8 + lenght / 2;
+							draw_line(x, y, x + size * 0.4, y, r, g, b);
+							draw_line(x + size * 0.4, y, x + size * 0.4, y + size, r, g, b);
+							draw_line(x + size * 0.4, y + size / 2, x + size * 0.8, y + size * 0.75, r, g, b);
+							draw_line(x + size * 0.8, y + size * 0.75, x + size * 0.4, y + size, r, g, b);
+							x = x + size * 0.8 + size / 2;
 						}
 
-						if (text[i] == 'Ы' || text[i] == 'ы')
+						if (text[i] == 'Р«' || text[i] == 'С‹')
 						{
-							draw_line(x, y, x, y + lenght, r, g, b);
-							draw_line(x, y + lenght / 2, x + lenght * 0.4, y + lenght * 0.75, r, g, b);
-							draw_line(x, y + lenght, x + lenght * 0.4, y + lenght * 0.75, r, g, b);
-							draw_line(x + lenght * 0.6, y, x + lenght * 0.6, y + lenght, r, g, b);
-							x = x + lenght / 2 + lenght / 2;
+							draw_line(x, y, x, y + size, r, g, b);
+							draw_line(x, y + size / 2, x + size * 0.4, y + size * 0.75, r, g, b);
+							draw_line(x, y + size, x + size * 0.4, y + size * 0.75, r, g, b);
+							draw_line(x + size * 0.6, y, x + size * 0.6, y + size, r, g, b);
+							x = x + size / 2 + size / 2;
 						}
 
-						if (text[i] == 'Ь' || text[i] == 'ь')
+						if (text[i] == 'Р¬' || text[i] == 'СЊ')
 						{
-							draw_line(x, y, x, y + lenght, r, g, b);
-							draw_line(x, y + lenght / 2, x + lenght * 0.4, y + lenght * 0.75, r, g, b);
-							draw_line(x, y + lenght, x + lenght * 0.4, y + lenght * 0.75, r, g, b);
-							x = x + lenght / 2 + lenght / 2;
+							draw_line(x, y, x, y + size, r, g, b);
+							draw_line(x, y + size / 2, x + size * 0.4, y + size * 0.75, r, g, b);
+							draw_line(x, y + size, x + size * 0.4, y + size * 0.75, r, g, b);
+							x = x + size / 2 + size / 2;
 						}
 
-						if (text[i] == 'Э' || text[i] == 'э')
+						if (text[i] == 'Р­' || text[i] == 'СЌ')
 						{
-							draw_line(x, y, x + lenght / 4, y - lenght * 0.2, r, g, b);
-							draw_line(x + lenght / 4, y - lenght * 0.2, x + lenght / 2, y, r, g, b);
-							draw_line(x + lenght / 2, y + lenght, x + lenght / 4, y + lenght * 1.2, r, g, b);
-							draw_line(x + lenght / 4, y + lenght * 1.2, x, y + lenght, r, g, b);
-							draw_line(x + lenght / 2, y, x + lenght / 2, y + lenght, r, g, b);
-							draw_line(x + lenght / 2, y + lenght / 2, x, y + lenght / 2, r, g, b);
-							x = x + lenght / 2 + lenght / 2;
+							draw_line(x, y, x + size / 4, y - size * 0.2, r, g, b);
+							draw_line(x + size / 4, y - size * 0.2, x + size / 2, y, r, g, b);
+							draw_line(x + size / 2, y + size, x + size / 4, y + size * 1.2, r, g, b);
+							draw_line(x + size / 4, y + size * 1.2, x, y + size, r, g, b);
+							draw_line(x + size / 2, y, x + size / 2, y + size, r, g, b);
+							draw_line(x + size / 2, y + size / 2, x, y + size / 2, r, g, b);
+							x = x + size / 2 + size / 2;
 						}
 
-						if (text[i] == 'Ю' || text[i] == 'ю')
+						if (text[i] == 'Р®' || text[i] == 'СЋ')
 						{
-							draw_line(x, y, x, y + lenght, r, g, b);
-							draw_line(x, y + lenght / 2, x + lenght * 0.4, y + lenght / 2, r, g, b);
-							draw_line(x + lenght * 0.4, y + lenght / 2, x + lenght * 0.6, y, r, g, b);
-							draw_line(x + lenght * 0.6, y, x + lenght * 0.8, y + lenght / 2, r, g, b);
-							draw_line(x + lenght * 0.8, y + lenght / 2, x + lenght * 0.6, y + lenght, r, g, b);
-							draw_line(x + lenght * 0.6, y + lenght, x + lenght * 0.4, y + lenght / 2, r, g, b);
-							x = x + lenght * 0.8 + lenght / 2;
+							draw_line(x, y, x, y + size, r, g, b);
+							draw_line(x, y + size / 2, x + size * 0.4, y + size / 2, r, g, b);
+							draw_line(x + size * 0.4, y + size / 2, x + size * 0.6, y, r, g, b);
+							draw_line(x + size * 0.6, y, x + size * 0.8, y + size / 2, r, g, b);
+							draw_line(x + size * 0.8, y + size / 2, x + size * 0.6, y + size, r, g, b);
+							draw_line(x + size * 0.6, y + size, x + size * 0.4, y + size / 2, r, g, b);
+							x = x + size * 0.8 + size / 2;
 						}
 
-						if (text[i] == 'Я' || text[i] == 'я')
+						if (text[i] == 'РЇ' || text[i] == 'СЏ')
 						{
-							draw_line(x + lenght / 2, y, x + lenght / 2, y + lenght, r, g, b);
-							draw_line(x + lenght / 2, y, x, y + lenght * 0.25, r, g, b);
-							draw_line(x, y + lenght * 0.25, x + lenght / 2, y + lenght / 2, r, g, b);
-							draw_line(x + lenght / 2, y + lenght / 2, x, y + lenght, r, g, b);
-							x = x + lenght / 2 + lenght / 2;
+							draw_line(x + size / 2, y, x + size / 2, y + size, r, g, b);
+							draw_line(x + size / 2, y, x, y + size * 0.25, r, g, b);
+							draw_line(x, y + size * 0.25, x + size / 2, y + size / 2, r, g, b);
+							draw_line(x + size / 2, y + size / 2, x, y + size, r, g, b);
+							x = x + size / 2 + size / 2;
 						}
 
 						if (text[i] == '_')
 						{
 
-							x = x + 1.5 * lenght;
+							x = x + 1.5 * size;
 						}
 				}
 				break;
 
 				default: 
-					MessageBox::Show("Нет такого шрифта");
+					MessageBox::Show("РќРµС‚ С‚Р°РєРѕРіРѕ С€СЂРёС„С‚Р°");
 					break;
 			}
 		}
@@ -833,7 +849,7 @@ namespace GraphServer {
 			my_sock = socket(AF_INET, SOCK_DGRAM, 0);
 			if (my_sock == INVALID_SOCKET)
 			{
-				MessageBox::Show("Ошибка", "Ошибка", MessageBoxButtons::OK, MessageBoxIcon::Warning);
+				MessageBox::Show("РћС€РёР±РєР°", "РћС€РёР±РєР°", MessageBoxButtons::OK, MessageBoxIcon::Warning);
 				WSACleanup();
 			}
 
@@ -844,7 +860,7 @@ namespace GraphServer {
 
 			if (bind(my_sock, (sockaddr*)&local_addr, sizeof(local_addr)) == -1)
 			{
-				MessageBox::Show("Ошибка", "Ошибка", MessageBoxButtons::OK, MessageBoxIcon::Warning);
+				MessageBox::Show("РћС€РёР±РєР°", "РћС€РёР±РєР°", MessageBoxButtons::OK, MessageBoxIcon::Warning);
 				closesocket(my_sock);
 				WSACleanup();
 			}
@@ -857,7 +873,7 @@ namespace GraphServer {
 				int bsize = recvfrom(my_sock, &buff[0], sizeof(buff) - 1, 0, (sockaddr*)&client_addr, &client_addr_size);
 				if (bsize == SOCKET_ERROR)
 				{
-					MessageBox::Show("Ошибка", "Ошибка", MessageBoxButtons::OK, MessageBoxIcon::Warning);
+					MessageBox::Show("РћС€РёР±РєР°", "РћС€РёР±РєР°", MessageBoxButtons::OK, MessageBoxIcon::Warning);
 
 				}
 				HOSTENT* hst = gethostbyaddr((char*)&client_addr.sin_addr, 4, AF_INET);
@@ -912,7 +928,7 @@ namespace GraphServer {
 
 			else if (com->name == "draw_text")
 			{
-				draw_text(com->x, com->y, com->r, com->g, com->b, com->font_number, com->lenght, com->text);
+				draw_text(com->x, com->y, com->r, com->g, com->b, com->font_number, com->size, com->text);
 			}
 
 		}
@@ -920,8 +936,10 @@ namespace GraphServer {
 	private: System::Void button1_Click(System::Object^ sender, System::EventArgs^ e) {
 
 			textBox1->Text = buffer;
+			
 
 	}
 
-	};
+	
+};
 }

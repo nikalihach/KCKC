@@ -19,7 +19,7 @@ namespace GraphServer {
 	using namespace System::Threading;
 
 	/// <summary>
-	/// Сводка для MyForm
+	/// РЎРІРѕРґРєР° РґР»СЏ MyForm
 	/// </summary>
 	public ref class MyForm : public System::Windows::Forms::Form
 	{
@@ -28,8 +28,10 @@ namespace GraphServer {
 		{
 			InitializeComponent();
 			//
-			//TODO: добавьте код конструктора
+			//TODO: РґРѕР±Р°РІСЊС‚Рµ РєРѕРґ РєРѕРЅСЃС‚СЂСѓРєС‚РѕСЂР°
 			//
+			Img1 = gcnew Bitmap(pictureBox1->Width, pictureBox1->Height);
+			gr = Graphics::FromImage(Img1);
 
 			Thread^ ServerThread = gcnew Thread(gcnew ThreadStart(this, &MyForm::Server));
 
@@ -42,7 +44,7 @@ namespace GraphServer {
 
 	protected:
 		/// <summary>
-		/// Освободить все используемые ресурсы.
+		/// РћСЃРІРѕР±РѕРґРёС‚СЊ РІСЃРµ РёСЃРїРѕР»СЊР·СѓРµРјС‹Рµ СЂРµСЃСѓСЂСЃС‹.
 		/// </summary>
 		~MyForm()
 		{
@@ -60,27 +62,33 @@ namespace GraphServer {
 
 	private: System::Windows::Forms::Label^ label2;
 	private: System::Windows::Forms::Button^ button1;
+	private: System::Windows::Forms::ImageList^ imageList1;
+	private: System::Windows::Forms::Timer^ timer1;
+	private: System::ComponentModel::IContainer^ components;
 
 
 
 
 	private:
 		/// <summary>
-		/// Обязательная переменная конструктора.
+		/// РћР±СЏР·Р°С‚РµР»СЊРЅР°СЏ РїРµСЂРµРјРµРЅРЅР°СЏ РєРѕРЅСЃС‚СЂСѓРєС‚РѕСЂР°.
 		/// </summary>
-		System::ComponentModel::Container^ components;
+
 
 #pragma region Windows Form Designer generated code
 		/// <summary>
-		/// Требуемый метод для поддержки конструктора — не изменяйте 
-		/// содержимое этого метода с помощью редактора кода.
+		/// РўСЂРµР±СѓРµРјС‹Р№ РјРµС‚РѕРґ РґР»СЏ РїРѕРґРґРµСЂР¶РєРё РєРѕРЅСЃС‚СЂСѓРєС‚РѕСЂР° вЂ” РЅРµ РёР·РјРµРЅСЏР№С‚Рµ 
+		/// СЃРѕРґРµСЂР¶РёРјРѕРµ СЌС‚РѕРіРѕ РјРµС‚РѕРґР° СЃ РїРѕРјРѕС‰СЊСЋ СЂРµРґР°РєС‚РѕСЂР° РєРѕРґР°.
 		/// </summary>
 		void InitializeComponent(void)
 		{
+			this->components = (gcnew System::ComponentModel::Container());
 			this->pictureBox1 = (gcnew System::Windows::Forms::PictureBox());
 			this->textBox1 = (gcnew System::Windows::Forms::TextBox());
 			this->label2 = (gcnew System::Windows::Forms::Label());
 			this->button1 = (gcnew System::Windows::Forms::Button());
+			this->imageList1 = (gcnew System::Windows::Forms::ImageList(this->components));
+			this->timer1 = (gcnew System::Windows::Forms::Timer(this->components));
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->pictureBox1))->BeginInit();
 			this->SuspendLayout();
 			// 
@@ -112,7 +120,7 @@ namespace GraphServer {
 			this->label2->Name = L"label2";
 			this->label2->Size = System::Drawing::Size(180, 22);
 			this->label2->TabIndex = 5;
-			this->label2->Text = L"Получена команда:";
+			this->label2->Text = L"РџРѕР»СѓС‡РµРЅР° РєРѕРјР°РЅРґР°:";
 			// 
 			// button1
 			// 
@@ -123,9 +131,19 @@ namespace GraphServer {
 			this->button1->Name = L"button1";
 			this->button1->Size = System::Drawing::Size(115, 37);
 			this->button1->TabIndex = 4;
-			this->button1->Text = L"Отобразить\r\n команду";
+			this->button1->Text = L"РћС‚РѕР±СЂР°Р·РёС‚СЊ\r\n РєРѕРјР°РЅРґСѓ";
 			this->button1->UseVisualStyleBackColor = false;
 			this->button1->Click += gcnew System::EventHandler(this, &MyForm::button1_Click_1);
+			// 
+			// imageList1
+			// 
+			this->imageList1->ColorDepth = System::Windows::Forms::ColorDepth::Depth8Bit;
+			this->imageList1->ImageSize = System::Drawing::Size(16, 16);
+			this->imageList1->TransparentColor = System::Drawing::Color::Transparent;
+			// 
+			// timer1
+			// 
+			
 			// 
 			// MyForm
 			// 
@@ -138,40 +156,79 @@ namespace GraphServer {
 			this->Controls->Add(this->pictureBox1);
 			this->Name = L"MyForm";
 			this->Text = L"MyForm";
-			this->Load += gcnew System::EventHandler(this, &MyForm::MyForm_Load);
+			
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->pictureBox1))->EndInit();
 			this->ResumeLayout(false);
 			this->PerformLayout();
 
 		}
 #pragma endregion
-		
-		Bitmap^ Img1;
-		Bitmap^ Img2;
-		Graphics^ gr;
-
-		private: System::Void MyForm_Load(System::Object^ sender, System::EventArgs^ e) {
-
-			
-			Img1 = gcnew Bitmap(pictureBox1->Width, pictureBox1->Height);
-			pictureBox1->Image = Img1;
-			gr = Graphics::FromImage(Img1);
-			
-		
-		}
 			  
-		
-	
+			   Bitmap^ Img1;
+			   Graphics^ gr;
+
+			   void set_orientation(int orientation)
+			   {
+
+				   switch (orientation)
+				   {
+				   case 0:
+					   load_sprite();
+					   Img1->RotateFlip(RotateFlipType::RotateNoneFlipNone);
+					   pictureBox1->Image = Img1;
+					   break;
+
+				   case 1:
+					   show_sprite();
+					   Img1->RotateFlip(RotateFlipType::Rotate90FlipNone);
+					   pictureBox1->Image = Img1;
+					   break;
+
+				   case 2:
+					   Img1->RotateFlip(RotateFlipType::Rotate180FlipNone);
+					   pictureBox1->Image = Img1;
+					   break;
+
+				   case 3:
+					   Img1->RotateFlip(RotateFlipType::Rotate270FlipNone);
+					   pictureBox1->Image = Img1;
+					   break;
+
+				   default:
+					   break;
+
+				   }
+
+			   }
+			  
+
+			   void get_size(int width, int height)
+			   {
+				
+				   Img1 = gcnew Bitmap(Img1,width, height);
+				   pictureBox1->Image = Img1;
+				   gr = Graphics::FromImage(Img1);
+
+			   }
+
+			   
 
 		void clear_display(int r, int g, int b)
 		{
+			 
+			
+			pictureBox1->Image = Img1;
 			
 			 //gr = this->CreateGraphics();
 			gr->Clear(Color::FromArgb(r, g, b));
+
 		}
 
 		void draw_pixel(int x0, int y0, int r, int g, int b)
 		{
+			
+			pictureBox1->Image = Img1;
+
 			Color aColor = Color::FromArgb(r, g, b);
 			SolidBrush^ aBrush = gcnew SolidBrush(aColor);
 			 //gr = this->CreateGraphics();
@@ -181,7 +238,10 @@ namespace GraphServer {
 
 		void draw_line(int x0, int y0, int x1, int y1, int r, int g, int b)
 		{
-		
+			
+			
+			pictureBox1->Image = Img1;
+
 			Pen^ color = gcnew Pen(Color::FromArgb(r, g, b));
 			//Graphics^ gr = this->CreateGraphics();
 			//gr = pictureBox1->CreateGraphics();
@@ -192,6 +252,7 @@ namespace GraphServer {
 		void draw_rectangle(int x0, int y0, int w, int h, int r, int g, int b)
 		{
 			
+			pictureBox1->Image = Img1;
 			Pen^ color = gcnew Pen(Color::FromArgb(r, g, b));
 			 //gr = this->CreateGraphics();
 			gr->DrawRectangle(color, x0, y0, w, h);
@@ -200,6 +261,9 @@ namespace GraphServer {
 
 		void fill_rectangle(int x0, int y0, int w, int h, int r, int g, int b)
 		{
+			
+			
+			pictureBox1->Image = Img1;
 			Color aColor = Color::FromArgb(r, g, b);
 			SolidBrush^ aBrush = gcnew SolidBrush(aColor);
 			 //gr = this->CreateGraphics();
@@ -208,6 +272,8 @@ namespace GraphServer {
 
 		void draw_ellipse(int x0, int y0, int rx, int ry, int r, int g, int b)
 		{
+			
+			pictureBox1->Image = Img1;
 			Pen^ color = gcnew Pen(Color::FromArgb(r, g, b));
 			// gr = this->CreateGraphics();
 			gr->DrawEllipse(color, x0, y0, rx, ry);
@@ -215,6 +281,8 @@ namespace GraphServer {
 
 		void fill_ellipse(int x0, int y0, int rx, int ry, int r, int g, int b)
 		{
+			
+			pictureBox1->Image = Img1;
 			Color aColor = Color::FromArgb(r, g, b);
 			SolidBrush^ aBrush = gcnew SolidBrush(aColor);
 			// gr = this->CreateGraphics();
@@ -229,7 +297,7 @@ namespace GraphServer {
 
 				for (int i = 0; i < strlen(text); i++)
 				{
-					if (text[i] == 'А' || text[i] == 'а')
+					if (text[i] == 'Рђ' || text[i] == 'Р°')
 					{
 						draw_line(x, y, x, y + size, r, g, b);
 						draw_line(x, y, x + (size / 2), y, r, g, b);
@@ -238,7 +306,7 @@ namespace GraphServer {
 						x = x + (size / 2) + size / 2;
 					}
 
-					if (text[i] == 'Б' || text[i] == 'б')
+					if (text[i] == 'Р‘' || text[i] == 'Р±')
 					{
 						draw_line(x, y, x, y + size, r, g, b);
 						draw_line(x, y, x + size / 2, y, r, g, b);
@@ -248,7 +316,7 @@ namespace GraphServer {
 						x = x + (size / 2) + size / 2;
 					}
 
-					if (text[i] == 'В' || text[i] == 'в')
+					if (text[i] == 'Р’' || text[i] == 'РІ')
 					{
 						draw_line(x, y, x, y + size, r, g, b);
 						draw_line(x, y, x + size / 2, y, r, g, b);
@@ -260,14 +328,14 @@ namespace GraphServer {
 						x=x + size*0.7 + size / 2;
 					}
 
-					if (text[i] == 'Г' || text[i] == 'г')
+					if (text[i] == 'Р“' || text[i] == 'Рі')
 					{
 						draw_line(x, y, x, y + size, r, g, b);
 						draw_line(x, y, x + size / 2, y, r, g, b);
 						x = x + (size / 2) + size / 2;
 					}
 
-					if (text[i] == 'Д' || text[i] == 'д')
+					if (text[i] == 'Р”' || text[i] == 'Рґ')
 					{
 						draw_line(x, y + size / 2, x, y + size, r, g, b);
 						draw_line(x, y + size / 2, x + size, y + size / 2, r, g, b);
@@ -278,7 +346,7 @@ namespace GraphServer {
 						x = x + size * 0.75 + size / 2;
 					}
 
-					if (text[i] == 'Е' || text[i] == 'е')
+					if (text[i] == 'Р•' || text[i] == 'Рµ')
 					{
 						draw_line(x, y, x, y + size, r, g, b);
 						draw_line(x, y, x + size / 2, y, r, g, b);
@@ -287,7 +355,7 @@ namespace GraphServer {
 						x = x + size / 2 + size / 2;
 					}
 
-					if (text[i] == 'Ё' || text[i] == 'ё')
+					if (text[i] == 'РЃ' || text[i] == 'С‘')
 					{
 						draw_line(x, y, x, y + size, r, g, b);
 						draw_line(x, y, x + size / 2, y, r, g, b);
@@ -298,7 +366,7 @@ namespace GraphServer {
 						x = x + size / 2 + size / 2;
 					}
 
-					if (text[i] == 'Ж' || text[i] == 'ж')
+					if (text[i] == 'Р–' || text[i] == 'Р¶')
 					{
 						draw_line(x, y, x + size, y + size, r, g, b);
 						draw_line(x, y + size, x + size, y, r, g, b);
@@ -306,7 +374,7 @@ namespace GraphServer {
 						x = x + size*0.8 + size / 2;
 					}
 
-					if (text[i] == 'З' || text[i] == 'з')
+					if (text[i] == 'Р—' || text[i] == 'Р·')
 					{
 						draw_line(x + size * 0.10, y, x + size / 2, y, r, g, b);
 						draw_line(x + size / 2, y, x + size / 2, y + size / 2, r, g, b);
@@ -316,7 +384,7 @@ namespace GraphServer {
 						x = x + size *0.75 + size / 2;
 					}
 
-					if (text[i] == 'И' || text[i] == 'и')
+					if (text[i] == 'Р' || text[i] == 'Рё')
 					{
 						draw_line(x, y, x, y + size, r, g, b);
 						draw_line(x, y + size, x + size / 2, y, r, g, b);
@@ -324,7 +392,7 @@ namespace GraphServer {
 						x = x + size / 2 + size / 2;
 					}
 
-					if (text[i] == 'Й' || text[i] == 'й')
+					if (text[i] == 'Р™' || text[i] == 'Р№')
 					{
 						draw_line(x, y, x, y + size, r, g, b);
 						draw_line(x, y + size, x + size / 2, y, r, g, b);
@@ -333,7 +401,7 @@ namespace GraphServer {
 						x = x + size / 2 + size / 2;
 					}
 
-					if (text[i] == 'К' || text[i] == 'к')
+					if (text[i] == 'Рљ' || text[i] == 'Рє')
 					{
 						draw_line(x, y, x, y + size, r, g, b);
 						draw_line(x, y + size / 2, x + size * 0.25, y + size / 2, r, g, b);
@@ -342,14 +410,14 @@ namespace GraphServer {
 						x = x + size / 2 + size / 2;
 					}
 
-					if (text[i] == 'Л' || text[i] == 'л')
+					if (text[i] == 'Р›' || text[i] == 'Р»')
 					{
 						draw_line(x, y + size, x + size / 2, y, r, g, b);
 						draw_line(x + size / 2, y, x + size, y + size, r, g, b);
 						x = x + size  + size / 2;
 					}
 
-					if (text[i] == 'М' || text[i] == 'м')
+					if (text[i] == 'Рњ' || text[i] == 'Рј')
 					{
 						draw_line(x, y, x, y + size, r, g, b);
 						draw_line(x, y, x + size / 2, y + size / 2, r, g, b);
@@ -358,7 +426,7 @@ namespace GraphServer {
 						x = x + size + size / 2;
 					}
 
-					if (text[i] == 'Н' || text[i] == 'н')
+					if (text[i] == 'Рќ' || text[i] == 'РЅ')
 					{
 						draw_line(x, y, x, y + size, r, g, b);
 						draw_line(x, y + size / 2, x + size / 2, y + size / 2, r, g, b);
@@ -366,7 +434,7 @@ namespace GraphServer {
 						x = x + size / 2 + size / 2;
 					}
 
-					if (text[i] == 'О' || text[i] == 'о')
+					if (text[i] == 'Рћ' || text[i] == 'Рѕ')
 					{
 						draw_line(x, y, x, y + size, r, g, b);
 						draw_line(x, y, x + size / 2, y, r, g, b);
@@ -375,7 +443,7 @@ namespace GraphServer {
 						x = x + size / 2 + size / 2;
 					}
 
-					if (text[i] == 'П' || text[i] == 'п')
+					if (text[i] == 'Рџ' || text[i] == 'Рї')
 					{
 						draw_line(x, y, x, y + size, r, g, b);
 						draw_line(x, y, x + size / 2, y, r, g, b);
@@ -383,7 +451,7 @@ namespace GraphServer {
 						x = x + size / 2 + size / 2;
 					}
 
-					if (text[i] == 'Р' || text[i] == 'р')
+					if (text[i] == 'Р ' || text[i] == 'СЂ')
 					{
 
 						draw_line(x, y, x, y + size, r, g, b);
@@ -394,7 +462,7 @@ namespace GraphServer {
 
 					}
 
-					if (text[i] == 'С' || text[i] == 'с')
+					if (text[i] == 'РЎ' || text[i] == 'СЃ')
 					{
 						draw_line(x, y, x, y + size, r, g, b);
 						draw_line(x, y, x + size / 2, y, r, g, b);
@@ -404,14 +472,14 @@ namespace GraphServer {
 						x = x + size / 2 + size / 2;
 					}
 
-					if (text[i] == 'Т' || text[i] == 'т')
+					if (text[i] == 'Рў' || text[i] == 'С‚')
 					{
 						draw_line(x, y, x + size * 0.8, y, r, g, b);
 						draw_line(x + size * 0.4, y, x + size * 0.4, y + size, r, g, b);
 						x = x + size *0.8 + size / 2;
 					}
 
-					if (text[i] == 'У' || text[i] == 'у')
+					if (text[i] == 'РЈ' || text[i] == 'Сѓ')
 					{
 						draw_line(x, y, x + size * 0.4, y + size / 2, r, g, b);
 						draw_line(x + size * 0.4, y + size / 2, x + size * 0.8, y, r, g, b);
@@ -419,7 +487,7 @@ namespace GraphServer {
 						x = x + size * 0.8 + size / 2;
 					}
 
-					if (text[i] == 'Ф' || text[i] == 'ф')
+					if (text[i] == 'Р¤' || text[i] == 'С„')
 					{
 						draw_line(x, y, x, y + size / 2, r, g, b);
 						draw_line(x, y, x + size * 0.8, y, r, g, b);
@@ -429,14 +497,14 @@ namespace GraphServer {
 						x = x + size * 0.8 + size / 2;
 					}
 
-					if (text[i] == 'Х' || text[i] == 'х')
+					if (text[i] == 'РҐ' || text[i] == 'С…')
 					{
 						draw_line(x, y, x + size * 0.8, y + size, r, g, b);
 						draw_line(x + size * 0.8, y, x, y + size, r, g, b);
 						x = x + size * 0.8 + size / 2;
 					}
 
-					if (text[i] == 'Ц' || text[i] == 'ц')
+					if (text[i] == 'Р¦' || text[i] == 'С†')
 					{
 						draw_line(x, y, x, y + size, r, g, b);
 						draw_line(x, y + size, x + size / 2, y + size, r, g, b);
@@ -446,7 +514,7 @@ namespace GraphServer {
 						x = x + size * 0.6 + size / 2;
 					}
 
-					if (text[i] == 'Ч' || text[i] == 'ч')
+					if (text[i] == 'Р§' || text[i] == 'С‡')
 					{
 						draw_line(x, y, x, y + size / 2, r, g, b);
 						draw_line(x, y + size / 2, x + size / 2, y + size / 2, r, g, b);
@@ -454,7 +522,7 @@ namespace GraphServer {
 						x = x + size / 2 + size / 2;
 					}
 
-					if (text[i] == 'Ш' || text[i] == 'ш')
+					if (text[i] == 'РЁ' || text[i] == 'С€')
 					{
 						draw_line(x, y, x, y + size, r, g, b);
 						draw_line(x + size * 0.4, y, x + size * 0.4, y + size, r, g, b);
@@ -463,7 +531,7 @@ namespace GraphServer {
 						x = x + size * 0.8 + size / 2;
 					}
 
-					if (text[i] == 'Щ' || text[i] == 'щ')
+					if (text[i] == 'Р©' || text[i] == 'С‰')
 					{
 						draw_line(x, y, x, y + size, r, g, b);
 						draw_line(x + size * 0.4, y, x + size * 0.4, y + size, r, g, b);
@@ -474,7 +542,7 @@ namespace GraphServer {
 						x = x + size * 0.8 + size / 2;
 					}
 
-					if (text[i] == 'Ъ' || text[i] == 'ъ')
+					if (text[i] == 'РЄ' || text[i] == 'СЉ')
 					{
 						draw_line(x, y, x + size * 0.4, y, r, g, b);
 						draw_line(x + size * 0.4, y, x + size * 0.4, y + size, r, g, b);
@@ -484,7 +552,7 @@ namespace GraphServer {
 						x = x + size * 0.8 + size / 2;
 					}
 
-					if (text[i] == 'Ы' || text[i] == 'ы')
+					if (text[i] == 'Р«' || text[i] == 'С‹')
 					{
 						draw_line(x, y, x, y + size, r, g, b);
 						draw_line(x, y + size / 2, x + size * 0.4, y + size / 2, r, g, b);
@@ -494,7 +562,7 @@ namespace GraphServer {
 						x = x + size / 2 + size / 2;
 					}
 
-					if (text[i] == 'Ь' || text[i] == 'ь')
+					if (text[i] == 'Р¬' || text[i] == 'СЊ')
 					{
 						draw_line(x, y, x, y + size, r, g, b);
 						draw_line(x, y + size / 2, x + size * 0.4, y + size / 2, r, g, b);
@@ -503,7 +571,7 @@ namespace GraphServer {
 						x = x + size / 2 + size / 2;
 					}
 
-					if (text[i] == 'Э' || text[i] == 'э')
+					if (text[i] == 'Р­' || text[i] == 'СЌ')
 					{
 						draw_line(x, y, x + size / 2, y, r, g, b);
 						draw_line(x + size / 2, y, x + size / 2, y + size, r, g, b);
@@ -512,7 +580,7 @@ namespace GraphServer {
 						x = x + size / 2 + size / 2;
 					}
 
-					if (text[i] == 'Ю' || text[i] == 'ю')
+					if (text[i] == 'Р®' || text[i] == 'СЋ')
 					{
 						draw_line(x, y, x, y + size, r, g, b);
 						draw_line(x, y + size / 2, x + size * 0.4, y + size / 2, r, g, b);
@@ -524,7 +592,7 @@ namespace GraphServer {
 					}
 
 
-					if (text[i] == 'Я' || text[i] == 'я')
+					if (text[i] == 'РЇ' || text[i] == 'СЏ')
 					{
 						draw_line(x + size / 2, y, x + size / 2, y + size, r, g, b);
 						draw_line(x, y, x + size / 2, y, r, g, b);
@@ -547,7 +615,7 @@ namespace GraphServer {
 
 				for (int i = 0; i < strlen(text); i++)
 				{
-					if (text[i] == 'А' || text[i] == 'а')
+					if (text[i] == 'Рђ' || text[i] == 'Р°')
 					{
 
 						draw_line(x, y + size, x + size / 3, y, r, g, b);
@@ -556,7 +624,7 @@ namespace GraphServer {
 
 						x = x + (size / 2) + size / 2;
 					}
-					if (text[i] == 'Б' || text[i] == 'б')
+					if (text[i] == 'Р‘' || text[i] == 'Р±')
 					{
 						draw_line(x, y, x, y + size, r, g, b);
 						draw_line(x, y, x + size / 2, y, r, g, b);
@@ -565,7 +633,7 @@ namespace GraphServer {
 						x = x + (size / 2) + size / 2;
 					}
 
-					if (text[i] == 'В' || text[i] == 'в')
+					if (text[i] == 'Р’' || text[i] == 'РІ')
 					{
 						draw_line(x, y, x, y + size, r, g, b);
 						draw_line(x, y, x + size / 2, y + size * 0.25, r, g, b);
@@ -575,14 +643,14 @@ namespace GraphServer {
 						x = x + (size / 2) + size / 2;
 					}
 
-					if (text[i] == 'Г' || text[i] == 'г')
+					if (text[i] == 'Р“' || text[i] == 'Рі')
 					{
 						draw_line(x, y, x, y + size, r, g, b);
 						draw_line(x, y, x + size / 2, y, r, g, b);
 						x = x + (size / 2) + size / 2;
 					}
 
-					if (text[i] == 'Д' || text[i] == 'д')
+					if (text[i] == 'Р”' || text[i] == 'Рґ')
 					{
 						draw_line(x, y + size / 2, x, y + size, r, g, b);
 						draw_line(x, y + size / 2, x + size, y + size / 2, r, g, b);
@@ -592,7 +660,7 @@ namespace GraphServer {
 						x = x + size + size / 2;
 					}
 
-					if (text[i] == 'Е' || text[i] == 'е')
+					if (text[i] == 'Р•' || text[i] == 'Рµ')
 					{
 						draw_line(x, y, x, y + size, r, g, b);
 						draw_line(x, y, x + size / 2, y + size * 0.25, r, g, b);
@@ -601,7 +669,7 @@ namespace GraphServer {
 						x = x + size / 2 + size / 2;
 					}
 
-					if (text[i] == 'Ё' || text[i] == 'ё')
+					if (text[i] == 'РЃ' || text[i] == 'С‘')
 					{
 						draw_line(x, y, x, y + size, r, g, b);
 						draw_line(x, y, x + size / 2, y + size * 0.25, r, g, b);
@@ -612,7 +680,7 @@ namespace GraphServer {
 						x = x + size / 2 + size / 2;
 					}
 
-					if (text[i] == 'Ж' || text[i] == 'ж')
+					if (text[i] == 'Р–' || text[i] == 'Р¶')
 					{
 						draw_line(x, y, x + size, y + size, r, g, b);
 						draw_line(x, y + size, x + size, y, r, g, b);
@@ -620,7 +688,7 @@ namespace GraphServer {
 						x = x + size + size / 2;
 					}
 
-					if (text[i] == 'З' || text[i] == 'з')
+					if (text[i] == 'Р—' || text[i] == 'Р·')
 					{
 						draw_line(x + size * 0.10, y, x + size / 2, y, r, g, b);
 						draw_line(x + size / 2, y, x + size / 2, y + size / 2, r, g, b);
@@ -632,7 +700,7 @@ namespace GraphServer {
 						x = x + size * 0.8 + size / 2;
 					}
 
-					if (text[i] == 'И' || text[i] == 'и')
+					if (text[i] == 'Р' || text[i] == 'Рё')
 					{
 						draw_line(x, y, x, y + size, r, g, b);
 						draw_line(x, y + size, x + size * 0.40, y, r, g, b);
@@ -640,7 +708,7 @@ namespace GraphServer {
 						x = x + size / 2 + size / 2;
 					}
 
-					if (text[i] == 'Й' || text[i] == 'й')
+					if (text[i] == 'Р™' || text[i] == 'Р№')
 					{
 						draw_line(x, y, x, y + size, r, g, b);
 						draw_line(x, y + size, x + size * 0.40, y, r, g, b);
@@ -649,7 +717,7 @@ namespace GraphServer {
 						x = x + size / 2 + size / 2;
 					}
 
-					if (text[i] == 'К' || text[i] == 'к')
+					if (text[i] == 'Рљ' || text[i] == 'Рє')
 					{
 						draw_line(x, y, x, y + size, r, g, b);
 						draw_line(x, y + size / 2, x + size / 2, y, r, g, b);
@@ -657,14 +725,14 @@ namespace GraphServer {
 						x = x + size / 2 + size / 2;
 					}
 
-					if (text[i] == 'Л' || text[i] == 'л')
+					if (text[i] == 'Р›' || text[i] == 'Р»')
 					{
 						draw_line(x, y + size, x + size * 0.30, y, r, g, b);
 						draw_line(x + size * 0.30, y, x + size * 0.60, y + size, r, g, b);
 						x = x + size / 2 + size / 2;
 					}
 
-					if (text[i] == 'М' || text[i] == 'м')
+					if (text[i] == 'Рњ' || text[i] == 'Рј')
 					{
 						draw_line(x, y, x, y + size, r, g, b);
 						draw_line(x, y, x + size * 0.30, y + size / 2, r, g, b);
@@ -674,7 +742,7 @@ namespace GraphServer {
 
 					}
 
-					if (text[i] == 'Н' || text[i] == 'н')
+					if (text[i] == 'Рќ' || text[i] == 'РЅ')
 					{
 						draw_line(x, y, x, y + size, r, g, b);
 						draw_line(x, y + size * 0.30, x + size / 2, y + size * 0.30, r, g, b);
@@ -683,7 +751,7 @@ namespace GraphServer {
 
 					}
 
-					if (text[i] == 'О' || text[i] == 'о')
+					if (text[i] == 'Рћ' || text[i] == 'Рѕ')
 					{
 						draw_line(x, y + size / 2, x + size / 2, y, r, g, b);
 						draw_line(x + size / 2, y, x + size, y + size / 2, r, g, b);
@@ -692,7 +760,7 @@ namespace GraphServer {
 						x = x + size  + size / 2;
 					}
 
-					if (text[i] == 'П' || text[i] == 'п')
+					if (text[i] == 'Рџ' || text[i] == 'Рї')
 					{
 						draw_line(x, y, x, y + size, r, g, b);
 						draw_line(x, y, x + size / 2, y, r, g, b);
@@ -700,7 +768,7 @@ namespace GraphServer {
 						x = x + size / 2 + size / 2;
 					}
 
-					if (text[i] == 'Р' || text[i] == 'р')
+					if (text[i] == 'Р ' || text[i] == 'СЂ')
 					{
 						draw_line(x, y, x, y + size, r, g, b);
 						draw_line(x, y, x + size / 2, y + size * 0.25, r, g, b);
@@ -708,7 +776,7 @@ namespace GraphServer {
 						x = x + (size / 2) + size / 2;
 					}
 
-					if (text[i] == 'С' || text[i] == 'с')
+					if (text[i] == 'РЎ' || text[i] == 'СЃ')
 					{
 						draw_line(x, y + size / 2, x + size / 2, y, r, g, b);
 						draw_line(x + size / 2, y, x + size, y + size * 0.2, r, g, b);
@@ -717,14 +785,14 @@ namespace GraphServer {
 						x = x + size  + size / 2;
 					}
 
-					if (text[i] == 'Т' || text[i] == 'т')
+					if (text[i] == 'Рў' || text[i] == 'С‚')
 					{
 						draw_line(x, y, x + size * 0.5, y, r, g, b);
 						draw_line(x + size * 0.25, y, x + size * 0.25, y + size, r, g, b);
 						x = x + size / 2 + size / 2;
 					}
 
-					if (text[i] == 'У' || text[i] == 'у')
+					if (text[i] == 'РЈ' || text[i] == 'Сѓ')
 					{
 						draw_line(x, y, x + size * 0.4, y + size / 2, r, g, b);
 						draw_line(x + size * 0.4, y + size / 2, x + size * 0.8, y, r, g, b);
@@ -732,7 +800,7 @@ namespace GraphServer {
 						x = x + size * 0.7 + size / 2;
 					}
 
-					if (text[i] == 'Ф' || text[i] == 'ф')
+					if (text[i] == 'Р¤' || text[i] == 'С„')
 					{
 						draw_line(x, y + size * 0.25, x + size * 0.4, y, r, g, b);
 						draw_line(x + size * 0.4, y, x + size * 0.8, y + size * 0.25, r, g, b);
@@ -742,14 +810,14 @@ namespace GraphServer {
 						x = x + size * 0.8 + size / 2;
 					}
 
-					if (text[i] == 'Х' || text[i] == 'х')
+					if (text[i] == 'РҐ' || text[i] == 'С…')
 					{
 						draw_line(x, y, x + size * 0.6, y + size, r, g, b);
 						draw_line(x + size * 0.6, y, x, y + size, r, g, b);
 						x = x + size / 2 + size / 2;
 					}
 
-					if (text[i] == 'Ц' || text[i] == 'ц')
+					if (text[i] == 'Р¦' || text[i] == 'С†')
 					{
 						draw_line(x, y, x, y + size, r, g, b);
 						draw_line(x, y + size, x + size / 2, y + size, r, g, b);
@@ -759,7 +827,7 @@ namespace GraphServer {
 						x = x + size * 0.6 + size / 2;
 					}
 
-						if (text[i] == 'Ч' || text[i] == 'ч')
+						if (text[i] == 'Р§' || text[i] == 'С‡')
 						{
 							draw_line(x, y, x, y + size / 2, r, g, b);
 							draw_line(x, y + size / 2, x + size / 4, y + size * 0.7, r, g, b);
@@ -768,7 +836,7 @@ namespace GraphServer {
 							x = x + size / 2 + size / 2;
 						}
 
-						if (text[i] == 'Ш' || text[i] == 'ш')
+						if (text[i] == 'РЁ' || text[i] == 'С€')
 						{
 							draw_line(x, y, x, y + size, r, g, b);
 							draw_line(x + size * 0.4, y + size * 0.25, x + size * 0.4, y + size, r, g, b);
@@ -777,7 +845,7 @@ namespace GraphServer {
 							x = x + size * 0.8 + size / 2;
 						}
 
-						if (text[i] == 'Щ' || text[i] == 'щ')
+						if (text[i] == 'Р©' || text[i] == 'С‰')
 						{
 							draw_line(x, y, x, y + size, r, g, b);
 							draw_line(x + size * 0.4, y + size * 0.25, x + size * 0.4, y + size, r, g, b);
@@ -788,7 +856,7 @@ namespace GraphServer {
 							x = x + size * 0.8 + size / 2;
 						}
 
-						if (text[i] == 'Ъ' || text[i] == 'ъ')
+						if (text[i] == 'РЄ' || text[i] == 'СЉ')
 						{
 							draw_line(x, y, x + size * 0.4, y, r, g, b);
 							draw_line(x + size * 0.4, y, x + size * 0.4, y + size, r, g, b);
@@ -797,7 +865,7 @@ namespace GraphServer {
 							x = x + size * 0.8 + size / 2;
 						}
 
-						if (text[i] == 'Ы' || text[i] == 'ы')
+						if (text[i] == 'Р«' || text[i] == 'С‹')
 						{
 							draw_line(x, y, x, y + size, r, g, b);
 							draw_line(x, y + size / 2, x + size * 0.4, y + size * 0.75, r, g, b);
@@ -806,7 +874,7 @@ namespace GraphServer {
 							x = x + size / 2 + size / 2;
 						}
 
-						if (text[i] == 'Ь' || text[i] == 'ь')
+						if (text[i] == 'Р¬' || text[i] == 'СЊ')
 						{
 							draw_line(x, y, x, y + size, r, g, b);
 							draw_line(x, y + size / 2, x + size * 0.4, y + size * 0.75, r, g, b);
@@ -814,7 +882,7 @@ namespace GraphServer {
 							x = x + size / 2 + size / 2;
 						}
 
-						if (text[i] == 'Э' || text[i] == 'э')
+						if (text[i] == 'Р­' || text[i] == 'СЌ')
 						{
 							draw_line(x, y, x + size / 4, y - size * 0.2, r, g, b);
 							draw_line(x + size / 4, y - size * 0.2, x + size / 2, y, r, g, b);
@@ -825,7 +893,7 @@ namespace GraphServer {
 							x = x + size / 2 + size / 2;
 						}
 
-						if (text[i] == 'Ю' || text[i] == 'ю')
+						if (text[i] == 'Р®' || text[i] == 'СЋ')
 						{
 							draw_line(x, y, x, y + size, r, g, b);
 							draw_line(x, y + size / 2, x + size * 0.4, y + size / 2, r, g, b);
@@ -836,7 +904,7 @@ namespace GraphServer {
 							x = x + size * 0.8 + size / 2;
 						}
 
-						if (text[i] == 'Я' || text[i] == 'я')
+						if (text[i] == 'РЇ' || text[i] == 'СЏ')
 						{
 							draw_line(x + size / 2, y, x + size / 2, y + size, r, g, b);
 							draw_line(x + size / 2, y, x, y + size * 0.25, r, g, b);
@@ -854,53 +922,12 @@ namespace GraphServer {
 				break;
 
 				default: 
-					MessageBox::Show("Нет такого шрифта");
+					MessageBox::Show("РќРµС‚ С‚Р°РєРѕРіРѕ С€СЂРёС„С‚Р°");
 					break;
 			}
 		}
 		
-		void set_orientation(int orientation)
-		{
-			MessageBox::Show("tyta");
-			switch (orientation)
-			{
-			case 0:
-				Img1->RotateFlip(RotateFlipType::RotateNoneFlipNone);
-				pictureBox1->Image = Img1;
-			
-				
-				break;
-			case 1:
-				Img1->RotateFlip(RotateFlipType::Rotate90FlipNone);
-				pictureBox1->Image = Img1;
-				break;
-			case 2:
-				Img1->RotateFlip(RotateFlipType::Rotate180FlipNone);
-				pictureBox1->Image = Img1;
-				break;
-
-			case 3:
-				Img1->RotateFlip(RotateFlipType::Rotate270FlipNone);
-				pictureBox1->Image = Img1;
-				break;
-
-			default:
-				break;
-
-			}
-			
-		}
-
-	
-
-		void get_size(int width, int height)
-		{
-			Img2 = gcnew Bitmap(Img1,width, height);
-			pictureBox1->Image = Img2;
-
-			
-		}
-
+		
 
 		String^ buffer;
 
@@ -919,7 +946,7 @@ namespace GraphServer {
 			my_sock = socket(AF_INET, SOCK_DGRAM, 0);
 			if (my_sock == INVALID_SOCKET)
 			{
-				MessageBox::Show("Ошибка", "Ошибка", MessageBoxButtons::OK, MessageBoxIcon::Warning);
+				MessageBox::Show("РћС€РёР±РєР°", "РћС€РёР±РєР°", MessageBoxButtons::OK, MessageBoxIcon::Warning);
 				WSACleanup();
 			}
 
@@ -930,7 +957,7 @@ namespace GraphServer {
 
 			if (bind(my_sock, (sockaddr*)&local_addr, sizeof(local_addr)) == -1)
 			{
-				MessageBox::Show("Ошибка", "Ошибка", MessageBoxButtons::OK, MessageBoxIcon::Warning);
+				MessageBox::Show("РћС€РёР±РєР°", "РћС€РёР±РєР°", MessageBoxButtons::OK, MessageBoxIcon::Warning);
 				closesocket(my_sock);
 				WSACleanup();
 			}
@@ -943,7 +970,7 @@ namespace GraphServer {
 				int bsize = recvfrom(my_sock, &buff[0], sizeof(buff) - 1, 0, (sockaddr*)&client_addr, &client_addr_size);
 				if (bsize == SOCKET_ERROR)
 				{
-					MessageBox::Show("Ошибка", "Ошибка", MessageBoxButtons::OK, MessageBoxIcon::Warning);
+					MessageBox::Show("РћС€РёР±РєР°", "РћС€РёР±РєР°", MessageBoxButtons::OK, MessageBoxIcon::Warning);
 
 				}
 				HOSTENT* hst = gethostbyaddr((char*)&client_addr.sin_addr, 4, AF_INET);

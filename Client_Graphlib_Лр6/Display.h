@@ -1,4 +1,4 @@
-﻿#ifndef Display_h
+#ifndef Display_h
 #define Display_h
 
 #include <iostream>
@@ -12,7 +12,7 @@
 #pragma comment(lib, "Ws2_32.lib")
 #include <winsock2.h>
 #include <windows.h>
-
+#include <fstream>
 
 #include "GraphicsLib.h"
 
@@ -38,6 +38,7 @@ public:
     Display(uint_least16_t w, uint_least16_t h, int PORT = 777, string SERVERADDR = "127.0.0.1") : GraphicsLib(w, h)
     
     {
+
         my_sock = socket(AF_INET, SOCK_DGRAM, 0);
         if (my_sock == INVALID_SOCKET)
         {
@@ -61,6 +62,7 @@ public:
                 closesocket(my_sock);
                 WSACleanup();
             }
+    
     };
 
     void fillScreen(uint_least16_t color) {
@@ -117,22 +119,15 @@ public:
     {
         return 0;
     }
-        int_least16_t drawText(int_least16_t x, int_least16_t y, const char* s, uint_least16_t color, uint_least16_t bg, uint_least8_t size) 
+       
+    int_least16_t drawText(int_least16_t x, int_least16_t y, const char* s, uint_least16_t color, uint_least16_t bg, uint_least8_t size) 
         {
+            setlocale(LC_ALL, "RUS");
             int hexcolor = hexToRGB(color);
             snprintf(buffer, buffer_length, "draw_text: %i %i %06x %i %i %s", x, y, hexcolor, bg, size, s);
             sendCommand(buffer);
             return 0;
         }
-
-        void loadSprite(uint_least8_t index, int_least16_t width, int_least16_t height, char* data) 
-        {
-        }
-
-        void showSprite(uint_least8_t index, uint_least16_t x, uint_least16_t y) 
-        {
-        }
-
 
         void setOrientation(uint_least8_t orientation)
         {
@@ -140,11 +135,42 @@ public:
             sendCommand(buffer);
         }
 
-        void getSize(uint_least16_t w, uint_least16_t h)
+        void getWidth()
         {
-            snprintf(buffer, buffer_length, "get_size: %i %i", w,h);
+            snprintf(buffer, buffer_length, "get_width:");
             sendCommand(buffer);
+            Recv();
+        }
 
+        void getHeight()
+        {
+            snprintf(buffer, buffer_length, "get_height:");
+            sendCommand(buffer);
+            Recv();
+        }
+
+       
+        void Recv()
+        {
+            char buff2[100];
+
+            sockaddr_in server_addr;
+            int server_addr_size = sizeof(server_addr);
+            int n;
+            int iResult;
+
+            
+                 n = recvfrom(my_sock, &buff2[0], sizeof(buff2) - 1, 0, (sockaddr*)&server_addr, &server_addr_size);
+                if (n == SOCKET_ERROR)
+                {
+                    printf("recvfrom() error: % d \n", WSAGetLastError());
+                    closesocket(my_sock);
+                    WSACleanup();
+                }
+                buff2[n] = 0;
+                printf("Server: %s", &buff2[0]);
+
+            
         }
 
 private:

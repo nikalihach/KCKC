@@ -1,5 +1,3 @@
-
-
 #include <iostream>
 #include <string>
 
@@ -27,7 +25,7 @@ bool HEX(string str)
     return true;
 }
 
-int Сonverting(char* str)
+int РЎonverting(char* str)
 {
     long lnum;
     int num;
@@ -58,7 +56,7 @@ void Parse(char* buff, struct Command* com)
     char* arr[100];
     char* str;
     char* next_token1 = NULL;
-    str = strtok_s(buff, " ,.;:", &next_token1);
+    str = strtok_s(buff, ",;:", &next_token1);
     k = 0;
     while (str != NULL)
     {
@@ -74,22 +72,38 @@ void Parse(char* buff, struct Command* com)
 
     switch (k)
     {
+    case 1: 
+        com->name = arr[0];
+
+        if (com->name == "get_width")
+        {
+            com->success = 1;
+            cout << "РџСЂРёРЅСЏС‚Рѕ" << endl;
+            break;
+        }
+
+        else if (com->name == "get_height")
+        {
+            com->success = 1;
+            cout << "РџСЂРёРЅСЏС‚Рѕ" << endl;
+            break;
+        }
+
+        else
+        {
+            System::Windows::Forms::MessageBox::Show("Error: РќРµРїСЂР°РІРёР»СЊРЅР°СЏ РєРѕРјР°РЅРґР° ");
+            com->success = 0;
+            break;
+        }
+
     case 2:
         com->name = arr[0];
-        /*
-        if (com->name != "clear_display" )
+   
+        if (com->name == "clear_display") 
         {
-            System::Windows::Forms::MessageBox::Show("Error: Неправильное название команды ");
-            com->success = 0;
-            error = 1;
-        }
-        if (error == 1)break;
-        */
-
-        if (com->name == "clear_display") {
             if (!HEX(arr[1]))
             {
-                System::Windows::Forms::MessageBox::Show("Error: Неправильный параметр color ");
+                System::Windows::Forms::MessageBox::Show("Error: РќРµРїСЂР°РІРёР»СЊРЅС‹Р№ РїР°СЂР°РјРµС‚СЂ color ");
                 error = 1;
                 com->success = 0;
             }
@@ -103,7 +117,8 @@ void Parse(char* buff, struct Command* com)
             com->b = num % 0x100;
 
             com->success = 1;
-            cout << "Принято" << endl;
+            cout << "РџСЂРёРЅСЏС‚Рѕ" << endl;
+            break;
         }
 
         else if (com->name == "set_orientation") 
@@ -114,104 +129,74 @@ void Parse(char* buff, struct Command* com)
             if (com->orientation < 0 || com->orientation> 65535)
              {
                 System::Windows::Forms::MessageBox::Show("Error");
-               cout << "Error: значение параметра orientation за диапазоном допустимых значений " << endl;
+               cout << "Error: Р·РЅР°С‡РµРЅРёРµ РїР°СЂР°РјРµС‚СЂР° orientation Р·Р° РґРёР°РїР°Р·РѕРЅРѕРј РґРѕРїСѓСЃС‚РёРјС‹С… Р·РЅР°С‡РµРЅРёР№ " << endl;
                error = 1;
                com->success = 0;
              }
           if (error == 1)break;
 
           com->success = 1;
-          cout << "Принято" << endl;
-        }
-
-        break;
-
-    case 3:
-
-        com->name = arr[0];
-        if (com->name == "get_size")
-        {
-            com->width = stoi(arr[1], 0, 10);
-
-            if (com->width < 0 || com->width> 65535)
-            {
-                System::Windows::Forms::MessageBox::Show("Error");
-                cout << "Error: значение параметра width за диапазоном допустимых значений " << endl;
-                error = 1;
-                com->success = 0;
-            }
-            if (error == 1)break;
-
-            com->height = stoi(arr[2], 0, 10);
-
-            if (com->height < 0 || com->height> 65535)
-            {
-                System::Windows::Forms::MessageBox::Show("Error");
-                cout << "Error: значение параметра height за диапазоном допустимых значений " << endl;
-                error = 1;
-                com->success = 0;
-            }
-            if (error == 1)break;
-
-            com->success = 1;
-            cout << "Принято" << endl;
+          cout << "РџСЂРёРЅСЏС‚Рѕ" << endl;
+          break;
         }
 
         else
         {
+            System::Windows::Forms::MessageBox::Show("Error: РќРµРїСЂР°РІРёР»СЊРЅР°СЏ РєРѕРјР°РЅРґР° ");
             com->success = 0;
             break;
         }
 
-        break;
-
+        
     case 4:
         com->name = arr[0];
-        if (com->name != "draw_pixel")
+
+        if (com->name == "draw_pixel")
         {
-            System::Windows::Forms::MessageBox::Show("Error: Неправильное название команды ");
-            com->success = 0;
-            error = 1;
+            com->first = РЎonverting(arr[1]);
+            if (com->first == 9999999)
+            {
+                error = 1;
+                com->success = 0;
+            }
+            if (error == 1) break;
+
+            com->second = РЎonverting(arr[2]);
+            if (com->second == 9999999)
+            {
+                error = 1;
+                com->success = 0;
+            }
+            if (error == 1) break;
+
+            //color
+            if (!HEX(arr[3]))
+            {
+                System::Windows::Forms::MessageBox::Show("Error: РќРµРїСЂР°РІРёР»СЊРЅС‹Р№ РїР°СЂР°РјРµС‚СЂ color ");
+                error = 1;
+                com->success = 0;
+            }
+            if (error == 1)break;
+
+            num = strtol(arr[3], &end, 16);
+
+            com->r = num / 0x10000;
+            com->g = (num / 0x100) % 0x100;
+            com->b = num % 0x100;
+
+            com->success = 1;
+            cout << "РџСЂРёРЅСЏС‚Рѕ" << endl;
+            break;
         }
-        if (error == 1)break;
 
-        cout << arr[1] << endl;
-
-        com->first = Сonverting(arr[1]);
-        if (com->first == 9999999)
+        else
         {
-            error = 1;
+            System::Windows::Forms::MessageBox::Show("Error: РќРµРїСЂР°РІРёР»СЊРЅР°СЏ РєРѕРјР°РЅРґР° ");
             com->success = 0;
+            break;
         }
-        if (error == 1) break;
 
-        com->second = Сonverting(arr[2]);
-        if (com->second == 9999999)
-        {
-            error = 1;
-            com->success = 0;
-        }
-        if (error == 1) break;
-
-        //color
-        if (!HEX(arr[3]))
-        {
-            System::Windows::Forms::MessageBox::Show("Error: Неправильный параметр color ");
-            error = 1;
-            com->success = 0;
-        }
-        if (error == 1)break;
-
-        num = strtol(arr[3], &end, 16);
-
-        com->r = num / 0x10000;
-        com->g = (num / 0x100) % 0x100;
-        com->b = num % 0x100;
-
-        com->success = 1;
-        cout << "Принято" << endl;
-        break;
-
+   
     case 6:
 
         com->name = arr[0];
@@ -219,17 +204,17 @@ void Parse(char* buff, struct Command* com)
 
         if (com->name == "draw_line" || com->name == "draw_rectangle" || com->name == "fill_rectangle" || com->name == "draw_ellipse" || com->name == "fill_ellipse")
         {
-           // System::Windows::Forms::MessageBox::Show ("Норм " );
+           // System::Windows::Forms::MessageBox::Show ("РќРѕСЂРј " );
           
         }
         else{
-            System::Windows::Forms::MessageBox::Show("Error: Неправильное название команды ");
+            System::Windows::Forms::MessageBox::Show("Error: РќРµРїСЂР°РІРёР»СЊРЅРѕРµ РЅР°Р·РІР°РЅРёРµ РєРѕРјР°РЅРґС‹ ");
             com->success = 0;
             error = 1;
         }
         if (error == 1)break;
 
-        com->first = Сonverting(arr[1]);
+        com->first = РЎonverting(arr[1]);
         if (com->first == 9999999)
         {
             error = 1;
@@ -237,7 +222,7 @@ void Parse(char* buff, struct Command* com)
         }
         if (error == 1) break;
 
-        com->second = Сonverting(arr[2]);
+        com->second = РЎonverting(arr[2]);
         if (com->second == 9999999)
         {
             error = 1;
@@ -245,7 +230,7 @@ void Parse(char* buff, struct Command* com)
         }
         if (error == 1) break;
 
-        com->third = Сonverting(arr[3]);
+        com->third = РЎonverting(arr[3]);
         if (com->third == 9999999)
         {
             error = 1;
@@ -253,7 +238,7 @@ void Parse(char* buff, struct Command* com)
         }
         if (error == 1) break;
 
-        com->fourth = Сonverting(arr[4]);
+        com->fourth = РЎonverting(arr[4]);
         if (com->fourth == 9999999)
         {
             error = 1;
@@ -264,7 +249,7 @@ void Parse(char* buff, struct Command* com)
       
         if (HEX(arr[5])==false)
         {
-            System::Windows::Forms::MessageBox::Show("Error: Неправильный параметр color ... ");
+            System::Windows::Forms::MessageBox::Show("Error: РќРµРїСЂР°РІРёР»СЊРЅС‹Р№ РїР°СЂР°РјРµС‚СЂ color ... ");
             error = 1;
             com->success = 0;
         }
@@ -277,7 +262,7 @@ void Parse(char* buff, struct Command* com)
         com->b = num % 0x100;
 
         com->success = 1;
-        cout << "Принято" << endl;
+        cout << "РџСЂРёРЅСЏС‚Рѕ" << endl;
         break;
 
     case 7:
@@ -286,13 +271,13 @@ void Parse(char* buff, struct Command* com)
 
         if (com->name != "draw_text")
         {
-            cout << "ERROR: Неправильное название команды" << endl;
+            cout << "ERROR: РќРµРїСЂР°РІРёР»СЊРЅРѕРµ РЅР°Р·РІР°РЅРёРµ РєРѕРјР°РЅРґС‹" << endl;
             com->success = 0;
             error = 1;
         }
         if (error == 1)break;
 
-        com->x = Сonverting(arr[1]);
+        com->x = РЎonverting(arr[1]);
         if (com->x == 9999999)
         {
             error = 1;
@@ -300,7 +285,7 @@ void Parse(char* buff, struct Command* com)
         }
         if (error == 1) break;
 
-        com->y = Сonverting(arr[2]);
+        com->y = РЎonverting(arr[2]);
         if (com->y == 9999999)
         {
             error = 1;
@@ -310,7 +295,7 @@ void Parse(char* buff, struct Command* com)
 
         if (!HEX(arr[3]))
         {
-            cout << "ERROR: Неправильный параметр color" << endl;
+            cout << "ERROR: РќРµРїСЂР°РІРёР»СЊРЅС‹Р№ РїР°СЂР°РјРµС‚СЂ color" << endl;
             error = 1;
             com->success = 0;
         }
@@ -325,7 +310,7 @@ void Parse(char* buff, struct Command* com)
 
         if (com->font_number < 0 || com->font_number> 65535)
         {
-            cout << "Error: значение параметра font_number за диапазоном допустимых значений " << endl;
+            cout << "Error: Р·РЅР°С‡РµРЅРёРµ РїР°СЂР°РјРµС‚СЂР° font_number Р·Р° РґРёР°РїР°Р·РѕРЅРѕРј РґРѕРїСѓСЃС‚РёРјС‹С… Р·РЅР°С‡РµРЅРёР№ " << endl;
             error = 1;
             com->success = 0;
         }
@@ -335,7 +320,7 @@ void Parse(char* buff, struct Command* com)
 
         if (com->size < 0 || com->size> 65535)
         {
-            cout << "Error: значение параметра lenght за диапазоном допустимых значений " << endl;
+            cout << "Error: Р·РЅР°С‡РµРЅРёРµ РїР°СЂР°РјРµС‚СЂР° lenght Р·Р° РґРёР°РїР°Р·РѕРЅРѕРј РґРѕРїСѓСЃС‚РёРјС‹С… Р·РЅР°С‡РµРЅРёР№ " << endl;
             error = 1;
             com->success = 0;
         }
@@ -345,14 +330,14 @@ void Parse(char* buff, struct Command* com)
         
 
         com->success = 1;
-        cout << "Принято" << endl;
+        cout << "РџСЂРёРЅСЏС‚Рѕ" << endl;
         break;
 
     default:
 
         com->success = 0;
-        System::Windows::Forms::MessageBox::Show("Error: Неправильноe количество параметров ");
-        cout << "Error: Неправильноe количество параметров" << endl;
+        System::Windows::Forms::MessageBox::Show("Error: РќРµРїСЂР°РІРёР»СЊРЅРѕe РєРѕР»РёС‡РµСЃС‚РІРѕ РїР°СЂР°РјРµС‚СЂРѕРІ ");
+        cout << "Error: РќРµРїСЂР°РІРёР»СЊРЅРѕe РєРѕР»РёС‡РµСЃС‚РІРѕ РїР°СЂР°РјРµС‚СЂРѕРІ" << endl;
         break;
     }
 }

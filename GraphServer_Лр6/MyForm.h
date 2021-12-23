@@ -3,6 +3,7 @@
 
 #include <iostream>
 #include <stdio.h>
+#include <fstream>
 #define _WINSOCK_DEPRECATED_NO_WARNINGS
 #pragma comment(lib, "Ws2_32.lib")
 #include <winsock2.h>
@@ -30,8 +31,11 @@ namespace GraphServer {
 			//
 			//TODO: добавьте код конструктора
 			//
-			Img1 = gcnew Bitmap(pictureBox1->Width, pictureBox1->Height);
-			gr = Graphics::FromImage(Img1);
+			//Img1 = gcnew Bitmap(pictureBox1->Width, pictureBox1->Height);
+			//Img1 = gcnew Bitmap(600, 600);
+			//gr = Graphics::FromImage(Img1);
+
+
 
 			Thread^ ServerThread = gcnew Thread(gcnew ThreadStart(this, &MyForm::Server));
 
@@ -91,62 +95,43 @@ namespace GraphServer {
 			this->timer1 = (gcnew System::Windows::Forms::Timer(this->components));
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->pictureBox1))->BeginInit();
 			this->SuspendLayout();
-			// 
-			// pictureBox1
-			// 
 			this->pictureBox1->Dock = System::Windows::Forms::DockStyle::Fill;
 			this->pictureBox1->Location = System::Drawing::Point(0, 0);
 			this->pictureBox1->Name = L"pictureBox1";
 			this->pictureBox1->Size = System::Drawing::Size(1924, 1055);
 			this->pictureBox1->TabIndex = 3;
 			this->pictureBox1->TabStop = false;
-			// 
-			// textBox1
-			// 
+			this->textBox1->Dock = System::Windows::Forms::DockStyle::Bottom;
 			this->textBox1->Font = (gcnew System::Drawing::Font(L"Consolas", 9, System::Drawing::FontStyle::Italic, System::Drawing::GraphicsUnit::Point,
 				static_cast<System::Byte>(204)));
-			this->textBox1->Location = System::Drawing::Point(1429, 12);
+			this->textBox1->Location = System::Drawing::Point(0, 971);
 			this->textBox1->Multiline = true;
 			this->textBox1->Name = L"textBox1";
-			this->textBox1->Size = System::Drawing::Size(343, 25);
+			this->textBox1->Size = System::Drawing::Size(1924, 25);
 			this->textBox1->TabIndex = 6;
-			// 
-			// label2
-			// 
 			this->label2->AutoSize = true;
-			this->label2->Font = (gcnew System::Drawing::Font(L"Consolas", 10.8F, static_cast<System::Drawing::FontStyle>((System::Drawing::FontStyle::Bold | System::Drawing::FontStyle::Italic)),
+			this->label2->Dock = System::Windows::Forms::DockStyle::Bottom;
+			this->label2->Font = (gcnew System::Drawing::Font(L"Consolas", 10.8, static_cast<System::Drawing::FontStyle>((System::Drawing::FontStyle::Bold | System::Drawing::FontStyle::Italic)),
 				System::Drawing::GraphicsUnit::Point, static_cast<System::Byte>(204)));
-			this->label2->Location = System::Drawing::Point(1226, 14);
+			this->label2->Location = System::Drawing::Point(0, 996);
 			this->label2->Name = L"label2";
 			this->label2->Size = System::Drawing::Size(180, 22);
 			this->label2->TabIndex = 5;
 			this->label2->Text = L"Получена команда:";
-			// 
-			// button1
-			// 
 			this->button1->BackColor = System::Drawing::SystemColors::ActiveCaption;
+			this->button1->Dock = System::Windows::Forms::DockStyle::Bottom;
 			this->button1->Font = (gcnew System::Drawing::Font(L"Consolas", 9, System::Drawing::FontStyle::Bold, System::Drawing::GraphicsUnit::Point,
 				static_cast<System::Byte>(204)));
-			this->button1->Location = System::Drawing::Point(1778, 12);
+			this->button1->Location = System::Drawing::Point(0, 1018);
 			this->button1->Name = L"button1";
-			this->button1->Size = System::Drawing::Size(115, 37);
+			this->button1->Size = System::Drawing::Size(1924, 37);
 			this->button1->TabIndex = 4;
 			this->button1->Text = L"Отобразить\r\n команду";
 			this->button1->UseVisualStyleBackColor = false;
 			this->button1->Click += gcnew System::EventHandler(this, &MyForm::button1_Click_1);
-			// 
-			// imageList1
-			// 
 			this->imageList1->ColorDepth = System::Windows::Forms::ColorDepth::Depth8Bit;
 			this->imageList1->ImageSize = System::Drawing::Size(16, 16);
 			this->imageList1->TransparentColor = System::Drawing::Color::Transparent;
-			// 
-			// timer1
-			// 
-			
-			// 
-			// MyForm
-			// 
 			this->AutoScaleDimensions = System::Drawing::SizeF(8, 16);
 			this->AutoScaleMode = System::Windows::Forms::AutoScaleMode::Font;
 			this->ClientSize = System::Drawing::Size(1924, 1055);
@@ -156,16 +141,21 @@ namespace GraphServer {
 			this->Controls->Add(this->pictureBox1);
 			this->Name = L"MyForm";
 			this->Text = L"MyForm";
-			
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->pictureBox1))->EndInit();
 			this->ResumeLayout(false);
 			this->PerformLayout();
+
+			Img1 = gcnew Bitmap(600, 600);
+			gr = Graphics::FromImage(Img1);
 
 		}
 #pragma endregion
 			  
 			   Bitmap^ Img1;
 			   Graphics^ gr;
+			   Color aColor;
+			   Pen^ color;
+			   SolidBrush^ aBrush;
 
 			   void set_orientation(int orientation)
 			   {
@@ -173,13 +163,13 @@ namespace GraphServer {
 				   switch (orientation)
 				   {
 				   case 0:
-					   load_sprite();
+					  
 					   Img1->RotateFlip(RotateFlipType::RotateNoneFlipNone);
 					   pictureBox1->Image = Img1;
 					   break;
 
 				   case 1:
-					   show_sprite();
+					   
 					   Img1->RotateFlip(RotateFlipType::Rotate90FlipNone);
 					   pictureBox1->Image = Img1;
 					   break;
@@ -200,93 +190,85 @@ namespace GraphServer {
 				   }
 
 			   }
-			  
 
-			   void get_size(int width, int height)
+			   int get_width()
 			   {
-				
-				   Img1 = gcnew Bitmap(Img1,width, height);
-				   pictureBox1->Image = Img1;
-				   gr = Graphics::FromImage(Img1);
-
+				   int  width = Img1->Width;
+				 //MessageBox::Show("get_width", width.ToString());
+				   return width; 
 			   }
 
+			   int get_height() 
+			   {
+				   int height = Img1->Height;
+				   //MessageBox::Show("get_height", height.ToString());
+				   return height;
+			   }
 			   
-
+			   
 		void clear_display(int r, int g, int b)
 		{
-			 
-			
+			 //gr = this->CreateGraphics();
+			aColor = Color::FromArgb(r, g, b);
+			gr->Clear(aColor);
 			pictureBox1->Image = Img1;
 			
-			 //gr = this->CreateGraphics();
-			gr->Clear(Color::FromArgb(r, g, b));
 
 		}
 
 		void draw_pixel(int x0, int y0, int r, int g, int b)
 		{
 			
-			pictureBox1->Image = Img1;
-
-			Color aColor = Color::FromArgb(r, g, b);
-			SolidBrush^ aBrush = gcnew SolidBrush(aColor);
+			aColor = Color::FromArgb(r, g, b);
+			 aBrush = gcnew SolidBrush(aColor);
 			 //gr = this->CreateGraphics();
 			gr->FillRectangle(aBrush, x0, y0, 1, 1);
-
+			pictureBox1->Image = Img1;
 		}
 
 		void draw_line(int x0, int y0, int x1, int y1, int r, int g, int b)
 		{
-			
-			
-			pictureBox1->Image = Img1;
-
-			Pen^ color = gcnew Pen(Color::FromArgb(r, g, b));
+		    color = gcnew Pen(Color::FromArgb(r, g, b));
 			//Graphics^ gr = this->CreateGraphics();
 			//gr = pictureBox1->CreateGraphics();
 			gr->DrawLine(color, x0, y0, x1, y1);
-
+			pictureBox1->Image = Img1;
 		}
 
 		void draw_rectangle(int x0, int y0, int w, int h, int r, int g, int b)
 		{
 			
-			pictureBox1->Image = Img1;
-			Pen^ color = gcnew Pen(Color::FromArgb(r, g, b));
+		
+			 color = gcnew Pen(Color::FromArgb(r, g, b));
 			 //gr = this->CreateGraphics();
 			gr->DrawRectangle(color, x0, y0, w, h);
-		
+			pictureBox1->Image = Img1;
 		}
 
 		void fill_rectangle(int x0, int y0, int w, int h, int r, int g, int b)
 		{
-			
-			
-			pictureBox1->Image = Img1;
-			Color aColor = Color::FromArgb(r, g, b);
-			SolidBrush^ aBrush = gcnew SolidBrush(aColor);
+			 aColor = Color::FromArgb(r, g, b);
+			 aBrush = gcnew SolidBrush(aColor);
 			 //gr = this->CreateGraphics();
 			gr->FillRectangle(aBrush, x0, y0, w, h);
+			pictureBox1->Image = Img1;
 		}
 
 		void draw_ellipse(int x0, int y0, int rx, int ry, int r, int g, int b)
 		{
-			
-			pictureBox1->Image = Img1;
-			Pen^ color = gcnew Pen(Color::FromArgb(r, g, b));
+			 color = gcnew Pen(Color::FromArgb(r, g, b));
 			// gr = this->CreateGraphics();
 			gr->DrawEllipse(color, x0, y0, rx, ry);
+			pictureBox1->Image = Img1;
 		}
 
 		void fill_ellipse(int x0, int y0, int rx, int ry, int r, int g, int b)
 		{
-			
-			pictureBox1->Image = Img1;
-			Color aColor = Color::FromArgb(r, g, b);
-			SolidBrush^ aBrush = gcnew SolidBrush(aColor);
+			 aColor = Color::FromArgb(r, g, b);
+			 aBrush = gcnew SolidBrush(aColor);
 			// gr = this->CreateGraphics();
 			gr->FillEllipse(aBrush, x0, y0, rx, ry);
+			pictureBox1->Image = Img1;
 		}
 
 		void draw_text(int x, int y, int r, int g, int b, int font_number, int size, char* text)
@@ -934,7 +916,8 @@ namespace GraphServer {
 		void Server()
 		{
 
-			char buff[1024];
+			char buff[1000];
+			char buff2[100];
 
 
 			if (WSAStartup(0x202, (WSADATA*)&buff[0]))
@@ -964,7 +947,6 @@ namespace GraphServer {
 
 			while (1)
 			{
-
 				sockaddr_in client_addr;
 				int client_addr_size = sizeof(client_addr);
 				int bsize = recvfrom(my_sock, &buff[0], sizeof(buff) - 1, 0, (sockaddr*)&client_addr, &client_addr_size);
@@ -978,6 +960,7 @@ namespace GraphServer {
 				buff[bsize] = 0;
 				buffer = gcnew String(buff);
 
+
 				struct Command one;
 
 				Parse(buff, &one);
@@ -986,7 +969,24 @@ namespace GraphServer {
 				{
 					Drawing(&one);
 				}
-			
+
+				 if (one.name == "get_width")
+				{
+					 one.width = get_width();
+					//MessageBox::Show("Server", one.width.ToString());
+					snprintf(buff2, 100, "Width: %i", one.width);
+					sendto(my_sock, &buff2[0], strlen(&buff2[0]), 0, (sockaddr*)&client_addr, sizeof(client_addr));
+
+				}
+
+				  if (one.name == "get_height")
+				 {
+					  one.height = get_height();
+					 //MessageBox::Show("Server", one.height.ToString());
+					 snprintf(buff2, 100, "Height: %i", one.height);
+					 sendto(my_sock, &buff2[0], strlen(&buff2[0]), 0, (sockaddr*)&client_addr, sizeof(client_addr));
+				 }
+				
 			}
 		}
 
@@ -1033,12 +1033,7 @@ namespace GraphServer {
 				set_orientation(com->orientation);
 			}
 
-			else if (com->name == "get_size")
-			{
-				get_size(com->width, com->height);
-			}
-
-
+			
 		}
 
 private: System::Void button1_Click_1(System::Object^ sender, System::EventArgs^ e) {

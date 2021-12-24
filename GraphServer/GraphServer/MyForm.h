@@ -506,10 +506,10 @@ namespace GraphServer {
 						x = x + size / 2 + size / 2;
 					}
 
-					if (text[i] == '_' )
+					if (text[i] == ' ' )
 					{
 						
-						x = x + 1.5* size;
+						x = x + size;
 					}
 				}
 
@@ -817,10 +817,10 @@ namespace GraphServer {
 							x = x + size / 2 + size / 2;
 						}
 
-						if (text[i] == '_')
+						if (text[i] == ' ')
 						{
 
-							x = x + 1.5 * size;
+							x = x +  size;
 						}
 				}
 				break;

@@ -1,5 +1,3 @@
-
-
 #include <iostream>
 #include <string>
 
@@ -27,7 +25,7 @@ bool HEX(string str)
     return true;
 }
 
-int Ñonverting(char* str)
+int Сonverting(char* str)
 {
     long lnum;
     int num;
@@ -58,7 +56,7 @@ void Parse(char* buff, struct Command* com)
     char* arr[100];
     char* str;
     char* next_token1 = NULL;
-    str = strtok_s(buff, " ,.;:", &next_token1);
+    str = strtok_s(buff, ",;:", &next_token1);
     k = 0;
     while (str != NULL)
     {
@@ -71,188 +69,27 @@ void Parse(char* buff, struct Command* com)
     char* end;
     int error = 0;
 
-
-    switch (k)
+    com->name = arr[0];
+    if (com->name == "draw_text")//6+text
     {
-    case 2:
-        com->name = arr[0];
-        if (com->name != "clear_display")
-        {
-            System::Windows::Forms::MessageBox::Show("Error: Íåïðàâèëüíîå íàçâàíèå êîìàíäû ");
-            com->success = 0;
-            error = 1;
-        }
-        if (error == 1)break;
-
-        if (!HEX(arr[1]))
-        {
-            System::Windows::Forms::MessageBox::Show("Error: Íåïðàâèëüíûé ïàðàìåòð color ");
-            error = 1;
-            com->success = 0;
-        }
-        if (error == 1)break;
-
-
-        num = strtol(arr[1], &end, 16);
-
-        com->r = num / 0x10000;
-        com->g = (num / 0x100) % 0x100;
-        com->b = num % 0x100;
-
-        com->success = 1;
-        cout << "Ïðèíÿòî" << endl;
-        break;
-
-    case 4:
-        com->name = arr[0];
-        if (com->name != "draw_pixel")
-        {
-            System::Windows::Forms::MessageBox::Show("Error: Íåïðàâèëüíîå íàçâàíèå êîìàíäû ");
-            com->success = 0;
-            error = 1;
-        }
-        if (error == 1)break;
-
-        cout << arr[1] << endl;
-
-        com->first = Ñonverting(arr[1]);
-        if (com->first == 9999999)
-        {
-            error = 1;
-            com->success = 0;
-        }
-        if (error == 1) break;
-
-        com->second = Ñonverting(arr[2]);
-        if (com->second == 9999999)
-        {
-            error = 1;
-            com->success = 0;
-        }
-        if (error == 1) break;
-
-        //color
-        if (!HEX(arr[3]))
-        {
-            System::Windows::Forms::MessageBox::Show("Error: Íåïðàâèëüíûé ïàðàìåòð color ");
-            error = 1;
-            com->success = 0;
-        }
-        if (error == 1)break;
-
-        num = strtol(arr[3], &end, 16);
-
-        com->r = num / 0x10000;
-        com->g = (num / 0x100) % 0x100;
-        com->b = num % 0x100;
-
-        com->success = 1;
-        cout << "Ïðèíÿòî" << endl;
-        break;
-
-    case 6:
-
-        com->name = arr[0];
-     
-
-        if (com->name == "draw_line" || com->name == "draw_rectangle" || com->name == "fill_rectangle" || com->name == "draw_ellipse" || com->name == "fill_ellipse")
-        {
-           // System::Windows::Forms::MessageBox::Show ("Íîðì " );
-          
-        }
-        else{
-            System::Windows::Forms::MessageBox::Show("Error: Íåïðàâèëüíîå íàçâàíèå êîìàíäû ");
-            com->success = 0;
-            error = 1;
-        }
-        if (error == 1)break;
-
-        com->first = Ñonverting(arr[1]);
-        if (com->first == 9999999)
-        {
-            error = 1;
-            com->success = 0;
-        }
-        if (error == 1) break;
-
-        com->second = Ñonverting(arr[2]);
-        if (com->second == 9999999)
-        {
-            error = 1;
-            com->success = 0;
-        }
-        if (error == 1) break;
-
-        com->third = Ñonverting(arr[3]);
-        if (com->third == 9999999)
-        {
-            error = 1;
-            com->success = 0;
-        }
-        if (error == 1) break;
-
-        com->fourth = Ñonverting(arr[4]);
-        if (com->fourth == 9999999)
-        {
-            error = 1;
-            com->success = 0;
-        }
-        if (error == 1) break;
-
-      
-        if (HEX(arr[5])==false)
-        {
-            System::Windows::Forms::MessageBox::Show("Error: Íåïðàâèëüíûé ïàðàìåòð color ... ");
-            error = 1;
-            com->success = 0;
-        }
-        if (error == 1)break;
-
-
-        num = strtol(arr[5], &end, 16);
-        com->r = num / 0x10000;
-        com->g = (num / 0x100) % 0x100;
-        com->b = num % 0x100;
-
-        com->success = 1;
-        cout << "Ïðèíÿòî" << endl;
-        break;
-
-    case 7:
-
-        com->name = arr[0];
-
-        if (com->name != "draw_text")
-        {
-            cout << "ERROR: Íåïðàâèëüíîå íàçâàíèå êîìàíäû" << endl;
-            com->success = 0;
-            error = 1;
-        }
-        if (error == 1)break;
-
-        com->x = Ñonverting(arr[1]);
+        
+        com->x = Сonverting(arr[1]);
         if (com->x == 9999999)
         {
             error = 1;
-            com->success = 0;
         }
-        if (error == 1) break;
-
-        com->y = Ñonverting(arr[2]);
+        
+        com->y = Сonverting(arr[2]);
         if (com->y == 9999999)
         {
             error = 1;
-            com->success = 0;
         }
-        if (error == 1) break;
 
         if (!HEX(arr[3]))
         {
-            cout << "ERROR: Íåïðàâèëüíûé ïàðàìåòð color" << endl;
+            cout << "ERROR: Неправильный параметр color" << endl;
             error = 1;
-            com->success = 0;
         }
-        if (error == 1)break;
 
         num = strtol(arr[3], &end, 16);
         com->r = num / 0x10000;
@@ -263,33 +100,192 @@ void Parse(char* buff, struct Command* com)
 
         if (com->font_number < 0 || com->font_number> 65535)
         {
-            cout << "Error: çíà÷åíèå ïàðàìåòðà font_number çà äèàïàçîíîì äîïóñòèìûõ çíà÷åíèé " << endl;
+            cout << "Error: значение параметра font_number за диапазоном допустимых значений " << endl;
             error = 1;
-            com->success = 0;
         }
-        if (error == 1)break;
 
         com->size = stoi(arr[5], 0, 10);
 
         if (com->size < 0 || com->size> 65535)
         {
-            cout << "Error: çíà÷åíèå ïàðàìåòðà lenght çà äèàïàçîíîì äîïóñòèìûõ çíà÷åíèé " << endl;
+            cout << "Error: значение параметра lenght за диапазоном допустимых значений " << endl;
             error = 1;
+        }
+
+        string s;
+       
+        for (int i = 6; i <k; i++)
+        {
+            s = s + arr[i]+ " ";
+        }
+        strncpy(com->text, s.c_str(), 44);
+
+        if (error == 1)
+        {
             com->success = 0;
         }
-        if (error == 1)break;
-
-        strncpy(com->text, arr[6], 44);
-        
-
+        else
         com->success = 1;
-        cout << "Ïðèíÿòî" << endl;
-        break;
+    }
 
-    default:
-        com->success = 0;
-        System::Windows::Forms::MessageBox::Show("Error: Íåïðàâèëüíîe êîëè÷åñòâî ïàðàìåòðîâ ");
-        cout << "Error: Íåïðàâèëüíîe êîëè÷åñòâî ïàðàìåòðîâ" << endl;
-        break;
+    else {
+        switch (k)
+        {
+       
+        case 2:
+            com->name = arr[0];
+
+            if (com->name == "clear_display")
+            {
+                if (!HEX(arr[1]))
+                {
+                    System::Windows::Forms::MessageBox::Show("Error: Неправильный параметр color ");
+                    error = 1;
+                    com->success = 0;
+                }
+                if (error == 1)break;
+
+
+                num = strtol(arr[1], &end, 16);
+
+                com->r = num / 0x10000;
+                com->g = (num / 0x100) % 0x100;
+                com->b = num % 0x100;
+
+                com->success = 1;
+                cout << "Принято" << endl;
+                break;
+            }
+
+            else
+            {
+                System::Windows::Forms::MessageBox::Show("Error: Неправильная команда ");
+                com->success = 0;
+                break;
+            }
+
+        case 4:
+            com->name = arr[0];
+
+            if (com->name == "draw_pixel")
+            {
+                com->first = Сonverting(arr[1]);
+                if (com->first == 9999999)
+                {
+                    error = 1;
+                    com->success = 0;
+                }
+                if (error == 1) break;
+
+                com->second = Сonverting(arr[2]);
+                if (com->second == 9999999)
+                {
+                    error = 1;
+                    com->success = 0;
+                }
+                if (error == 1) break;
+
+                //color
+                if (!HEX(arr[3]))
+                {
+                    System::Windows::Forms::MessageBox::Show("Error: Неправильный параметр color ");
+                    error = 1;
+                    com->success = 0;
+                }
+                if (error == 1)break;
+
+                num = strtol(arr[3], &end, 16);
+
+                com->r = num / 0x10000;
+                com->g = (num / 0x100) % 0x100;
+                com->b = num % 0x100;
+
+                com->success = 1;
+                cout << "Принято" << endl;
+                break;
+            }
+
+            else
+            {
+                System::Windows::Forms::MessageBox::Show("Error: Неправильная команда ");
+                com->success = 0;
+                break;
+            }
+
+        case 6:
+
+            com->name = arr[0];
+
+
+            if (com->name == "draw_line" || com->name == "draw_rectangle" || com->name == "fill_rectangle" || com->name == "draw_ellipse" || com->name == "fill_ellipse")
+            {
+                // System::Windows::Forms::MessageBox::Show ("Норм " );
+
+            }
+            else {
+                System::Windows::Forms::MessageBox::Show("Error: Неправильное название команды ");
+                com->success = 0;
+                error = 1;
+            }
+            if (error == 1)break;
+
+            com->first = Сonverting(arr[1]);
+            if (com->first == 9999999)
+            {
+                error = 1;
+                com->success = 0;
+            }
+            if (error == 1) break;
+
+            com->second = Сonverting(arr[2]);
+            if (com->second == 9999999)
+            {
+                error = 1;
+                com->success = 0;
+            }
+            if (error == 1) break;
+
+            com->third = Сonverting(arr[3]);
+            if (com->third == 9999999)
+            {
+                error = 1;
+                com->success = 0;
+            }
+            if (error == 1) break;
+
+            com->fourth = Сonverting(arr[4]);
+            if (com->fourth == 9999999)
+            {
+                error = 1;
+                com->success = 0;
+            }
+            if (error == 1) break;
+
+
+            if (HEX(arr[5]) == false)
+            {
+                System::Windows::Forms::MessageBox::Show("Error: Неправильный параметр color ... ");
+                error = 1;
+                com->success = 0;
+            }
+            if (error == 1)break;
+
+
+            num = strtol(arr[5], &end, 16);
+            com->r = num / 0x10000;
+            com->g = (num / 0x100) % 0x100;
+            com->b = num % 0x100;
+
+            com->success = 1;
+            cout << "Принято" << endl;
+            break;
+
+        default:
+
+            com->success = 0;
+            System::Windows::Forms::MessageBox::Show("Error: Неправильноe количество параметров ");
+            cout << "Error: Неправильноe количество параметров" << endl;
+            break;
+        }
     }
 }

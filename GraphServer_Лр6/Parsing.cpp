@@ -69,90 +69,208 @@ void Parse(char* buff, struct Command* com)
     char* end;
     int error = 0;
 
-
-    switch (k)
+    com->name = arr[0];
+    if (com->name == "draw_text")//6+text
     {
-    case 1: 
-        com->name = arr[0];
-
-        if (com->name == "get_width")
+        
+        com->x = Сonverting(arr[1]);
+        if (com->x == 9999999)
         {
-            com->success = 1;
-            cout << "Принято" << endl;
-            break;
+            error = 1;
+        }
+        
+        com->y = Сonverting(arr[2]);
+        if (com->y == 9999999)
+        {
+            error = 1;
         }
 
-        else if (com->name == "get_height")
+        if (!HEX(arr[3]))
         {
-            com->success = 1;
-            cout << "Принято" << endl;
-            break;
+            cout << "ERROR: Неправильный параметр color" << endl;
+            error = 1;
         }
 
-        else
+        num = strtol(arr[3], &end, 16);
+        com->r = num / 0x10000;
+        com->g = (num / 0x100) % 0x100;
+        com->b = num % 0x100;
+
+        com->font_number = stoi(arr[4], 0, 10);
+
+        if (com->font_number < 0 || com->font_number> 65535)
         {
-            System::Windows::Forms::MessageBox::Show("Error: Неправильная команда ");
+            cout << "Error: значение параметра font_number за диапазоном допустимых значений " << endl;
+            error = 1;
+        }
+
+        com->size = stoi(arr[5], 0, 10);
+
+        if (com->size < 0 || com->size> 65535)
+        {
+            cout << "Error: значение параметра lenght за диапазоном допустимых значений " << endl;
+            error = 1;
+        }
+
+        string s;
+       
+        for (int i = 6; i <k; i++)
+        {
+            s = s + arr[i]+ " ";
+        }
+        strncpy(com->text, s.c_str(), 44);
+
+        if (error == 1)
+        {
             com->success = 0;
-            break;
         }
+        else
+        com->success = 1;
+    }
 
-    case 2:
-        com->name = arr[0];
-   
-        if (com->name == "clear_display") 
+    else {
+        switch (k)
         {
-            if (!HEX(arr[1]))
+        case 1:
+            com->name = arr[0];
+
+            if (com->name == "get_width")
             {
-                System::Windows::Forms::MessageBox::Show("Error: Неправильный параметр color ");
-                error = 1;
+                com->success = 1;
+                cout << "Принято" << endl;
+                break;
+            }
+
+            else if (com->name == "get_height")
+            {
+                com->success = 1;
+                cout << "Принято" << endl;
+                break;
+            }
+
+            else
+            {
+                System::Windows::Forms::MessageBox::Show("Error: Неправильная команда ");
                 com->success = 0;
+                break;
+            }
+
+        case 2:
+            com->name = arr[0];
+
+            if (com->name == "clear_display")
+            {
+                if (!HEX(arr[1]))
+                {
+                    System::Windows::Forms::MessageBox::Show("Error: Неправильный параметр color ");
+                    error = 1;
+                    com->success = 0;
+                }
+                if (error == 1)break;
+
+
+                num = strtol(arr[1], &end, 16);
+
+                com->r = num / 0x10000;
+                com->g = (num / 0x100) % 0x100;
+                com->b = num % 0x100;
+
+                com->success = 1;
+                cout << "Принято" << endl;
+                break;
+            }
+
+            else if (com->name == "set_orientation")
+            {
+
+                com->orientation = stoi(arr[1], 0, 10);
+
+                if (com->orientation < 0 || com->orientation> 65535)
+                {
+                    System::Windows::Forms::MessageBox::Show("Error");
+                    cout << "Error: значение параметра orientation за диапазоном допустимых значений " << endl;
+                    error = 1;
+                    com->success = 0;
+                }
+                if (error == 1)break;
+
+                com->success = 1;
+                cout << "Принято" << endl;
+                break;
+            }
+
+            else
+            {
+                System::Windows::Forms::MessageBox::Show("Error: Неправильная команда ");
+                com->success = 0;
+                break;
+            }
+
+        case 4:
+            com->name = arr[0];
+
+            if (com->name == "draw_pixel")
+            {
+                com->first = Сonverting(arr[1]);
+                if (com->first == 9999999)
+                {
+                    error = 1;
+                    com->success = 0;
+                }
+                if (error == 1) break;
+
+                com->second = Сonverting(arr[2]);
+                if (com->second == 9999999)
+                {
+                    error = 1;
+                    com->success = 0;
+                }
+                if (error == 1) break;
+
+                //color
+                if (!HEX(arr[3]))
+                {
+                    System::Windows::Forms::MessageBox::Show("Error: Неправильный параметр color ");
+                    error = 1;
+                    com->success = 0;
+                }
+                if (error == 1)break;
+
+                num = strtol(arr[3], &end, 16);
+
+                com->r = num / 0x10000;
+                com->g = (num / 0x100) % 0x100;
+                com->b = num % 0x100;
+
+                com->success = 1;
+                cout << "Принято" << endl;
+                break;
+            }
+
+            else
+            {
+                System::Windows::Forms::MessageBox::Show("Error: Неправильная команда ");
+                com->success = 0;
+                break;
+            }
+
+        case 6:
+
+            com->name = arr[0];
+
+
+            if (com->name == "draw_line" || com->name == "draw_rectangle" || com->name == "fill_rectangle" || com->name == "draw_ellipse" || com->name == "fill_ellipse")
+            {
+                // System::Windows::Forms::MessageBox::Show ("Норм " );
+
+            }
+            else {
+                System::Windows::Forms::MessageBox::Show("Error: Неправильное название команды ");
+                com->success = 0;
+                error = 1;
             }
             if (error == 1)break;
 
-
-            num = strtol(arr[1], &end, 16);
-
-            com->r = num / 0x10000;
-            com->g = (num / 0x100) % 0x100;
-            com->b = num % 0x100;
-
-            com->success = 1;
-            cout << "Принято" << endl;
-            break;
-        }
-
-        else if (com->name == "set_orientation") 
-        {
-           
-          com->orientation = stoi(arr[1], 0, 10);
-
-            if (com->orientation < 0 || com->orientation> 65535)
-             {
-                System::Windows::Forms::MessageBox::Show("Error");
-               cout << "Error: значение параметра orientation за диапазоном допустимых значений " << endl;
-               error = 1;
-               com->success = 0;
-             }
-          if (error == 1)break;
-
-          com->success = 1;
-          cout << "Принято" << endl;
-          break;
-        }
-
-        else
-        {
-            System::Windows::Forms::MessageBox::Show("Error: Неправильная команда ");
-            com->success = 0;
-            break;
-        }
-
-        
-    case 4:
-        com->name = arr[0];
-
-        if (com->name == "draw_pixel")
-        {
             com->first = Сonverting(arr[1]);
             if (com->first == 9999999)
             {
@@ -169,17 +287,33 @@ void Parse(char* buff, struct Command* com)
             }
             if (error == 1) break;
 
-            //color
-            if (!HEX(arr[3]))
+            com->third = Сonverting(arr[3]);
+            if (com->third == 9999999)
             {
-                System::Windows::Forms::MessageBox::Show("Error: Неправильный параметр color ");
+                error = 1;
+                com->success = 0;
+            }
+            if (error == 1) break;
+
+            com->fourth = Сonverting(arr[4]);
+            if (com->fourth == 9999999)
+            {
+                error = 1;
+                com->success = 0;
+            }
+            if (error == 1) break;
+
+
+            if (HEX(arr[5]) == false)
+            {
+                System::Windows::Forms::MessageBox::Show("Error: Неправильный параметр color ... ");
                 error = 1;
                 com->success = 0;
             }
             if (error == 1)break;
 
-            num = strtol(arr[3], &end, 16);
 
+            num = strtol(arr[5], &end, 16);
             com->r = num / 0x10000;
             com->g = (num / 0x100) % 0x100;
             com->b = num % 0x100;
@@ -187,157 +321,13 @@ void Parse(char* buff, struct Command* com)
             com->success = 1;
             cout << "Принято" << endl;
             break;
-        }
 
-        else
-        {
-            System::Windows::Forms::MessageBox::Show("Error: Неправильная команда ");
+        default:
+
             com->success = 0;
+            System::Windows::Forms::MessageBox::Show("Error: Неправильноe количество параметров ");
+            cout << "Error: Неправильноe количество параметров" << endl;
             break;
         }
-
-   
-    case 6:
-
-        com->name = arr[0];
-     
-
-        if (com->name == "draw_line" || com->name == "draw_rectangle" || com->name == "fill_rectangle" || com->name == "draw_ellipse" || com->name == "fill_ellipse")
-        {
-           // System::Windows::Forms::MessageBox::Show ("Норм " );
-          
-        }
-        else{
-            System::Windows::Forms::MessageBox::Show("Error: Неправильное название команды ");
-            com->success = 0;
-            error = 1;
-        }
-        if (error == 1)break;
-
-        com->first = Сonverting(arr[1]);
-        if (com->first == 9999999)
-        {
-            error = 1;
-            com->success = 0;
-        }
-        if (error == 1) break;
-
-        com->second = Сonverting(arr[2]);
-        if (com->second == 9999999)
-        {
-            error = 1;
-            com->success = 0;
-        }
-        if (error == 1) break;
-
-        com->third = Сonverting(arr[3]);
-        if (com->third == 9999999)
-        {
-            error = 1;
-            com->success = 0;
-        }
-        if (error == 1) break;
-
-        com->fourth = Сonverting(arr[4]);
-        if (com->fourth == 9999999)
-        {
-            error = 1;
-            com->success = 0;
-        }
-        if (error == 1) break;
-
-      
-        if (HEX(arr[5])==false)
-        {
-            System::Windows::Forms::MessageBox::Show("Error: Неправильный параметр color ... ");
-            error = 1;
-            com->success = 0;
-        }
-        if (error == 1)break;
-
-
-        num = strtol(arr[5], &end, 16);
-        com->r = num / 0x10000;
-        com->g = (num / 0x100) % 0x100;
-        com->b = num % 0x100;
-
-        com->success = 1;
-        cout << "Принято" << endl;
-        break;
-
-    case 7:
-
-        com->name = arr[0];
-
-        if (com->name != "draw_text")
-        {
-            cout << "ERROR: Неправильное название команды" << endl;
-            com->success = 0;
-            error = 1;
-        }
-        if (error == 1)break;
-
-        com->x = Сonverting(arr[1]);
-        if (com->x == 9999999)
-        {
-            error = 1;
-            com->success = 0;
-        }
-        if (error == 1) break;
-
-        com->y = Сonverting(arr[2]);
-        if (com->y == 9999999)
-        {
-            error = 1;
-            com->success = 0;
-        }
-        if (error == 1) break;
-
-        if (!HEX(arr[3]))
-        {
-            cout << "ERROR: Неправильный параметр color" << endl;
-            error = 1;
-            com->success = 0;
-        }
-        if (error == 1)break;
-
-        num = strtol(arr[3], &end, 16);
-        com->r = num / 0x10000;
-        com->g = (num / 0x100) % 0x100;
-        com->b = num % 0x100;
-
-        com->font_number = stoi(arr[4], 0, 10);
-
-        if (com->font_number < 0 || com->font_number> 65535)
-        {
-            cout << "Error: значение параметра font_number за диапазоном допустимых значений " << endl;
-            error = 1;
-            com->success = 0;
-        }
-        if (error == 1)break;
-
-        com->size = stoi(arr[5], 0, 10);
-
-        if (com->size < 0 || com->size> 65535)
-        {
-            cout << "Error: значение параметра lenght за диапазоном допустимых значений " << endl;
-            error = 1;
-            com->success = 0;
-        }
-        if (error == 1)break;
-
-        strncpy(com->text, arr[6], 44);
-        
-
-        com->success = 1;
-        cout << "Принято" << endl;
-        break;
-
-    default:
-
-        com->success = 0;
-        System::Windows::Forms::MessageBox::Show("Error: Неправильноe количество параметров ");
-        cout << "Error: Неправильноe количество параметров" << endl;
-        break;
     }
 }

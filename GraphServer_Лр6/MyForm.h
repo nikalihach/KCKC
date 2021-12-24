@@ -148,14 +148,14 @@ namespace GraphServer {
 			Img1 = gcnew Bitmap(600, 600);
 			gr = Graphics::FromImage(Img1);
 
+
 		}
 #pragma endregion
 			  
 			   Bitmap^ Img1;
 			   Graphics^ gr;
-			   Color aColor;
-			   Pen^ color;
-			   SolidBrush^ aBrush;
+			   
+		
 
 			   void set_orientation(int orientation)
 			   {
@@ -191,11 +191,15 @@ namespace GraphServer {
 
 			   }
 
+			  
+			
+
 			   int get_width()
 			   {
 				   int  width = Img1->Width;
 				 //MessageBox::Show("get_width", width.ToString());
-				   return width; 
+				   return width;
+				 
 			   }
 
 			   int get_height() 
@@ -204,13 +208,16 @@ namespace GraphServer {
 				   //MessageBox::Show("get_height", height.ToString());
 				   return height;
 			   }
+
 			   
-			   
+
 		void clear_display(int r, int g, int b)
 		{
+			
 			 //gr = this->CreateGraphics();
-			aColor = Color::FromArgb(r, g, b);
+			Color aColor = Color::FromArgb(r, g, b);
 			gr->Clear(aColor);
+
 			pictureBox1->Image = Img1;
 			
 
@@ -219,8 +226,8 @@ namespace GraphServer {
 		void draw_pixel(int x0, int y0, int r, int g, int b)
 		{
 			
-			aColor = Color::FromArgb(r, g, b);
-			 aBrush = gcnew SolidBrush(aColor);
+			Color aColor = Color::FromArgb(r, g, b);
+			SolidBrush^ aBrush = gcnew SolidBrush(aColor);
 			 //gr = this->CreateGraphics();
 			gr->FillRectangle(aBrush, x0, y0, 1, 1);
 			pictureBox1->Image = Img1;
@@ -228,18 +235,19 @@ namespace GraphServer {
 
 		void draw_line(int x0, int y0, int x1, int y1, int r, int g, int b)
 		{
-		    color = gcnew Pen(Color::FromArgb(r, g, b));
+			Pen^ color = gcnew Pen(Color::FromArgb(r, g, b));
 			//Graphics^ gr = this->CreateGraphics();
 			//gr = pictureBox1->CreateGraphics();
 			gr->DrawLine(color, x0, y0, x1, y1);
 			pictureBox1->Image = Img1;
+		
 		}
 
 		void draw_rectangle(int x0, int y0, int w, int h, int r, int g, int b)
 		{
 			
 		
-			 color = gcnew Pen(Color::FromArgb(r, g, b));
+			Pen^ color = gcnew Pen(Color::FromArgb(r, g, b));
 			 //gr = this->CreateGraphics();
 			gr->DrawRectangle(color, x0, y0, w, h);
 			pictureBox1->Image = Img1;
@@ -247,8 +255,8 @@ namespace GraphServer {
 
 		void fill_rectangle(int x0, int y0, int w, int h, int r, int g, int b)
 		{
-			 aColor = Color::FromArgb(r, g, b);
-			 aBrush = gcnew SolidBrush(aColor);
+			Color aColor = Color::FromArgb(r, g, b);
+			SolidBrush^  aBrush = gcnew SolidBrush(aColor);
 			 //gr = this->CreateGraphics();
 			gr->FillRectangle(aBrush, x0, y0, w, h);
 			pictureBox1->Image = Img1;
@@ -256,7 +264,7 @@ namespace GraphServer {
 
 		void draw_ellipse(int x0, int y0, int rx, int ry, int r, int g, int b)
 		{
-			 color = gcnew Pen(Color::FromArgb(r, g, b));
+			Pen^ color = gcnew Pen(Color::FromArgb(r, g, b));
 			// gr = this->CreateGraphics();
 			gr->DrawEllipse(color, x0, y0, rx, ry);
 			pictureBox1->Image = Img1;
@@ -264,8 +272,8 @@ namespace GraphServer {
 
 		void fill_ellipse(int x0, int y0, int rx, int ry, int r, int g, int b)
 		{
-			 aColor = Color::FromArgb(r, g, b);
-			 aBrush = gcnew SolidBrush(aColor);
+			Color aColor = Color::FromArgb(r, g, b);
+			SolidBrush^ aBrush = gcnew SolidBrush(aColor);
 			// gr = this->CreateGraphics();
 			gr->FillEllipse(aBrush, x0, y0, rx, ry);
 			pictureBox1->Image = Img1;
@@ -587,7 +595,7 @@ namespace GraphServer {
 					if (text[i] == ' ' )
 					{
 						
-						x = x + 1.5* size;
+						x = x +  size;
 					}
 				}
 
@@ -898,7 +906,7 @@ namespace GraphServer {
 						if (text[i] == ' ')
 						{
 
-							x = x + 1.5 * size;
+							x = x +  size;
 						}
 				}
 				break;
@@ -916,7 +924,7 @@ namespace GraphServer {
 		void Server()
 		{
 
-			char buff[1000];
+			char buff[20000];
 			char buff2[100];
 
 
@@ -960,10 +968,10 @@ namespace GraphServer {
 				buff[bsize] = 0;
 				buffer = gcnew String(buff);
 
-
 				struct Command one;
 
 				Parse(buff, &one);
+
 				
 				if (one.success == 1)
 				{
@@ -1033,7 +1041,6 @@ namespace GraphServer {
 				set_orientation(com->orientation);
 			}
 
-			
 		}
 
 private: System::Void button1_Click_1(System::Object^ sender, System::EventArgs^ e) {

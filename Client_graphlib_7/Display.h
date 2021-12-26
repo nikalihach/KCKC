@@ -62,10 +62,6 @@ public:
                 closesocket(my_sock);
                 WSACleanup();
             }
-    
- 
-
-
     };
 
     void fillScreen(uint_least16_t color) {
@@ -171,15 +167,6 @@ public:
             Recv();
            
         }
-
-        /*
-        void getSize(uint_least16_t w, uint_least16_t h)
-        {
-            snprintf(buffer, buffer_length, "get_size: %i %i", w,h);
-            sendCommand(buffer);
-
-        }
-        */
 
         void Recv()
         {

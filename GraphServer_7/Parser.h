@@ -3,7 +3,7 @@
 using namespace std;
 
 bool HEX(string str);
-int Ñonverting(char* str);
+int Ã‘onverting(char* str);
 void Parse(char* buff, struct Command* com);
 
 
@@ -20,8 +20,6 @@ struct Command {
     int x, y, font_number, size = 9999999;
     char text[1000];
     
-    char buffer[100];
-
     int orientation = 9999999;
 
     int width = 9999999;

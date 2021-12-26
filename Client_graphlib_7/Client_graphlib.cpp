@@ -31,53 +31,8 @@ int main()
 		printf("socket() error: % d \n", WSAGetLastError());
 		WSACleanup();
 	}
-
-
-
+	
 	Display display = Display(600, 600);
-	
-
-	
-	//display.getSize(display.getWidth(), display.getHeight());
-
-	//display.fillScreen(stoi("ffff", 0, 16));
-	//display.drawPixel(20,60, stoi(" 5FFB", 0, 16));
-   
-
-	//display.drawLine(10, 60, 30,40, stoi("F9A6", 0, 16));
-	//display.drawRect(30, 140, 100, 80, stoi("F9A6", 0, 16));
-	//display.fillRect(20, 260, 100, 50, stoi("5FFB", 0, 16));
-	//display.drawEllipse(200, 50, 100, 80, stoi("749F", 0, 16));
-	//display.fillEllipse(200, 200, 100, 80, stoi("749F", 0, 16));
-	//display.drawText(100, 120, "Добро_пожаловать", stoi("5568", 0, 16), 1, 20);
-
-	//display.setOrientation(2);
-	//display.setOrientation(0);
-	//display.setOrientation(1);
-	
-	/*
-	int x = 300;
-	int y = 10;
-	int speed = 0;
-
-	while (1)
-	{
-		if (speed % 3000 == 0)
-		{
-			display.fillScreen(stoi("ffff", 0, 16));
-			display.drawText(x, y, "Добро пожаловать", 0000, 1, 20);
-			x = x - 20;
-
-			if (x == 0)
-			{
-				x = 600;
-			}
-		}
-		speed++;
-		cout << speed << endl;
-	}
-	*/
-	
 	
 	while (1)
 	{
@@ -104,7 +59,6 @@ int main()
 			cout << "7. fillEllipse: x0, y0, rx, ry, color" << endl;
 			cout << "8. drawText: x0, y0, s, color, bg, size" << endl;
 			cout << "9. setOrientation: orientation" << endl;
-			//cout << "?. getSize:" << endl;
 			cout << "10. getWidth:" << endl;
 			cout << "11. getHeight:" << endl;
 			cout << "12. loadSprite: index, width, height, data" << endl;
@@ -135,9 +89,9 @@ int main()
 
 			case 2:
 				cout << "Подготовка команды 'drawPixel':" << endl;
-				cout << "Введите парметр x0:";
+				cout << "Введите параметр x0:";
 				cin >> x0;
-				cout << "Введите парметр y0:";
+				cout << "Введите параметр y0:";
 				cin >> y0;
 				cout << "Введите параметр color (формат 0х0000):";
 				cin >> Color;
@@ -155,13 +109,13 @@ int main()
 
 			case 3: 
 				cout << "Подготовка команды 'drawLine':" << endl; 
-				cout << "Введите парметр x0:";
+				cout << "Введите параметр x0:";
 				cin >> x0;
-				cout << "Введите парметр y0:";
+				cout << "Введите параметр y0:";
 				cin >> y0;
-				cout << "Введите парметр x1:";
+				cout << "Введите параметр x1:";
 				cin >> x1;
-				cout << "Введите парметр y1:";
+				cout << "Введите параметр y1:";
 				cin >> y1;
 				cout << "Введите параметр color (формат 0х0000):";
 				cin >> Color;
@@ -178,13 +132,13 @@ int main()
 
 			case 4: 
 				cout << "Подготовка команды 'drawRect':" << endl;
-				cout << "Введите парметр x0:";
+				cout << "Введите параметр x0:";
 				cin >> x0;
-				cout << "Введите парметр y0:";
+				cout << "Введите параметр y0:";
 				cin >> y0;
-				cout << "Введите парметр w:";
+				cout << "Введите параметр w:";
 				cin >> w;
-				cout << "Введите парметр h:";
+				cout << "Введите параметр h:";
 				cin >> h;
 				cout << "Введите параметр color (формат 0х0000):";
 				cin >> Color;
@@ -199,13 +153,13 @@ int main()
 
 			case 5:
 				cout << "Подготовка команды 'fillRect'" << endl; 
-				cout << "Введите парметр x0:";
+				cout << "Введите параметр x0:";
 				cin >> x0;
-				cout << "Введите парметр y0:";
+				cout << "Введите параметр y0:";
 				cin >> y0;
-				cout << "Введите парметр w:";
+				cout << "Введите параметр w:";
 				cin >> w;
-				cout << "Введите парметр h:";
+				cout << "Введите параметр h:";
 				cin >> h;
 				cout << "Введите параметр color (формат 0х0000):";
 				cin >> Color;
@@ -220,13 +174,13 @@ int main()
 				
 			case 6:
 				cout << "Подготовка команды 'drawEllipse'" << endl; 
-				cout << "Введите парметр x0:";
+				cout << "Введите параметр x0:";
 				cin >> x0;
-				cout << "Введите парметр y0:";
+				cout << "Введите параметр y0:";
 				cin >> y0;
-				cout << "Введите парметр rx:";
+				cout << "Введите параметр rx:";
 				cin >> rx;
-				cout << "Введите парметр ry:";
+				cout << "Введите параметр ry:";
 				cin >> ry;
 				cout << "Введите параметр color (формат 0х0000):";
 				cin >> Color;
@@ -242,13 +196,13 @@ int main()
 				
 			case 7:
 				cout << "Подготовка команды 'fillEllipse'" << endl;
-				cout << "Введите парметр x0:";
+				cout << "Введите параметр x0:";
 				cin >> x0;
-				cout << "Введите парметр y0:";
+				cout << "Введите параметр y0:";
 				cin >> y0;
-				cout << "Введите парметр rx:";
+				cout << "Введите параметр rx:";
 				cin >> rx;
-				cout << "Введите парметр ry:";
+				cout << "Введите параметр ry:";
 				cin >> ry;
 				cout << "Введите параметр color (формат 0х0000):";
 				cin >> Color;
@@ -262,11 +216,10 @@ int main()
 				break;
 
 			case 8:
-				setlocale(LC_ALL, "RUS");
 				cout << "Подготовка команды 'drawText'" << endl;
 				cout << "Введите парметр x0:";
 				cin >> x0;
-				cout << "Введите парметр y0:";
+				cout << "Введите параметр y0:";
 				cin >> y0;
 				cout << "Введите параметр color (формат 0х0000):";
 				cin >> Color;
@@ -274,8 +227,7 @@ int main()
 				cin >> bg;
 				cout << "Введите параметр size: ";
 				cin >> size;
-				cout << "Введите парметр s:";
-				gets_s(s);
+				cout << "Введите параметр s:";
 				getline(cin, str);
 				strncpy(s, str.c_str(), 100);
 
@@ -293,16 +245,11 @@ int main()
 			
 			case 9:
 				cout << "Подготовка команды 'setOrientation'" << endl;
-				cout << "Введите парметр orientation:";
+				cout << "Введите параметр orientation:";
 				cin >> orientation;
 				display.setOrientation(orientation);
 				break;
 				
-			//case 10:
-			//	cout << "Подготовка команды 'getSize'" << endl;
-			//	display.getSize(display.getWidth(), display.getHeight());
-			//	break;
-					
 			case 10:
 				cout << "Подготовка команды 'getWidth'" << endl;
 				display.getWidth();
@@ -317,13 +264,13 @@ int main()
 
 			case 12:
 				cout << "Подготовка команды 'loadSprite'" << endl;
-				cout << "Введите парметр index:";
+				cout << "Введите параметр index:";
 				cin >> index;
-				cout << "Введите парметр width:";
+				cout << "Введите параметр width:";
 				cin >> w;
-				cout << "Введите парметр height:";
+				cout << "Введите параметр height:";
 				cin >> h;
-				cout << "Введите парметр data:";
+				cout << "Введите параметр data:";
 				cin >> data;
 				display.loadSprite(index, w, h, data);
 				break;
@@ -331,11 +278,11 @@ int main()
 			case 13:
 				cout << "Подготовка команды 'showSprite'" << endl;
 				
-				cout << "Введите парметр index:";
+				cout << "Введите параметр index:";
 				cin >> index;
-				cout << "Введите парметр x:";
+				cout << "Введите параметр x:";
 				cin >> x0;
-				cout << "Введите парметр y:";
+				cout << "Введите параметр y:";
 				cin >> y0;
 				display.showSprite(index, x0, y0);
 				break;

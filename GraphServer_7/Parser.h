@@ -1,9 +1,10 @@
 #pragma once
+
 #include <string>
 using namespace std;
 
 bool HEX(string str);
-int Ñonverting(char* str);
+int Сonverting(char* str);
 void Parse(char* buff, struct Command* com);
 
 

@@ -1,10 +1,10 @@
 #include <iostream>
 #include <string>
+#include "MyForm.h"
 
 using namespace std;
 
 #include "Parser.h"
-
 bool HEX(string str)
 {
 
@@ -71,7 +71,7 @@ void Parse(char* buff, struct Command* com)
     int error = 0;
 
     com->name = arr[0];
-    if (com->name == "draw_text")
+    if (com->name == "draw_text")//6+text
     {
         
         com->x = Сonverting(arr[1]);
@@ -101,7 +101,7 @@ void Parse(char* buff, struct Command* com)
 
         if (com->font_number < 0 || com->font_number> 65535)
         {
-            cout << "Error: значение параметра font_number за диапазоном допустимых значений" << endl;
+            cout << "Error: значение параметра font_number за диапазоном допустимых значений " << endl;
             error = 1;
         }
 
@@ -109,7 +109,7 @@ void Parse(char* buff, struct Command* com)
 
         if (com->size < 0 || com->size> 65535)
         {
-            cout << "Error: значение параметра size за диапазоном допустимых значений " << endl;
+            cout << "Error: значение параметра lenght за диапазоном допустимых значений " << endl;
             error = 1;
         }
 
@@ -144,14 +144,17 @@ void Parse(char* buff, struct Command* com)
             com->height = Сonverting(arr[3]);
 
             strncpy(com->data, arr[4], 100);
-          
+
             if (error == 1)
             {
                 com->success = 0;
             }
             else
+            {
                 com->success = 1;
-        
+                com->load = 1;
+           
+            }
     }
 
 
@@ -229,11 +232,11 @@ void Parse(char* buff, struct Command* com)
 
             else
             {
-                System::Windows::Forms::MessageBox::Show("2. Error: Неправильная команда ");
+                System::Windows::Forms::MessageBox::Show("2. Parser error: Неправильная команда ");
                 com->success = 0;
                 break;
             }
-                
+
         case 4:
             com->name = arr[0];
 
@@ -277,6 +280,15 @@ void Parse(char* buff, struct Command* com)
             
             else if (com->name == "show_sprite")
             {
+                if (com->load != 1)
+                {
+                    System::Windows::Forms::MessageBox::Show("Ни одно изображение не было загружено. Пожалуйста, воспользуйтесь командой load_sprite перед вызовом данной команды ");
+                
+                    error = 1;
+                    com->success = 0;
+
+                } if (error == 1) break;
+
                 com->index = Сonverting(arr[1]);
 
                 if (com->index < 0 || com->index>255)
@@ -291,6 +303,7 @@ void Parse(char* buff, struct Command* com)
                 com->y = Сonverting(arr[3]);
 
                 com->success = 1;
+               
                 cout << "Принято" << endl;
                 break;
 
@@ -302,7 +315,7 @@ void Parse(char* buff, struct Command* com)
                 com->success = 0;
                 break;
             }
-
+ 
         case 6:
 
             com->name = arr[0];
@@ -310,11 +323,11 @@ void Parse(char* buff, struct Command* com)
 
             if (com->name == "draw_line" || com->name == "draw_rectangle" || com->name == "fill_rectangle" || com->name == "draw_ellipse" || com->name == "fill_ellipse")
             {
-                // System::Windows::Forms::MessageBox::Show ("ok" );
+                // System::Windows::Forms::MessageBox::Show ("Норм " );
 
             }
             else {
-                System::Windows::Forms::MessageBox::Show("Error:  Неправильное название команды  ");
+                System::Windows::Forms::MessageBox::Show("Error: Неправильное название команды ");
                 com->success = 0;
                 error = 1;
             }
@@ -374,7 +387,7 @@ void Parse(char* buff, struct Command* com)
         default:
 
             com->success = 0;
-            System::Windows::Forms::MessageBox::Show("6. Error: Неправильноe количество параметров");
+            System::Windows::Forms::MessageBox::Show("6. Error: Неправильноe количество параметров ");
             cout << "Error: Неправильноe количество параметров" << endl;
             break;
         }

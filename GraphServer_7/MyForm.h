@@ -19,29 +19,33 @@ namespace GraphServer {
 	using namespace System::Drawing;
 	using namespace System::Threading;
 
-	
+	/// <summary>
+	/// Сводка для MyForm
+	/// </summary>
 	public ref class MyForm : public System::Windows::Forms::Form
 	{
+	
 	public:
 		MyForm(void)
 		{
 			InitializeComponent();
+			//
+			//TODO: добавьте код конструктора
+			//
 			
-			Img1 = gcnew Bitmap(600, 600);
-			gr = Graphics::FromImage(Img1);
-
 
 			Thread^ ServerThread = gcnew Thread(gcnew ThreadStart(this, &MyForm::Server));
 
 			ServerThread->IsBackground = true;
 			ServerThread->Start();
-			
-			Thread::Sleep(20);
-
+		
 		}
 
 	protected:
-		
+		/// <summary>
+		/// Освободить все используемые ресурсы.
+		/// </summary>
+
 		~MyForm()
 		{
 			if (components)
@@ -49,6 +53,8 @@ namespace GraphServer {
 				delete components;
 			}
 		}
+
+
 
 	protected:
 
@@ -66,11 +72,16 @@ namespace GraphServer {
 
 
 	private:
-		
+		/// <summary>
+		/// Обязательная переменная конструктора.
+		/// </summary>
 
 
 #pragma region Windows Form Designer generated code
-		
+		/// <summary>
+		/// Требуемый метод для поддержки конструктора — не изменяйте 
+		/// содержимое этого метода с помощью редактора кода.
+		/// </summary>
 		void InitializeComponent(void)
 		{
 			this->components = (gcnew System::ComponentModel::Container());
@@ -87,11 +98,12 @@ namespace GraphServer {
 			// 
 			this->pictureBox1->Dock = System::Windows::Forms::DockStyle::Fill;
 			this->pictureBox1->Location = System::Drawing::Point(0, 0);
-			this->pictureBox1->Margin = System::Windows::Forms::Padding(2, 2, 2, 2);
+			this->pictureBox1->Margin = System::Windows::Forms::Padding(2);
 			this->pictureBox1->Name = L"pictureBox1";
-			this->pictureBox1->Size = System::Drawing::Size(1443, 857);
+			this->pictureBox1->Size = System::Drawing::Size(600, 600);
 			this->pictureBox1->TabIndex = 3;
 			this->pictureBox1->TabStop = false;
+		
 			// 
 			// textBox1
 			// 
@@ -99,7 +111,7 @@ namespace GraphServer {
 			this->textBox1->Font = (gcnew System::Drawing::Font(L"Consolas", 9, System::Drawing::FontStyle::Italic, System::Drawing::GraphicsUnit::Point,
 				static_cast<System::Byte>(204)));
 			this->textBox1->Location = System::Drawing::Point(0, 784);
-			this->textBox1->Margin = System::Windows::Forms::Padding(2, 2, 2, 2);
+			this->textBox1->Margin = System::Windows::Forms::Padding(2);
 			this->textBox1->Multiline = true;
 			this->textBox1->Name = L"textBox1";
 			this->textBox1->Size = System::Drawing::Size(1443, 21);
@@ -116,7 +128,7 @@ namespace GraphServer {
 			this->label2->Name = L"label2";
 			this->label2->Size = System::Drawing::Size(180, 22);
 			this->label2->TabIndex = 5;
-			this->label2->Text = L"Ïîëó÷åíà êîìàíäà:";
+			this->label2->Text = L"Получена команда:";
 			// 
 			// button1
 			// 
@@ -125,18 +137,18 @@ namespace GraphServer {
 			this->button1->Font = (gcnew System::Drawing::Font(L"Consolas", 9, System::Drawing::FontStyle::Bold, System::Drawing::GraphicsUnit::Point,
 				static_cast<System::Byte>(204)));
 			this->button1->Location = System::Drawing::Point(0, 827);
-			this->button1->Margin = System::Windows::Forms::Padding(2, 2, 2, 2);
+			this->button1->Margin = System::Windows::Forms::Padding(2);
 			this->button1->Name = L"button1";
 			this->button1->Size = System::Drawing::Size(1443, 30);
 			this->button1->TabIndex = 4;
-			this->button1->Text = L"Îòîáðàçèòü\r\n êîìàíäó";
+			this->button1->Text = L"Отобразить\r\n команду";
 			this->button1->UseVisualStyleBackColor = false;
 			this->button1->Click += gcnew System::EventHandler(this, &MyForm::button1_Click_1);
 			// 
 			// imageList1
 			// 
 			this->imageList1->ColorDepth = System::Windows::Forms::ColorDepth::Depth8Bit;
-			this->imageList1->ImageSize = System::Drawing::Size(16, 16);
+			this->imageList1->ImageSize = System::Drawing::Size(256, 256);
 			this->imageList1->TransparentColor = System::Drawing::Color::Transparent;
 			// 
 			// MyForm
@@ -148,24 +160,30 @@ namespace GraphServer {
 			this->Controls->Add(this->label2);
 			this->Controls->Add(this->button1);
 			this->Controls->Add(this->pictureBox1);
-			this->Margin = System::Windows::Forms::Padding(2, 2, 2, 2);
+			this->Margin = System::Windows::Forms::Padding(2);
 			this->Name = L"MyForm";
 			this->Text = L"MyForm";
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->pictureBox1))->EndInit();
 			this->ResumeLayout(false);
 			this->PerformLayout();
 
+			Img1 = gcnew Bitmap(600, 600);
+
+			gr = Graphics::FromImage(Img1);
+		
+
 		}
-#pragma endregion  
+#pragma endregion
+			  
 			   Bitmap^ Img1;
 			   Graphics^ gr;
-		
+
 			   void set_orientation(int orientation)
 			   {
+
 				   switch (orientation)
 				   {
 				   case 0:
-					  
 					   Img1->RotateFlip(RotateFlipType::RotateNoneFlipNone);
 					   pictureBox1->Image = Img1;
 					   break;
@@ -188,46 +206,49 @@ namespace GraphServer {
 
 				   default:
 					   break;
-					   
+
 				   }
+
 			   }
 
 
 			   int get_width()
 			   {
 				   int  width = Img1->Width;
-				   return width; 
+				   return width;
+				 
 			   }
 
 			   int get_height() 
 			   {
-				   int height = Img1->Height;
+				   int height = Img1->Height; 
 				   return height;
 			   }
 
-			   int Width, Height;
+			  
 
-			   void load_sprite(int index, int width, int height, char* data)
+			   void load_sprite(int index, int width, int height, char* data, int*w, int*h)
 			   {
+				   w[index] = width;
+				   h[index] = height;
+
 				   String^ Index = index.ToString();
 				   String^ Data  = gcnew String(data);
 
 				   imageList1->Images->Add(Index, Image::FromFile(Data));
-				  
-				  Width = width;
-				   Height = height;
-				  
+
 			   }
 
-			   void show_sprite(int index, int x, int y)
+			   void show_sprite(int index, int x, int y, int* w, int* h)
 			   {
 				   String^ Index = index.ToString();
 				   int ind  = imageList1->Images->IndexOfKey(Index);
 				   Image^ img = imageList1->Images[ind];
 				  
-				   gr->DrawImage(img, x, y, Width, Height);
-				   pictureBox1->Image = Img1;
+				   gr->DrawImage(img, x, y, w[ind], h[ind]);
 
+				  pictureBox1->Image = Img1;
+				   
 			   }
 
 
@@ -237,13 +258,10 @@ namespace GraphServer {
 			gr->Clear(aColor);
 
 			pictureBox1->Image = Img1;
-			
-
 		}
 
 		void draw_pixel(int x0, int y0, int r, int g, int b)
 		{
-			
 			Color aColor = Color::FromArgb(r, g, b);
 			SolidBrush^ aBrush = gcnew SolidBrush(aColor);
 			gr->FillRectangle(aBrush, x0, y0, 1, 1);
@@ -253,6 +271,7 @@ namespace GraphServer {
 		void draw_line(int x0, int y0, int x1, int y1, int r, int g, int b)
 		{
 			Pen^ color = gcnew Pen(Color::FromArgb(r, g, b));
+			//Graphics^ gr = this->CreateGraphics();
 			gr->DrawLine(color, x0, y0, x1, y1);
 			pictureBox1->Image = Img1;
 		
@@ -927,7 +946,7 @@ namespace GraphServer {
 					break;
 			}
 		}
-
+		
 		
 
 		String^ buffer;
@@ -990,6 +1009,7 @@ namespace GraphServer {
 				
 				if (one.success == 1)
 				{
+					
 					Drawing(&one);
 				}
 
@@ -1008,11 +1028,21 @@ namespace GraphServer {
 					 sendto(my_sock, &buff2[0], strlen(&buff2[0]), 0, (sockaddr*)&client_addr, sizeof(client_addr));
 				 }
 
-				  if (one.name == "load_sprite")
+				
+
+				  if (one.name == "load_sprite" && one.success == 1)
 				  {
 					  Get_sprite(one.data);
-					  load_sprite(one.index, one.width, one.height, one.data);
+					  load_sprite(one.index, one.width, one.height, one.data, one.w, one.h);
 				  }
+
+				   if (one.name == "show_sprite" && one.success == 1)
+				  {
+					   
+					  show_sprite(one.index, one.x, one.y, one.w, one.h);
+				  }
+
+				  System::Threading::Thread::Sleep(1);
 			}
 		}
 
@@ -1058,17 +1088,12 @@ namespace GraphServer {
 			{
 				set_orientation(com->orientation);
 			}
-
-			else if (com->name == "show_sprite")
-			{
-				show_sprite(com->index, com->x, com->y);
-			}
-
 		}
 
 
 		void Get_sprite(char* data)
 		{
+
 			WSADATA wsaData;
 			int winsock_result = WSAStartup(MAKEWORD(2, 2), &wsaData);
 
@@ -1093,6 +1118,13 @@ namespace GraphServer {
 			int const buffer_size = 1024;
 			char buffer[buffer_size];
 
+
+			if (sendto(server_socket, "Ready", 5, 0, (SOCKADDR*)&client, client_sizeof) == SOCKET_ERROR)
+			{
+				closesocket(server_socket);
+				WSACleanup();
+			}
+
 			FILE* file;
 			file = fopen(data, "wb");
 
@@ -1116,6 +1148,7 @@ namespace GraphServer {
 
 				fwrite(buffer, sizeof(char), received_size, file);
 			}
+
 			fclose(file);
 
 			closesocket(server_socket);

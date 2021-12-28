@@ -1,4 +1,4 @@
-﻿#ifndef Display_h
+#ifndef Display_h
 #define Display_h
 
 #include <iostream>
@@ -62,6 +62,7 @@ public:
                 closesocket(my_sock);
                 WSACleanup();
             }
+
     };
 
     void fillScreen(uint_least16_t color) {
@@ -175,8 +176,6 @@ public:
             sockaddr_in server_addr;
             int server_addr_size = sizeof(server_addr);
             int n;
-         
-
             
                  n = recvfrom(my_sock, &buff2[0], sizeof(buff2) - 1, 0, (sockaddr*)&server_addr, &server_addr_size);
                 if (n == SOCKET_ERROR)
@@ -222,7 +221,8 @@ public:
             int const buffer_size = 1024;
             char buffer[buffer_size];
 
-            if (recvfrom(client_socket, buffer, buffer_size, 0, (SOCKADDR*)&server, &server_sizeof) == SOCKET_ERROR)
+            int n = recvfrom(client_socket, buffer, buffer_size, 0, (SOCKADDR*)&server, &server_sizeof);
+            if ( n == SOCKET_ERROR)
             {
                 closesocket(client_socket);
                 WSACleanup();
@@ -230,12 +230,14 @@ public:
             }
             else
             {
+                buffer[n] = 0;
+                cout << "Server:" << buffer<< endl;
                 FILE* file;
                 file = fopen(data, "rb");
                
                 if (file == NULL)
                 {
-                    std::cout << "Не удалось открыть файл." << std::endl;
+                    cout << "Не удалось открыть файл." << endl;
                 }
                 fseek(file, 0, SEEK_END);
                 int file_size = ftell(file);

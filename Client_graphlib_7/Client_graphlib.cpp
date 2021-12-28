@@ -1,4 +1,4 @@
-﻿#define _CRT_SECURE_NO_WARNINGS
+#define _CRT_SECURE_NO_WARNINGS
 #include "Display.h"
 
 #include <stdio.h>
@@ -31,8 +31,9 @@ int main()
 		printf("socket() error: % d \n", WSAGetLastError());
 		WSACleanup();
 	}
-	
+
 	Display display = Display(600, 600);
+	
 	
 	while (1)
 	{
@@ -111,7 +112,7 @@ int main()
 				cout << "Подготовка команды 'drawLine':" << endl; 
 				cout << "Введите параметр x0:";
 				cin >> x0;
-				cout << "Введите параметр y0:";
+				cout << "Введите парметр y0:";
 				cin >> y0;
 				cout << "Введите параметр x1:";
 				cin >> x1;
@@ -196,7 +197,7 @@ int main()
 				
 			case 7:
 				cout << "Подготовка команды 'fillEllipse'" << endl;
-				cout << "Введите параметр x0:";
+				cout << "Введите парметр x0:";
 				cin >> x0;
 				cout << "Введите параметр y0:";
 				cin >> y0;
@@ -216,8 +217,9 @@ int main()
 				break;
 
 			case 8:
+				setlocale(LC_ALL, "RUS");
 				cout << "Подготовка команды 'drawText'" << endl;
-				cout << "Введите парметр x0:";
+				cout << "Введите параметр x0:";
 				cin >> x0;
 				cout << "Введите параметр y0:";
 				cin >> y0;
@@ -228,6 +230,7 @@ int main()
 				cout << "Введите параметр size: ";
 				cin >> size;
 				cout << "Введите параметр s:";
+				gets_s(s);
 				getline(cin, str);
 				strncpy(s, str.c_str(), 100);
 
@@ -250,6 +253,7 @@ int main()
 				display.setOrientation(orientation);
 				break;
 				
+					
 			case 10:
 				cout << "Подготовка команды 'getWidth'" << endl;
 				display.getWidth();
@@ -291,11 +295,8 @@ int main()
 				cout << "Ошибка: Введен не правильный номер команды" << endl;
 				break;
 			}
-
-
-
 	}
-	
+
 
 
 

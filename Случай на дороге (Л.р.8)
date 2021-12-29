@@ -1,0 +1,141 @@
+#define _CRT_SECURE_NO_WARNINGS
+#include "Display.h"
+
+#include <stdio.h>
+#include <iostream>
+#include <string.h>
+#include <string>
+#include <Windows.h> 
+
+using namespace std;
+
+
+int main()
+{
+	
+	SetConsoleCP(1251);
+	SetConsoleOutputCP(1251);
+	printf("Client\n");
+
+	char buff[1000];
+	
+
+	if (WSAStartup(0x202, (WSADATA*)&buff[0]))
+	{
+		printf("WSAStartup error : % d \n", WSAGetLastError());
+	}
+
+	SOCKET my_sock = socket(AF_INET, SOCK_DGRAM, 0);
+	if (my_sock == INVALID_SOCKET)
+	{
+		printf("socket() error: % d \n", WSAGetLastError());
+		WSACleanup();
+	}
+
+
+
+	Display display = Display(600, 600);
+
+char data[50];
+int snail_width = 50;
+int snail_height = 50;
+int run_width = 90;
+int run_height = 100;
+
+strcpy(data, "road.jpg"); 
+display.loadSprite(0, 600, 600, data);
+
+strcpy(data, "right.png");
+display.loadSprite(1, snail_width, snail_height, data);
+
+strcpy(data, "what.png");
+display.loadSprite(2, 20, 20, data);
+
+strcpy(data, "run1.png");
+display.loadSprite(3, run_width, run_height, data);
+
+strcpy(data, "run2.png");
+display.loadSprite(4, run_width, run_height, data);
+
+strcpy(data, "run3.png");
+display.loadSprite(5, run_width, run_height, data);
+
+strcpy(data, "run4.png");
+display.loadSprite(6, run_width, run_height, data);
+
+strcpy(data, "run5.png");
+display.loadSprite(7, run_width, run_height, data);
+
+strcpy(data, "run6.png");
+display.loadSprite(8, run_width, run_height, data);
+
+strcpy(data, "left.png");
+display.loadSprite(9, snail_width, snail_height, data);
+
+strcpy(data, "disappear.png");
+display.loadSprite(10, snail_width, snail_height, data);
+
+int xs= 0;
+int ys = 500;
+
+int xr = 0;
+int yr = 350;
+
+int exit = 0;
+
+
+display.showSprite(0, 0, 0);
+
+while (true)
+{
+	if (xs< 150) 
+	{
+		display.showSprite(0, 0, 0);
+		display.showSprite(1, xs, ys);
+
+		xs= xs + 1;
+		Sleep(100);
+	}
+
+	if (xs> 148)
+	{
+		do {
+			for (int i = 3; i < 9; i++)
+			{
+				display.showSprite(0, 0, 0);
+				display.showSprite(1, xs, ys);
+				display.showSprite(2, xs + 30, ys-30);
+				display.showSprite(i, xr, yr);
+				xr = xr + 10;
+				Sleep(100);
+			}
+		} while (xr < 600);
+	}
+
+	if (xr == 600)
+	{
+		do {
+
+			display.showSprite(0, 0, 0);
+			display.showSprite(9, xs, ys);
+
+			xs= xs- 1;
+			Sleep(100);
+
+		} while (xs> 0);
+
+		if (xs== 0)
+		{
+			display.showSprite(0, 0, 0);
+			display.showSprite(10, xs, ys);
+			Sleep(100);
+		}
+
+		display.showSprite(0, 0, 0);
+		display.drawText(200, 275, "КОНЕЦ", stoi("ffff", 0, 16), 1, 50);
+		break;
+	}
+}
+
+	return 0;
+}
